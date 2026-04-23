@@ -3,19 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Seva - Admin Panel</title>
+    <title>Smart Seva - Super Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
 </head>
-<body class="bg-gray-100 p-5">
-    <h1 class="text-2xl font-bold mb-5">Worker Management</h1>
-    
-    <div id="workerList" class="space-y-4">
-        <p class="text-gray-500">Loading workers...</p>
+<body class="bg-gray-50 min-h-screen">
+
+    <div class="bg-blue-800 text-white p-6 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold italic">SmartSeva Admin Panel</h1>
+            <span class="bg-blue-700 px-4 py-1 rounded-full text-sm">Control Room</span>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-blue-500">
+                <p class="text-gray-500 font-medium">Total Workers</p>
+                <h2 id="totalCount" class="text-4xl font-bold">0</h2>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-yellow-500">
+                <p class="text-gray-500 font-medium">Pending Requests</p>
+                <h2 id="pendingCount" class="text-4xl font-bold text-yellow-600">0</h2>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-green-500">
+                <p class="text-gray-500 font-medium">Active Workers</p>
+                <h2 id="activeCount" class="text-4xl font-bold text-green-600">0</h2>
+            </div>
+        </div>
+
+        <h3 class="text-xl font-bold mb-6 text-gray-800">Manage Professionals</h3>
+        <div id="workerList" class="grid grid-cols-1 gap-4">
+            <p class="text-center py-20 text-gray-400">Loading database...</p>
+        </div>
     </div>
 
     <script>
+        // Password Protection
+        const pass = prompt("Admin Security Key:");
+        if (pass !== "Shayan123") { // Yahan apna password set karein
+            document.body.innerHTML = "<h1 style='text-align:center; margin-top:100px;'>Access Denied!</h1>";
+            window.location.href = "index.html";
+        }
+
         const firebaseConfig = {
             apiKey: "AIzaSyDWRwmMzdLlWLhdf6KQL4iQi1VHx7uVwXQ",
             authDomain: "smart-seva-5bef9.firebaseapp.com",
@@ -27,39 +58,54 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Real-time workers list fetch karna
-        db.collection("workers").onSnapshot((querySnapshot) => {
+        // Database ko monitor karna aur Stats update karna
+        db.collection("workers").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
             const listDiv = document.getElementById('workerList');
             listDiv.innerHTML = "";
-            querySnapshot.forEach((doc) => {
-                const worker = doc.data();
+            
+            let total = 0, pending = 0, active = 0;
+
+            snapshot.forEach((doc) => {
+                const w = doc.data();
                 const id = doc.id;
-                
+                total++;
+                if(w.status === 'pending') pending++;
+                if(w.status === 'active') active++;
+
                 const card = `
-                    <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 ${worker.status === 'active' ? 'border-green-500' : 'border-red-500'}">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h3 class="font-bold text-lg">${worker.name} (${worker.category})</h3>
-                                <p class="text-sm text-gray-600">${worker.location} | ${worker.phone}</p>
-                                <p class="text-xs font-bold uppercase mt-1 ${worker.status === 'active' ? 'text-green-600' : 'text-red-600'}">Status: ${worker.status}</p>
+                    <div class="bg-white p-5 rounded-xl shadow-md flex flex-col md:flex-row justify-between items-center gap-4 transition-all hover:shadow-lg border border-gray-100">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <h4 class="text-lg font-bold text-gray-800">${w.name}</h4>
+                                <span class="px-2 py-0.5 text-xs rounded-md ${w.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'} font-bold uppercase">${w.status}</span>
                             </div>
-                            <div class="space-x-2">
-                                <button onclick="updateStatus('${id}', 'active')" class="bg-green-100 text-green-700 px-3 py-1 rounded-lg text-sm font-bold">Approve</button>
-                                <button onclick="updateStatus('${id}', 'suspended')" class="bg-red-100 text-red-700 px-3 py-1 rounded-lg text-sm font-bold">Suspend</button>
-                            </div>
+                            <p class="text-sm text-blue-600 font-semibold">${w.category}</p>
+                            <p class="text-xs text-gray-500 mt-1"><i class="fas fa-map-marker-alt mr-1"></i> ${w.location} | <i class="fas fa-phone mr-1"></i> ${w.phone}</p>
+                        </div>
+                        <div class="flex gap-2 w-full md:w-auto">
+                            <button onclick="setStatus('${id}', 'active')" class="flex-1 md:flex-none bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md hover:bg-green-700 transition">Approve</button>
+                            <button onclick="setStatus('${id}', 'suspended')" class="flex-1 md:flex-none bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md hover:bg-red-600 transition">Suspend</button>
+                            <button onclick="deleteWorker('${id}')" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg text-sm hover:bg-gray-200 transition"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
                 `;
                 listDiv.innerHTML += card;
             });
+
+            document.getElementById('totalCount').innerText = total;
+            document.getElementById('pendingCount').innerText = pending;
+            document.getElementById('activeCount').innerText = active;
         });
 
-        // Status change karne ka function
-        async function updateStatus(id, newStatus) {
-            try {
-                await db.collection("workers").doc(id).update({ status: newStatus });
-            } catch (err) {
-                alert("Error updating: " + err.message);
+        // Status change function
+        async function setStatus(id, s) {
+            await db.collection("workers").doc(id).update({ status: s });
+        }
+
+        // Permanent Delete function
+        async function deleteWorker(id) {
+            if(confirm("Kya aap ise hamesha ke liye delete karna chahte hain?")) {
+                await db.collection("workers").doc(id).delete();
             }
         }
     </script>
