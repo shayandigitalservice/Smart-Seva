@@ -3,138 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Seva - Premium Home Services</title>
+    <title>SmartSeva - India's Trusted Home Service App</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .hero-gradient { background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7)); }
-        .service-card:hover i { transform: scale(1.2) rotate(10deg); transition: 0.3s; }
-        #mobile-menu { transition: all 0.3s ease-in-out; max-height: 0; overflow: hidden; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+        .hero-overlay { background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)); }
+        .swiper-slide { height: 550px; position: relative; }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
+        .shadow-elite { box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1); }
+        #mobile-menu { max-height: 0; overflow: hidden; transition: all 0.3s ease-out; }
         #mobile-menu.active { max-height: 300px; }
     </style>
 </head>
-<body class="bg-[#F8FAFC]">
+<body class="text-gray-900">
 
-    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-[100] border-b border-slate-100">
+    <nav class="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-[100] border-b border-gray-100">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-extrabold tracking-tight text-blue-600">
-                Smart<span class="text-slate-900">Seva</span>
-            </a>
+            <div class="text-2xl font-bold text-blue-600 tracking-tighter">Smart<span class="text-gray-900">Seva</span></div>
             
-            <div class="hidden md:flex items-center space-x-8 font-semibold text-slate-600">
-                <a href="index.html" class="hover:text-blue-600 transition">Home</a>
-                <a href="#services" class="hover:text-blue-600 transition">Services</a>
-                <a href="partner.html" class="bg-blue-50 text-blue-600 px-4 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">Become a Partner</a>
-                <a href="admin.html" class="text-slate-400 hover:text-red-500"><i class="fas fa-user-shield"></i></a>
+            <div class="hidden md:flex items-center space-x-7 font-semibold text-gray-700">
+                <a href="#" class="hover:text-blue-600 transition">Home</a>
+                <a href="#services" class="hover:text-blue-600 transition">Our Services</a>
+                <a href="partner.html" class="bg-gray-100 text-blue-600 px-5 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">Become a Partner</a>
+                <a href="admin.html" class="text-red-500 hover:text-red-700 text-xl"><i class="fas fa-user-shield"></i></a>
             </div>
 
-            <button id="menu-btn" class="md:hidden text-2xl text-slate-800 focus:outline-none">
-                <i class="fas fa-bars-staggered"></i>
-            </button>
+            <div class="flex items-center space-x-3 md:hidden">
+                <a href="partner.html" class="bg-blue-600 text-white px-4 py-1.5 rounded-full font-bold text-sm">Join</a>
+                <button id="menu-btn" class="text-2xl text-gray-800"><i class="fas fa-bars-staggered"></i></button>
+            </div>
         </div>
 
         <div id="mobile-menu" class="md:hidden bg-white px-6">
-            <a href="index.html" class="block py-3 text-slate-700 font-semibold border-b border-slate-50">Home</a>
-            <a href="#services" class="block py-3 text-slate-700 font-semibold border-b border-slate-50">Services</a>
-            <a href="partner.html" class="block py-3 text-blue-600 font-bold">Become a Partner</a>
+            <a href="#" class="block py-3 text-gray-800 font-semibold border-b border-gray-50">Home</a>
+            <a href="#services" class="block py-3 text-gray-800 font-semibold border-b border-gray-50">Our Services</a>
+            <a href="partner.html" class="block py-3 text-blue-600 font-bold border-b border-gray-50">Become a Partner</a>
+            <a href="admin.html" class="block py-3 text-red-600 font-bold">Admin</a>
         </div>
     </nav>
 
-    <div class="swiper mySwiper h-[500px] md:h-[600px] relative">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide relative">
-                <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1600" class="w-full h-full object-cover">
-                <div class="absolute inset-0 hero-gradient flex items-center justify-center text-center px-6">
-                    <div class="max-w-3xl">
-                        <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">Ghar ki har Service,<br><span class="text-blue-400 font-outline-2">Ab Smart Hogi</span></h1>
-                        <p class="text-slate-200 text-lg md:text-xl mb-8">Professional experts for every household need.</p>
+    <div class="relative overflow-hidden h-[550px]">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1600&q=80">
+                    <div class="absolute inset-0 hero-overlay flex items-center justify-center text-center px-4">
+                        <div class="max-w-3xl">
+                            <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">Ghar Ki Har Problem,<br>Ab <span class="text-blue-400">Smart Seva</span> Solve Karegi!</h1>
+                            <p class="text-gray-200 text-lg md:text-xl mb-8">India's most trusted experts for Home repairs & services.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="swiper-slide relative">
-                <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1600" class="w-full h-full object-cover">
-                <div class="absolute inset-0 hero-gradient flex items-center justify-center text-center px-6">
-                    <div>
-                        <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4">Cleaning Experts</h1>
-                        <p class="text-slate-200 text-lg mb-8">Book deep cleaning for a sparkling home.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="absolute bottom-[-32px] left-0 right-0 z-50 px-4">
-            <div class="max-w-3xl mx-auto bg-white p-3 rounded-2xl shadow-[0_20px_50px_rgba(8,_112,_184,_0.2)] flex items-center gap-2 border border-slate-100">
-                <div class="flex-1 flex items-center px-4 gap-3">
-                    <i class="fas fa-search text-slate-400"></i>
-                    <input type="text" placeholder="Kya help chahiye? (e.g. Electrician)" class="w-full py-3 outline-none text-slate-700 font-medium">
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1600&q=80">
+                    <div class="absolute inset-0 hero-overlay flex items-center justify-center text-center px-4">
+                        <div class="max-w-2xl">
+                            <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">Deep Cleaning Specialists</h1>
+                            <p class="text-gray-200 text-lg mb-8 font-semibold">Ghar chamkaye sirf ₹999 se shuru. Professional Cleaners.</p>
+                        </div>
+                    </div>
                 </div>
-                <button class="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg hidden md:block">Find Expert</button>
+
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1600&q=80">
+                    <div class="absolute inset-0 hero-overlay flex items-center justify-center text-center px-4">
+                        <div class="max-w-2xl">
+                            <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">AC & Appliance Repair</h1>
+                            <p class="text-gray-200 text-lg mb-8 font-semibold">Instant repair for AC, Fridge, Washing Machine by certified professionals.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <img src="https://images.unsplash.com/photo-1603712760331-5079a4055236?auto=format&fit=crop&w=1600&q=80">
+                    <div class="absolute inset-0 hero-overlay flex items-center justify-center text-center px-4">
+                        <div class="max-w-2xl">
+                            <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">Verified Experts Only</h1>
+                            <p class="text-gray-200 text-lg mb-8 font-semibold text-green-300"><i class="fas fa-user-check"></i> 100% Background Checked for your complete safety.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        
+        <div class="absolute bottom-[-32px] left-0 right-0 z-50 px-4">
+            <div class="max-w-3xl mx-auto bg-white p-3 rounded-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.15)] flex items-center gap-2 border border-gray-100">
+                <i class="fas fa-search text-gray-400 ml-4 mr-1 text-lg"></i>
+                <input type="text" placeholder="Kya help chahiye? (e.g. Electrician, AC Repair)" class="w-full px-2 py-3 outline-none text-gray-800 font-medium text-lg">
+                <button class="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition hidden md:block">Search Expert</button>
                 <button class="bg-blue-600 text-white p-4 rounded-xl md:hidden"><i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
     </div>
 
-    <section id="services" class="pt-24 pb-16 container mx-auto px-4">
-        <div class="flex justify-between items-end mb-10">
-            <div>
-                <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Hamari Popular Services</h2>
-                <div class="h-1.5 w-20 bg-blue-600 rounded-full"></div>
+    <section id="services" class="container mx-auto px-4 pt-24 pb-16">
+        <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-12">Hamari Popular Services</h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            <div class="group bg-white p-8 rounded-3xl shadow-elite border border-gray-100 text-center hover:transform hover:-translate-y-2 transition-all cursor-pointer">
+                <div class="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600 transition-all">
+                    <i class="fas fa-bolt text-4xl text-blue-600 group-hover:text-white transition"></i>
+                </div>
+                <h3 class="font-bold text-xl text-gray-800">Electrician</h3>
+                <p class="text-sm text-gray-500 mt-1">Wiring, Repairs & Installation</p>
             </div>
-            <a href="#" class="text-blue-600 font-bold hover:underline">See All</a>
+
+            <div class="group bg-white p-8 rounded-3xl shadow-elite border border-gray-100 text-center hover:transform hover:-translate-y-2 transition-all cursor-pointer">
+                <div class="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600 transition-all">
+                    <i class="fas fa-faucet text-4xl text-blue-600 group-hover:text-white transition"></i>
+                </div>
+                <h3 class="font-bold text-xl text-gray-800">Plumber</h3>
+                <p class="text-sm text-gray-500 mt-1">Taps, Leaks & Pipe Fittings</p>
+            </div>
+
+            <div class="group bg-white p-8 rounded-3xl shadow-elite border border-gray-100 text-center hover:transform hover:-translate-y-2 transition-all cursor-pointer">
+                <div class="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600 transition-all">
+                    <i class="fas fa-snowflake text-4xl text-blue-600 group-hover:text-white transition"></i>
+                </div>
+                <h3 class="font-bold text-xl text-gray-800">AC Repair</h3>
+                <p class="text-sm text-gray-500 mt-1">Servicing, Gas Fill & Repair</p>
+            </div>
+
+            <div class="group bg-white p-8 rounded-3xl shadow-elite border border-gray-100 text-center hover:transform hover:-translate-y-2 transition-all cursor-pointer">
+                <div class="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600 transition-all">
+                    <i class="fas fa-broom text-4xl text-blue-600 group-hover:text-white transition"></i>
+                </div>
+                <h3 class="font-bold text-xl text-gray-800">Cleaning</h3>
+                <p class="text-sm text-gray-500 mt-1">Home & Sofa Deep Clean</p>
+            </div>
         </div>
+    </section>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="service-card bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:border-blue-100 transition-all cursor-pointer group text-center">
-                <div class="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600 transition-all">
-                    <i class="fas fa-bolt text-3xl text-blue-600 group-hover:text-white"></i>
-                </div>
-                <h3 class="font-bold text-lg text-slate-800">Electrician</h3>
-                <p class="text-slate-400 text-sm mt-2">Wiring & Repairs</p>
+    <section class="bg-white py-16 container mx-auto px-4 rounded-3xl mb-16 shadow-lg">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-extrabold text-gray-900">Kyun Hum? Trust & Quality Promise</h2>
+            <div class="h-1.5 w-20 bg-blue-600 rounded-full mx-auto mt-2"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-6 bg-gray-50 rounded-2xl border border-gray-100">
+                <i class="fas fa-star text-4xl text-orange-400 mb-4"></i>
+                <h4 class="font-bold text-lg mb-2">Verified Professionals</h4>
+                <p class="text-sm text-gray-600">Strict background check and skill test for every expert.</p>
             </div>
-
-            <div class="service-card bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:border-blue-100 transition-all cursor-pointer group text-center">
-                <div class="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600 transition-all">
-                    <i class="fas fa-faucet text-3xl text-blue-600 group-hover:text-white"></i>
-                </div>
-                <h3 class="font-bold text-lg text-slate-800">Plumber</h3>
-                <p class="text-slate-400 text-sm mt-2">Taps & Pipes</p>
+            <div class="text-center p-6 bg-gray-50 rounded-2xl border border-gray-100">
+                <i class="fas fa-shield-alt text-4xl text-blue-600 mb-4"></i>
+                <h4 class="font-bold text-lg mb-2">Service Guarantee</h4>
+                <p class="text-sm text-gray-600">7 days warranty on all home repair services.</p>
             </div>
-
-            <div class="service-card bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:border-blue-100 transition-all cursor-pointer group text-center">
-                <div class="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600 transition-all">
-                    <i class="fas fa-snowflake text-3xl text-blue-600 group-hover:text-white"></i>
-                </div>
-                <h3 class="font-bold text-lg text-slate-800">AC Repair</h3>
-                <p class="text-slate-400 text-sm mt-2">Gas & Service</p>
-            </div>
-
-            <div class="service-card bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:border-blue-100 transition-all cursor-pointer group text-center">
-                <div class="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600 transition-all">
-                    <i class="fas fa-broom text-3xl text-blue-600 group-hover:text-white"></i>
-                </div>
-                <h3 class="font-bold text-lg text-slate-800">Cleaning</h3>
-                <p class="text-slate-400 text-sm mt-2">Deep Home Clean</p>
+            <div class="text-center p-6 bg-gray-50 rounded-2xl border border-gray-100">
+                <i class="fas fa-user-secret text-4xl text-red-500 mb-4"></i>
+                <h4 class="font-bold text-lg mb-2">No Hidden Charges</h4>
+                <p class="text-sm text-gray-600">Transparent upfront pricing before we start any work.</p>
             </div>
         </div>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        const swiper = new Swiper(".mySwiper", {
+        // Slider Configuration
+        var swiper = new Swiper(".mySwiper", {
             loop: true,
-            autoplay: { delay: 4000 },
-            effect: 'fade',
+            autoplay: { delay: 3500, disableOnInteraction: false },
+            pagination: { el: ".swiper-pagination", clickable: true },
         });
 
+        // Mobile Menu Logic
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('active');
-            menuBtn.innerHTML = mobileMenu.classList.contains('active') ? 
-                '<i class="fas fa-xmark"></i>' : '<i class="fas fa-bars-staggered"></i>';
+            const icon = menuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars-staggered');
+            icon.classList.toggle('fa-times');
         });
     </script>
 </body>
