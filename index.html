@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Seva - Premium Home Services & Solutions</title>
+    <title>Smart Seva - Professional Home Services</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -14,10 +14,13 @@
         .nav-link { position: relative; transition: 0.3s; }
         .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background-color: #2563eb; transition: 0.3s; }
         .nav-link:hover::after { width: 100%; }
-        .btn-box { border: 2px solid #2563eb; transition: all 0.3s; }
-        .btn-box:hover { background: #2563eb; color: white; }
-        .swiper-slide { height: 600px; }
-        .hero-overlay { background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); }
+        /* Box Border Buttons */
+        .btn-box { border: 2px solid #2563eb; transition: all 0.3s; background: transparent; }
+        .btn-box:hover { background: #2563eb; color: white !important; }
+        /* Adjusted Slider Height */
+        .swiper-slide { height: 400px; } 
+        @media (max-width: 768px) { .swiper-slide { height: 250px; } }
+        .hero-overlay { background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); }
         #mobile-menu { max-height: 0; overflow: hidden; transition: 0.5s ease; }
         #mobile-menu.active { max-height: 600px; }
     </style>
@@ -28,7 +31,7 @@
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <a href="index.html" class="flex items-center space-x-2">
                 <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-lg">
-                    <i class="fas fa-hand-sparkles text-xl"></i>
+                    <i class="fas fa-screwdriver-wrench text-xl"></i>
                 </div>
                 <span class="text-2xl font-extrabold tracking-tight text-slate-900">Smart<span class="text-blue-600">Seva</span></span>
             </a>
@@ -40,8 +43,8 @@
                 <a href="#terms" class="nav-link">T&C</a>
                 
                 <div class="flex items-center space-x-3 ml-4">
-                    <a href="partner.html" class="btn-box px-4 py-2 rounded text-blue-600 uppercase tracking-wider text-xs">Worker Registration</a>
-                    <a href="customer-reg.html" class="btn-box px-4 py-2 rounded text-blue-600 uppercase tracking-wider text-xs">Customer Registration</a>
+                    <a href="partner.html" class="btn-box px-4 py-2 rounded text-blue-600 uppercase tracking-wider text-[10px]">Worker Registration</a>
+                    <a href="customer-reg.html" class="btn-box px-4 py-2 rounded text-blue-600 uppercase tracking-wider text-[10px]">Customer Registration</a>
                 </div>
             </nav>
 
@@ -49,12 +52,10 @@
         </div>
 
         <div id="mobile-menu" class="lg:hidden bg-white px-6 shadow-xl">
-            <div class="flex flex-col space-y-4 py-6">
+            <div class="flex flex-col space-y-4 py-6 text-sm">
                 <a href="index.html" class="font-bold border-b pb-2">Home</a>
                 <a href="#about" class="font-bold border-b pb-2">About Us</a>
                 <a href="#contact" class="font-bold border-b pb-2">Contact</a>
-                <a href="#terms" class="font-bold border-b pb-2">Terms & Conditions</a>
-                <a href="#disclaimer" class="font-bold border-b pb-2">Disclaimer</a>
                 <a href="partner.html" class="bg-blue-600 text-white p-3 rounded text-center font-bold">Worker Registration</a>
                 <a href="customer-reg.html" class="border-2 border-blue-600 text-blue-600 p-3 rounded text-center font-bold">Customer Registration</a>
             </div>
@@ -64,108 +65,85 @@
     <section class="relative">
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1600" class="w-full h-full object-cover"><div class="absolute inset-0 hero-overlay flex items-end p-12 text-white"><div><h2 class="text-4xl font-bold mb-2">Expert Electricians</h2><p>Safe wiring and repairs at home.</p></div></div></div>
-                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1600" class="w-full h-full object-cover"><div class="absolute inset-0 hero-overlay flex items-end p-12 text-white"><div><h2 class="text-4xl font-bold mb-2">Deep Cleaning</h2><p>Make your home sparkle today.</p></div></div></div>
-                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1600" class="w-full h-full object-cover"><div class="absolute inset-0 hero-overlay flex items-end p-12 text-white"><div><h2 class="text-4xl font-bold mb-2">AC Servicing</h2><p>Beat the heat with expert repair.</p></div></div></div>
-                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1505798517-569ff49bb1e4?auto=format&fit=crop&w=1600" class="w-full h-full object-cover"><div class="absolute inset-0 hero-overlay flex items-end p-12 text-white"><div><h2 class="text-4xl font-bold mb-2">Plumbing Solutions</h2><p>No more leaks, no more worries.</p></div></div></div>
-                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1603712760331-5079a4055236?auto=format&fit=crop&w=1600" class="w-full h-full object-cover"><div class="absolute inset-0 hero-overlay flex items-end p-12 text-white"><div><h2 class="text-4xl font-bold mb-2">Verified Experts</h2><p>100% background-checked professionals.</p></div></div></div>
+                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1600" class="w-full h-full object-cover"><div class="absolute inset-0 hero-overlay flex items-end p-8 text-white"><div><h2 class="text-2xl font-bold">Expert Electricians</h2></div></div></div>
+                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1600" class="w-full h-full object-cover"><div class="absolute inset-0 hero-overlay flex items-end p-8 text-white"><div><h2 class="text-2xl font-bold">Deep Cleaning</h2></div></div></div>
+                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1600" class="w-full h-full object-cover"><div class="absolute inset-0 hero-overlay flex items-end p-8 text-white"><div><h2 class="text-2xl font-bold">AC Servicing</h2></div></div></div>
             </div>
             <div class="swiper-pagination"></div>
         </div>
     </section>
 
-    <section id="services" class="container mx-auto px-4 py-20">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-extrabold text-slate-900">Explore Our Services</h2>
-            <p class="text-slate-500 mt-2">Quality services delivered at your doorstep.</p>
+    <section id="services" class="container mx-auto px-4 py-12">
+        <div class="text-center mb-10">
+            <h2 class="text-2xl font-extrabold text-slate-900 uppercase tracking-wide">Popular Services</h2>
+            <div class="h-1 w-12 bg-blue-600 mx-auto mt-2"></div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div class="bg-white p-10 rounded-3xl shadow-sm border border-slate-100 text-center hover:shadow-xl transition cursor-pointer">
-                <i class="fas fa-bolt text-4xl text-blue-600 mb-4"></i>
-                <h3 class="font-bold">Electrician</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center hover:border-blue-600 transition cursor-pointer">
+                <i class="fas fa-bolt text-3xl text-blue-600 mb-3"></i>
+                <h3 class="font-bold text-sm">Electrician</h3>
             </div>
-            <div class="bg-white p-10 rounded-3xl shadow-sm border border-slate-100 text-center hover:shadow-xl transition cursor-pointer">
-                <i class="fas fa-faucet text-4xl text-blue-600 mb-4"></i>
-                <h3 class="font-bold">Plumber</h3>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center hover:border-blue-600 transition cursor-pointer">
+                <i class="fas fa-faucet text-3xl text-blue-600 mb-3"></i>
+                <h3 class="font-bold text-sm">Plumber</h3>
             </div>
-            <div class="bg-white p-10 rounded-3xl shadow-sm border border-slate-100 text-center hover:shadow-xl transition cursor-pointer">
-                <i class="fas fa-broom text-4xl text-blue-600 mb-4"></i>
-                <h3 class="font-bold">Cleaning</h3>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center hover:border-blue-600 transition cursor-pointer">
+                <i class="fas fa-broom text-3xl text-blue-600 mb-3"></i>
+                <h3 class="font-bold text-sm">Cleaning</h3>
             </div>
-            <div class="bg-white p-10 rounded-3xl shadow-sm border border-slate-100 text-center hover:shadow-xl transition cursor-pointer">
-                <i class="fas fa-tools text-4xl text-blue-600 mb-4"></i>
-                <h3 class="font-bold">Appliances</h3>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center hover:border-blue-600 transition cursor-pointer">
+                <i class="fas fa-toolbox text-3xl text-blue-600 mb-3"></i>
+                <h3 class="font-bold text-sm">Repairing</h3>
             </div>
         </div>
     </section>
 
-    <footer class="bg-slate-900 text-slate-300 pt-20 pb-10">
+    <footer class="bg-slate-900 text-slate-400 py-12">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-                <div class="col-span-1 md:col-span-1">
-                    <div class="flex items-center space-x-2 mb-6">
-                        <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white">
-                            <i class="fas fa-hand-sparkles text-sm"></i>
-                        </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <div>
+                    <div class="flex items-center justify-center md:justify-start space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold">S</div>
                         <span class="text-xl font-bold text-white">SmartSeva</span>
                     </div>
-                    <p class="text-sm leading-relaxed">Smart Seva is North India's emerging home service platform providing high-quality solutions for modern living.</p>
+                    <p class="text-sm">Trusted Home Services at your doorstep. Reliable, Verified & Professional.</p>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-6">Quick Links</h4>
-                    <ul class="space-y-4 text-sm">
-                        <li><a href="#" class="hover:text-blue-500">Home</a></li>
-                        <li><a href="#about" class="hover:text-blue-500">About Us</a></li>
-                        <li><a href="#contact" class="hover:text-blue-500">Contact Support</a></li>
-                        <li><a href="admin.html" class="hover:text-blue-500">Admin Login</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-6">Legal</h4>
-                    <ul class="space-y-4 text-sm">
-                        <li><a href="#terms" class="hover:text-blue-500">Terms & Conditions</a></li>
-                        <li><a href="#disclaimer" class="hover:text-blue-500">Disclaimer</a></li>
+                    <h4 class="text-white font-bold mb-4">Company</h4>
+                    <ul class="text-sm space-y-2">
+                        <li><a href="#" class="hover:text-blue-500">About Us</a></li>
+                        <li><a href="#" class="hover:text-blue-500">Terms & Conditions</a></li>
                         <li><a href="#" class="hover:text-blue-500">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-blue-500">Disclaimer</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-6">Connect</h4>
-                    <div class="flex space-x-4 mb-6 text-xl">
+                    <h4 class="text-white font-bold mb-4">Follow Us</h4>
+                    <div class="flex justify-center md:justify-start space-x-4 text-xl">
                         <a href="#" class="hover:text-blue-500"><i class="fab fa-facebook"></i></a>
                         <a href="#" class="hover:text-blue-500"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="hover:text-blue-500"><i class="fab fa-whatsapp"></i></a>
                     </div>
+                    <p class="mt-4 text-xs">Email: support@smartseva.com</p>
                 </div>
             </div>
-
-            <div class="border-t border-slate-800 pt-10 mt-10">
-                <h3 class="text-white font-bold mb-4">About Smart Seva - India's Leading Home Service Network</h3>
-                <div class="text-xs leading-relaxed space-y-4 opacity-60">
-                    <p>Welcome to Smart Seva, your one-stop destination for all household requirements. In today's fast-paced world, finding reliable and skilled professionals like electricians, plumbers, and cleaning experts can be a daunting task. Smart Seva bridges the gap between verified service providers and customers looking for quality work at transparent prices. Whether you are located in Assam, Bihar, West Bengal, or any other region, our mission is to deliver excellence right to your doorstep.</p>
-                    <p>Our platform specializes in wide range of services including residential deep cleaning, full-house electrical wiring, leak-proof plumbing solutions, and expert AC repair and maintenance. Every professional on our network undergoes a rigorous background check to ensure your safety and satisfaction. By choosing Smart Seva, you are opting for a hassle-free experience where booking takes less than a minute and the quality of work is guaranteed for 7 days.</p>
-                    <p>For service professionals, Smart Seva offers a unique opportunity to grow their business. Our Worker Registration portal allows skilled laborers and technicians to join a platform that values their hard work and connects them with high-paying clients. Similarly, our Customer Registration ensures that every user gets personalized offers, loyalty points, and a dedicated dashboard to track their service history.</p>
-                </div>
+            <div class="border-t border-slate-800 mt-10 pt-6 text-center">
+                <p class="text-xs opacity-50">© 2026 Smart Seva. All Rights Reserved.</p>
             </div>
-
-            <p class="text-center text-xs mt-12 opacity-40">© 2026 Smart Seva. All Rights Reserved. Designed for Professional Services.</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // Swiper Initial
         new Swiper(".mySwiper", {
             loop: true,
-            autoplay: { delay: 4000, disableOnInteraction: false },
+            autoplay: { delay: 3000, disableOnInteraction: false },
             pagination: { el: ".swiper-pagination", clickable: true },
         });
 
-        // Mobile Menu Toggle
         const btn = document.getElementById('menu-btn');
         const menu = document.getElementById('mobile-menu');
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('active');
-        });
+        btn.addEventListener('click', () => { menu.classList.toggle('active'); });
     </script>
 </body>
 </html>
