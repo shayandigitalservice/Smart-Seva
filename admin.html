@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Seva - Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="bg-gray-100 p-5">
+    <h1 class="text-2xl font-bold mb-5">Worker Management</h1>
+    
+    <div id="workerList" class="space-y-4">
+        <p class="text-gray-500">Loading workers...</p>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDWRwmMzdLlWLhdf6KQL4iQi1VHx7uVwXQ",
+            authDomain: "smart-seva-5bef9.firebaseapp.com",
+            projectId: "smart-seva-5bef9",
+            storageBucket: "smart-seva-5bef9.firebasestorage.app",
+            messagingSenderId: "1042547190403",
+            appId: "1:1042547190403:web:15ea1659a88bdf3621c9b6"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Real-time workers list fetch karna
+        db.collection("workers").onSnapshot((querySnapshot) => {
+            const listDiv = document.getElementById('workerList');
+            listDiv.innerHTML = "";
+            querySnapshot.forEach((doc) => {
+                const worker = doc.data();
+                const id = doc.id;
+                
+                const card = `
+                    <div class="bg-white p-5 rounded-xl shadow-sm border-l-4 ${worker.status === 'active' ? 'border-green-500' : 'border-red-500'}">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="font-bold text-lg">${worker.name} (${worker.category})</h3>
+                                <p class="text-sm text-gray-600">${worker.location} | ${worker.phone}</p>
+                                <p class="text-xs font-bold uppercase mt-1 ${worker.status === 'active' ? 'text-green-600' : 'text-red-600'}">Status: ${worker.status}</p>
+                            </div>
+                            <div class="space-x-2">
+                                <button onclick="updateStatus('${id}', 'active')" class="bg-green-100 text-green-700 px-3 py-1 rounded-lg text-sm font-bold">Approve</button>
+                                <button onclick="updateStatus('${id}', 'suspended')" class="bg-red-100 text-red-700 px-3 py-1 rounded-lg text-sm font-bold">Suspend</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                listDiv.innerHTML += card;
+            });
+        });
+
+        // Status change karne ka function
+        async function updateStatus(id, newStatus) {
+            try {
+                await db.collection("workers").doc(id).update({ status: newStatus });
+            } catch (err) {
+                alert("Error updating: " + err.message);
+            }
+        }
+    </script>
+</body>
+</html>
