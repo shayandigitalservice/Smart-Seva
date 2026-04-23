@@ -3,117 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Seva - Home Services</title>
+    <title>Smart Seva - Premium Home Services</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
-        .hero-overlay { background: rgba(0, 0, 0, 0.6); }
-        .swiper-slide { position: relative; height: 450px; }
-        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
-        /* Mobile menu hidden by default */
-        #mobile-menu { display: none; }
-        #mobile-menu.active { display: block; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .hero-gradient { background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7)); }
+        .service-card:hover i { transform: scale(1.2) rotate(10deg); transition: 0.3s; }
+        #mobile-menu { transition: all 0.3s ease-in-out; max-height: 0; overflow: hidden; }
+        #mobile-menu.active { max-height: 300px; }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-[#F8FAFC]">
 
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="text-2xl font-bold text-blue-600">Smart<span class="text-orange-500">Seva</span></div>
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-[100] border-b border-slate-100">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-extrabold tracking-tight text-blue-600">
+                Smart<span class="text-slate-900">Seva</span>
+            </a>
             
-            <div class="hidden md:flex space-x-6 font-medium">
-                <a href="#" class="hover:text-blue-600">Home</a>
-                <a href="#" class="hover:text-blue-600">Services</a>
-                <a href="#" class="hover:text-blue-600">Become a Partner</a>
+            <div class="hidden md:flex items-center space-x-8 font-semibold text-slate-600">
+                <a href="index.html" class="hover:text-blue-600 transition">Home</a>
+                <a href="#services" class="hover:text-blue-600 transition">Services</a>
+                <a href="partner.html" class="bg-blue-50 text-blue-600 px-4 py-2 rounded-full hover:bg-blue-600 hover:text-white transition">Become a Partner</a>
+                <a href="admin.html" class="text-slate-400 hover:text-red-500"><i class="fas fa-user-shield"></i></a>
             </div>
 
-            <div class="flex items-center space-x-4">
-                <button class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700 text-sm">Login</button>
-                
-                <button id="menu-btn" class="md:hidden text-2xl text-gray-700">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
+            <button id="menu-btn" class="md:hidden text-2xl text-slate-800 focus:outline-none">
+                <i class="fas fa-bars-staggered"></i>
+            </button>
         </div>
 
-        <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-100 p-4">
-            <a href="#" class="block py-2 text-gray-700 font-medium border-b border-gray-50">Home</a>
-            <a href="#" class="block py-2 text-gray-700 font-medium border-b border-gray-50">Services</a>
-            <a href="#" class="block py-2 text-gray-700 font-medium">Become a Partner</a>
+        <div id="mobile-menu" class="md:hidden bg-white px-6">
+            <a href="index.html" class="block py-3 text-slate-700 font-semibold border-b border-slate-50">Home</a>
+            <a href="#services" class="block py-3 text-slate-700 font-semibold border-b border-slate-50">Services</a>
+            <a href="partner.html" class="block py-3 text-blue-600 font-bold">Become a Partner</a>
         </div>
     </nav>
 
-    <div class="swiper mySwiper relative h-[450px]">
+    <div class="swiper mySwiper h-[500px] md:h-[600px] relative">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1600&q=80">
-                <div class="absolute inset-0 hero-overlay flex items-center justify-center text-center px-4">
-                    <div class="z-10">
-                        <h1 class="text-2xl md:text-5xl font-extrabold text-white mb-4">Ghar ki har Service, ab Smart hogi!</h1>
-                        <p class="text-gray-200 text-sm md:text-lg mb-8">Cleaning, Plumbing, Electrician aur bohot kuch...</p>
+            <div class="swiper-slide relative">
+                <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1600" class="w-full h-full object-cover">
+                <div class="absolute inset-0 hero-gradient flex items-center justify-center text-center px-6">
+                    <div class="max-w-3xl">
+                        <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">Ghar ki har Service,<br><span class="text-blue-400 font-outline-2">Ab Smart Hogi</span></h1>
+                        <p class="text-slate-200 text-lg md:text-xl mb-8">Professional experts for every household need.</p>
                     </div>
                 </div>
             </div>
-            <div class="swiper-slide">
-                <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1600&q=80">
-                <div class="absolute inset-0 hero-overlay flex items-center justify-center text-center px-4">
-                    <div class="z-10">
-                        <h1 class="text-2xl md:text-5xl font-extrabold text-white mb-4">Expert Electricians</h1>
-                        <p class="text-gray-200 text-sm md:text-lg mb-8">Safe & Reliable services at your doorstep.</p>
+            <div class="swiper-slide relative">
+                <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1600" class="w-full h-full object-cover">
+                <div class="absolute inset-0 hero-gradient flex items-center justify-center text-center px-6">
+                    <div>
+                        <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4">Cleaning Experts</h1>
+                        <p class="text-slate-200 text-lg mb-8">Book deep cleaning for a sparkling home.</p>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class="absolute bottom-10 left-0 right-0 z-30 px-4">
-            <div class="max-w-2xl mx-auto bg-white p-2 rounded-full shadow-2xl flex items-center">
-                <i class="fas fa-search text-gray-400 ml-4"></i>
-                <input type="text" placeholder="Aapko kya help chahiye?" class="w-full px-4 py-3 outline-none text-gray-700 rounded-full text-sm">
-                <button class="bg-blue-600 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-700 transition text-sm">Search</button>
+
+        <div class="absolute bottom-[-32px] left-0 right-0 z-50 px-4">
+            <div class="max-w-3xl mx-auto bg-white p-3 rounded-2xl shadow-[0_20px_50px_rgba(8,_112,_184,_0.2)] flex items-center gap-2 border border-slate-100">
+                <div class="flex-1 flex items-center px-4 gap-3">
+                    <i class="fas fa-search text-slate-400"></i>
+                    <input type="text" placeholder="Kya help chahiye? (e.g. Electrician)" class="w-full py-3 outline-none text-slate-700 font-medium">
+                </div>
+                <button class="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg hidden md:block">Find Expert</button>
+                <button class="bg-blue-600 text-white p-4 rounded-xl md:hidden"><i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
     </div>
 
-    <div class="container mx-auto px-4 py-12">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:transform hover:-translate-y-1 transition cursor-pointer border border-gray-100">
-                <i class="fas fa-bolt text-3xl text-yellow-500 mb-2"></i>
-                <p class="font-bold text-sm">Electrician</p>
+    <section id="services" class="pt-24 pb-16 container mx-auto px-4">
+        <div class="flex justify-between items-end mb-10">
+            <div>
+                <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Hamari Popular Services</h2>
+                <div class="h-1.5 w-20 bg-blue-600 rounded-full"></div>
             </div>
-            <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:transform hover:-translate-y-1 transition cursor-pointer border border-gray-100">
-                <i class="fas fa-faucet text-3xl text-blue-500 mb-2"></i>
-                <p class="font-bold text-sm">Plumber</p>
+            <a href="#" class="text-blue-600 font-bold hover:underline">See All</a>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="service-card bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:border-blue-100 transition-all cursor-pointer group text-center">
+                <div class="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600 transition-all">
+                    <i class="fas fa-bolt text-3xl text-blue-600 group-hover:text-white"></i>
+                </div>
+                <h3 class="font-bold text-lg text-slate-800">Electrician</h3>
+                <p class="text-slate-400 text-sm mt-2">Wiring & Repairs</p>
             </div>
-            <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:transform hover:-translate-y-1 transition cursor-pointer border border-gray-100">
-                <i class="fas fa-broom text-3xl text-green-500 mb-2"></i>
-                <p class="font-bold text-sm">Cleaning</p>
+
+            <div class="service-card bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:border-blue-100 transition-all cursor-pointer group text-center">
+                <div class="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600 transition-all">
+                    <i class="fas fa-faucet text-3xl text-blue-600 group-hover:text-white"></i>
+                </div>
+                <h3 class="font-bold text-lg text-slate-800">Plumber</h3>
+                <p class="text-slate-400 text-sm mt-2">Taps & Pipes</p>
             </div>
-            <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:transform hover:-translate-y-1 transition cursor-pointer border border-gray-100">
-                <i class="fas fa-paint-roller text-3xl text-red-500 mb-2"></i>
-                <p class="font-bold text-sm">Painting</p>
+
+            <div class="service-card bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:border-blue-100 transition-all cursor-pointer group text-center">
+                <div class="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600 transition-all">
+                    <i class="fas fa-snowflake text-3xl text-blue-600 group-hover:text-white"></i>
+                </div>
+                <h3 class="font-bold text-lg text-slate-800">AC Repair</h3>
+                <p class="text-slate-400 text-sm mt-2">Gas & Service</p>
+            </div>
+
+            <div class="service-card bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:border-blue-100 transition-all cursor-pointer group text-center">
+                <div class="w-20 h-20 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600 transition-all">
+                    <i class="fas fa-broom text-3xl text-blue-600 group-hover:text-white"></i>
+                </div>
+                <h3 class="font-bold text-lg text-slate-800">Cleaning</h3>
+                <p class="text-slate-400 text-sm mt-2">Deep Home Clean</p>
             </div>
         </div>
-    </div>
+    </section>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // Slider Logic
-        var swiper = new Swiper(".mySwiper", {
+        const swiper = new Swiper(".mySwiper", {
             loop: true,
-            autoplay: { delay: 3000, disableOnInteraction: false },
+            autoplay: { delay: 4000 },
+            effect: 'fade',
         });
 
-        // Mobile Menu Logic
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-
         menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('active');
-            // Change icon from Bars to X
-            const icon = menuBtn.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
+            menuBtn.innerHTML = mobileMenu.classList.contains('active') ? 
+                '<i class="fas fa-xmark"></i>' : '<i class="fas fa-bars-staggered"></i>';
         });
     </script>
 </body>
