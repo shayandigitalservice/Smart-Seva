@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Registration - Smart Seva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto px-4 py-10">
+        <div class="max-w-md mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+            <div class="bg-blue-600 p-8 text-white text-center">
+                <h2 class="text-3xl font-bold">Join Smart Seva</h2>
+                <p class="mt-2 text-blue-100">Register as a service professional</p>
+            </div>
+
+            <form id="pForm" class="p-8 space-y-5">
+                <input type="text" id="wName" placeholder="Full Name" required class="w-full p-4 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-blue-500">
+                
+                <select id="wCat" required class="w-full p-4 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">Select Service</option>
+                    <option value="Electrician">Electrician</option>
+                    <option value="Plumber">Plumber</option>
+                    <option value="Cleaning">Cleaning</option>
+                </select>
+
+                <input type="text" id="wLoc" placeholder="Your Area / City" required class="w-full p-4 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-blue-500">
+                
+                <input type="tel" id="wPhone" placeholder="WhatsApp Number" required class="w-full p-4 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-blue-500">
+
+                <button type="submit" id="subBtn" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition shadow-lg">
+                    Register Now
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDWRwmMzdLlWLhdf6KQL4iQi1VHx7uVwXQ",
+            authDomain: "smart-seva-5bef9.firebaseapp.com",
+            projectId: "smart-seva-5bef9",
+            storageBucket: "smart-seva-5bef9.firebasestorage.app",
+            messagingSenderId: "1042547190403",
+            appId: "1:1042547190403:web:15ea1659a88bdf3621c9b6"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        document.getElementById('pForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('subBtn');
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            const data = {
+                name: document.getElementById('wName').value,
+                category: document.getElementById('wCat').value,
+                location: document.getElementById('wLoc').value,
+                phone: document.getElementById('wPhone').value,
+                status: "pending", // Default status
+                createdAt: new Date()
+            };
+
+            try {
+                await db.collection("workers").add(data);
+                alert("Success! Admin will approve you soon.");
+                window.location.href = "index.html";
+            } catch (err) {
+                alert("Error: " + err.message);
+                btn.innerText = "Register Now";
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
