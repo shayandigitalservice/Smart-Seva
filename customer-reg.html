@@ -3,84 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Portal - SmartSeva</title>
+    <title>Customer Registration - SmartSeva</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; }
-        
-        .btn-box { border: 2px solid #2563eb; color: #2563eb; font-weight: 700; padding: 10px 20px; border-radius: 12px; transition: 0.3s; font-size: 0.85rem; text-transform: uppercase; display: inline-block; text-align: center; }
-        .btn-box:hover { background: #2563eb; color: white !important; transform: translateY(-2px); }
-        
-        .input-field { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 14px 20px; outline: none; transition: 0.3s; font-weight: 600; font-size: 0.9rem; }
-        .input-field:focus { border-color: #2563eb; background: #ffffff; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
-        
-        .reg-card { border-radius: 3rem; background: #ffffff; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08); border: 1px solid #f1f5f9; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+        .input-field { background: #ffffff; border: 2px solid #f1f5f9; border-radius: 12px; padding: 12px 16px; outline: none; transition: 0.3s; font-weight: 600; font-size: 0.85rem; width: 100%; color: #1e293b; }
+        .input-field:focus { border-color: #2563eb; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.05); }
+        .label-text { font-size: 10px; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px; display: block; letter-spacing: 0.05em; }
+        .reg-card { border-radius: 3rem; background: #ffffff; box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05); border: 1px solid #f1f5f9; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-6 bg-slate-50/50">
+<body class="min-h-screen py-10 px-4 flex flex-col items-center">
 
-    <div class="mb-10 text-center">
-        <a href="index.html" class="flex flex-col items-center">
-            <div class="w-16 h-16 bg-blue-600 rounded-2xl shadow-xl flex items-center justify-center mb-4 text-white text-2xl font-black">S</div>
-            <h1 class="text-2xl font-black text-slate-800 uppercase tracking-tighter">Smart<span class="text-blue-600">Seva</span></h1>
-            <p class="text-[10px] font-bold text-orange-600 uppercase tracking-[0.3em] mt-1">Customer Excellence</p>
-        </a>
-    </div>
+    <div class="max-w-3xl w-full">
+        <div class="text-center mb-10">
+            <a href="index.html" class="inline-block">
+                <div class="bg-blue-600 w-14 h-14 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 text-white text-xl font-black italic">S</div>
+                <h1 class="text-2xl font-black text-slate-800 uppercase tracking-tighter italic">Smart<span class="text-blue-600">Seva</span></h1>
+                <p class="text-[9px] font-black text-orange-600 uppercase tracking-[0.3em]">User Identity & KYC</p>
+            </a>
+        </div>
 
-    <div class="w-full max-w-md reg-card p-10 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -mr-16 -mt-16 z-0"></div>
-        
-        <div class="relative z-10">
-            <h2 class="text-xl font-black text-slate-900 mb-2 uppercase italic">Naya Account Banayein</h2>
-            <p class="text-slate-400 text-xs font-bold mb-8 uppercase tracking-wide">Quick service ke liye register karein</p>
+        <div class="reg-card p-8 md:p-12 relative overflow-hidden">
+            <h2 class="text-xl font-black text-slate-900 uppercase italic mb-8 border-b pb-4">Complete Your KYC Profile</h2>
 
-            <form id="customerForm" class="flex flex-col space-y-5">
-                <div class="flex flex-col">
-                    <label class="text-[10px] font-black uppercase text-slate-400 mb-2 ml-1">Pura Naam</label>
-                    <input type="text" id="custName" placeholder="Enter Full Name" required class="input-field">
+            <form id="customerRegForm" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="label-text">Pura Naam (Full Name)</label>
+                        <input type="text" id="cName" required placeholder="Ex: Muksidul Islam" class="input-field">
+                    </div>
+                    <div>
+                        <label class="label-text">Father's Name</label>
+                        <input type="text" id="cFather" required placeholder="Father's Name" class="input-field">
+                    </div>
                 </div>
 
-                <div class="flex flex-col">
-                    <label class="text-[10px] font-black uppercase text-slate-400 mb-2 ml-1">Mobile Number</label>
-                    <input type="tel" id="custPhone" placeholder="Enter Mobile" required class="input-field">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="label-text">Gender</label>
+                        <select id="cGender" required class="input-field">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label-text">Phone Number</label>
+                        <input type="tel" id="cPhone" required placeholder="+91 XXXXX XXXXX" class="input-field">
+                    </div>
+                    <div>
+                        <label class="label-text">Aadhar Number</label>
+                        <input type="number" id="cAadhar" required placeholder="12 Digit Number" class="input-field">
+                    </div>
                 </div>
 
-                <div class="flex flex-col">
-                    <label class="text-[10px] font-black uppercase text-slate-400 mb-2 ml-1">Email (Optional)</label>
-                    <input type="email" id="custEmail" placeholder="name@example.com" class="input-field">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-4 rounded-2xl border-2 border-dashed border-slate-200">
+                        <label class="label-text">ID Card (Aadhar) Photo</label>
+                        <input type="file" required accept="image/*" class="text-[10px] font-bold text-slate-400">
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border-2 border-dashed border-slate-200">
+                        <label class="label-text">Selfie / Profile Photo</label>
+                        <input type="file" required accept="image/*" class="text-[10px] font-bold text-slate-400">
+                    </div>
                 </div>
 
-                <div class="flex flex-col">
-                    <label class="text-[10px] font-black uppercase text-slate-400 mb-2 ml-1">Permanent Address</label>
-                    <textarea id="custAddress" placeholder="Ghar ka address likhein" required class="input-field h-24 resize-none"></textarea>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="label-text">State</label>
+                        <select id="cState" required class="input-field">
+                            <option value="Assam">Assam</option>
+                            <option value="West Bengal">West Bengal</option>
+                            <option value="Bihar">Bihar</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label-text">District</label>
+                        <select id="cDistrict" required class="input-field">
+                            <option value="Sonitpur">Sonitpur</option>
+                            <option value="Kamrup">Kamrup</option>
+                            <option value="Nagaon">Nagaon</option>
+                            <option value="Kolkata">Kolkata</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label-text">Pin Code</label>
+                        <input type="number" id="cPin" required placeholder="784XXX" class="input-field">
+                    </div>
                 </div>
 
-                <div class="pt-4">
-                    <button type="submit" id="submitBtn" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs shadow-lg hover:bg-blue-600 transition-all duration-300">
-                        Create My Account
+                <div>
+                    <label class="label-text">Permanent Address</label>
+                    <textarea id="cAddr" required placeholder="Colony, Road, House No." class="input-field h-20 resize-none"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
+                    <div>
+                        <label class="label-text">Landmark</label>
+                        <input type="text" id="cLandmark" required placeholder="Ex: Near SBI Bank" class="input-field">
+                    </div>
+                    <div>
+                        <button type="button" onclick="getLocation()" class="w-full bg-blue-50 text-blue-600 py-3.5 rounded-xl font-black text-[10px] uppercase border-2 border-blue-600/10 hover:bg-blue-600 hover:text-white transition">
+                           <i class="fas fa-location-dot mr-1"></i> Auto-Detect Location
+                        </button>
+                        <input type="hidden" id="cCoords">
+                    </div>
+                </div>
+
+                <div class="pt-6">
+                    <button type="submit" id="regBtn" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase tracking-[0.2em] text-xs shadow-xl hover:bg-blue-600 transition-all duration-500">
+                        Verify & Create Account
                     </button>
                 </div>
             </form>
-
-            <div class="mt-8 pt-6 border-t border-slate-100 text-center">
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">Pehle se account hai?</p>
-                <a href="#" class="text-blue-600 font-black text-xs uppercase mt-2 inline-block hover:underline">Login Here</a>
-            </div>
         </div>
-    </div>
-
-    <div class="mt-10 flex space-x-6">
-        <a href="index.html" class="text-[10px] font-black uppercase text-slate-400 hover:text-blue-600 transition">Back to Home</a>
-        <a href="partner.html" class="text-[10px] font-black uppercase text-slate-400 hover:text-blue-600 transition">Join as Expert</a>
+        <p class="text-center mt-8 text-[10px] font-bold text-slate-400 uppercase tracking-widest">© 2026 Smart Seva - Secure KYC Protocol</p>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyDWRwmMzdLlWLhdf6KQL4iQi1VHx7uVwXQ",
             authDomain: "smart-seva-5bef9.firebaseapp.com",
@@ -92,42 +138,53 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        const customerForm = document.getElementById('customerForm');
-        const submitBtn = document.getElementById('submitBtn');
+        // Location Function
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((p) => {
+                    document.getElementById('cCoords').value = `${p.coords.latitude}, ${p.coords.longitude}`;
+                    alert("GPS Locked Successfully!");
+                }, () => { alert("Please enable GPS/Location."); });
+            }
+        }
 
-        customerForm.addEventListener('submit', async (e) => {
+        // Submit Function
+        document.getElementById('customerRegForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            submitBtn.innerText = "Processing...";
-            submitBtn.disabled = true;
+            const btn = document.getElementById('regBtn');
+            btn.innerText = "Verifying KYC...";
+            btn.disabled = true;
 
             const customerData = {
-                name: document.getElementById('custName').value,
-                phone: document.getElementById('custPhone').value,
-                email: document.getElementById('custEmail').value,
-                address: document.getElementById('custAddress').value,
+                name: document.getElementById('cName').value,
+                fatherName: document.getElementById('cFather').value,
+                gender: document.getElementById('cGender').value,
+                phone: document.getElementById('cPhone').value,
+                aadhar: document.getElementById('cAadhar').value,
+                state: document.getElementById('cState').value,
+                district: document.getElementById('cDistrict').value,
+                pincode: document.getElementById('cPin').value,
+                address: document.getElementById('cAddr').value,
+                landmark: document.getElementById('cLandmark').value,
+                coords: document.getElementById('cCoords').value,
                 createdAt: new Date(),
-                status: 'active'
+                isRegistered: true
             };
 
             try {
-                // Check if customer already exists
-                const snap = await db.collection("customers").where("phone", "==", customerData.phone).get();
-                if (!snap.empty) {
-                    alert("Ye number pehle se registered hai!");
-                    submitBtn.innerText = "Create My Account";
-                    submitBtn.disabled = false;
-                    return;
+                // Number verification
+                const check = await db.collection("customers").where("phone", "==", customerData.phone).get();
+                if(!check.empty) {
+                    alert("Aapka number pehle se registered hai!");
+                } else {
+                    await db.collection("customers").add(customerData);
+                    localStorage.setItem("smartSevaUser", JSON.stringify(customerData));
+                    alert("KYC Completed! Ab aap booking kar sakte hain.");
+                    window.location.href = "index.html";
                 }
-
-                await db.collection("customers").add(customerData);
-                alert("Registration Successful! Ab aap SmartSeva use kar sakte hain.");
-                window.location.href = "index.html";
-            } catch (error) {
-                console.error("Error:", error);
-                alert("Server error. Please try again.");
-                submitBtn.innerText = "Create My Account";
-                submitBtn.disabled = false;
-            }
+            } catch (err) { alert(err.message); }
+            btn.disabled = false;
+            btn.innerText = "Verify & Create Account";
         });
     </script>
 </body>
