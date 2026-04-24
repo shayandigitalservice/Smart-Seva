@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Portal - SmartSeva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; }
+        
+        .btn-box { border: 2px solid #2563eb; color: #2563eb; font-weight: 700; padding: 10px 20px; border-radius: 12px; transition: 0.3s; font-size: 0.85rem; text-transform: uppercase; display: inline-block; text-align: center; }
+        .btn-box:hover { background: #2563eb; color: white !important; transform: translateY(-2px); }
+        
+        .input-field { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 14px 20px; outline: none; transition: 0.3s; font-weight: 600; font-size: 0.9rem; }
+        .input-field:focus { border-color: #2563eb; background: #ffffff; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+        
+        .reg-card { border-radius: 3rem; background: #ffffff; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08); border: 1px solid #f1f5f9; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-6 bg-slate-50/50">
+
+    <div class="mb-10 text-center">
+        <a href="index.html" class="flex flex-col items-center">
+            <div class="w-16 h-16 bg-blue-600 rounded-2xl shadow-xl flex items-center justify-center mb-4 text-white text-2xl font-black">S</div>
+            <h1 class="text-2xl font-black text-slate-800 uppercase tracking-tighter">Smart<span class="text-blue-600">Seva</span></h1>
+            <p class="text-[10px] font-bold text-orange-600 uppercase tracking-[0.3em] mt-1">Customer Excellence</p>
+        </a>
+    </div>
+
+    <div class="w-full max-w-md reg-card p-10 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -mr-16 -mt-16 z-0"></div>
+        
+        <div class="relative z-10">
+            <h2 class="text-xl font-black text-slate-900 mb-2 uppercase italic">Naya Account Banayein</h2>
+            <p class="text-slate-400 text-xs font-bold mb-8 uppercase tracking-wide">Quick service ke liye register karein</p>
+
+            <form id="customerForm" class="flex flex-col space-y-5">
+                <div class="flex flex-col">
+                    <label class="text-[10px] font-black uppercase text-slate-400 mb-2 ml-1">Pura Naam</label>
+                    <input type="text" id="custName" placeholder="Enter Full Name" required class="input-field">
+                </div>
+
+                <div class="flex flex-col">
+                    <label class="text-[10px] font-black uppercase text-slate-400 mb-2 ml-1">Mobile Number</label>
+                    <input type="tel" id="custPhone" placeholder="Enter Mobile" required class="input-field">
+                </div>
+
+                <div class="flex flex-col">
+                    <label class="text-[10px] font-black uppercase text-slate-400 mb-2 ml-1">Email (Optional)</label>
+                    <input type="email" id="custEmail" placeholder="name@example.com" class="input-field">
+                </div>
+
+                <div class="flex flex-col">
+                    <label class="text-[10px] font-black uppercase text-slate-400 mb-2 ml-1">Permanent Address</label>
+                    <textarea id="custAddress" placeholder="Ghar ka address likhein" required class="input-field h-24 resize-none"></textarea>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" id="submitBtn" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs shadow-lg hover:bg-blue-600 transition-all duration-300">
+                        Create My Account
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-8 pt-6 border-t border-slate-100 text-center">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">Pehle se account hai?</p>
+                <a href="#" class="text-blue-600 font-black text-xs uppercase mt-2 inline-block hover:underline">Login Here</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-10 flex space-x-6">
+        <a href="index.html" class="text-[10px] font-black uppercase text-slate-400 hover:text-blue-600 transition">Back to Home</a>
+        <a href="partner.html" class="text-[10px] font-black uppercase text-slate-400 hover:text-blue-600 transition">Join as Expert</a>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDWRwmMzdLlWLhdf6KQL4iQi1VHx7uVwXQ",
+            authDomain: "smart-seva-5bef9.firebaseapp.com",
+            projectId: "smart-seva-5bef9",
+            storageBucket: "smart-seva-5bef9.firebasestorage.app",
+            messagingSenderId: "1042547190403",
+            appId: "1:1042547190403:web:15ea1659a88bdf3621c9b6"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        const customerForm = document.getElementById('customerForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        customerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            submitBtn.innerText = "Processing...";
+            submitBtn.disabled = true;
+
+            const customerData = {
+                name: document.getElementById('custName').value,
+                phone: document.getElementById('custPhone').value,
+                email: document.getElementById('custEmail').value,
+                address: document.getElementById('custAddress').value,
+                createdAt: new Date(),
+                status: 'active'
+            };
+
+            try {
+                // Check if customer already exists
+                const snap = await db.collection("customers").where("phone", "==", customerData.phone).get();
+                if (!snap.empty) {
+                    alert("Ye number pehle se registered hai!");
+                    submitBtn.innerText = "Create My Account";
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                await db.collection("customers").add(customerData);
+                alert("Registration Successful! Ab aap SmartSeva use kar sakte hain.");
+                window.location.href = "index.html";
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Server error. Please try again.");
+                submitBtn.innerText = "Create My Account";
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
