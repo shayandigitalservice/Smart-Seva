@@ -9,21 +9,22 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; margin: 0; padding: 0; }
         
         /* Slider Height Control */
-        .hero-slide { height: 400px; } 
+        .hero-slide { height: 450px; } 
         @media (max-width: 640px) { .hero-slide { height: 250px; } }
 
         /* Box Border Buttons */
-        .btn-box { border: 2px solid #2563eb; color: #2563eb; font-weight: 700; padding: 6px 14px; border-radius: 8px; transition: 0.3s; font-size: 0.75rem; text-transform: uppercase; }
+        .btn-box { border: 2px solid #2563eb; color: #2563eb; font-weight: 700; padding: 8px 16px; border-radius: 8px; transition: 0.3s; font-size: 0.75rem; text-transform: uppercase; display: inline-block; }
         .btn-box:hover { background: #2563eb; color: white !important; }
 
         /* Mobile Menu */
         #mobile-menu { max-height: 0; overflow: hidden; transition: 0.4s ease-out; }
         #mobile-menu.active { max-height: 500px; }
         
-        .hero-overlay { background: rgba(0, 0, 0, 0.5); }
+        .hero-overlay { background: rgba(0, 0, 0, 0.4); }
+        .swiper-pagination-bullet-active { background: #2563eb !important; }
     </style>
 </head>
 <body class="text-gray-900">
@@ -52,7 +53,7 @@
             </button>
         </div>
 
-        <div id="mobile-menu" class="lg:hidden bg-gray-50 border-t border-gray-100">
+        <div id="mobile-menu" class="lg:hidden bg-white border-t border-gray-100">
             <div class="flex flex-col p-6 space-y-4">
                 <a href="index.html" class="font-bold text-lg">Home</a>
                 <a href="partner.html" class="btn-box text-center py-3">Worker Registration</a>
@@ -75,24 +76,20 @@
         <div class="swiper mySwiper rounded-3xl overflow-hidden shadow-xl">
             <div class="swiper-wrapper">
                 <div class="swiper-slide hero-slide">
-                    <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1200" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 hero-overlay flex items-center justify-center"><h2 class="text-white text-2xl font-bold">Expert Electricians</h2></div>
+                    <img src="https://images.pexels.com/photos/257736/pexels-photo-257736.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 hero-overlay flex items-center justify-center"><h2 class="text-white text-2xl md:text-4xl font-bold">Expert Electricians</h2></div>
                 </div>
                 <div class="swiper-slide hero-slide">
-                    <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 hero-overlay flex items-center justify-center"><h2 class="text-white text-2xl font-bold">Deep Cleaning Services</h2></div>
+                    <img src="https://images.pexels.com/photos/4107120/pexels-photo-4107120.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 hero-overlay flex items-center justify-center"><h2 class="text-white text-2xl md:text-4xl font-bold">Deep Cleaning Services</h2></div>
                 </div>
                 <div class="swiper-slide hero-slide">
-                    <img src="https://images.unsplash.com/photo-1505798517-569ff49bb1e4?auto=format&fit=crop&w=1200" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 hero-overlay flex items-center justify-center"><h2 class="text-white text-2xl font-bold">Plumbing & Leaks</h2></div>
+                    <img src="https://images.pexels.com/photos/2310904/pexels-photo-2310904.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 hero-overlay flex items-center justify-center"><h2 class="text-white text-2xl md:text-4xl font-bold">Plumbing & Leaks</h2></div>
                 </div>
                 <div class="swiper-slide hero-slide">
-                    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1200" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 hero-overlay flex items-center justify-center"><h2 class="text-white text-2xl font-bold">Appliance Repair</h2></div>
-                </div>
-                <div class="swiper-slide hero-slide">
-                    <img src="https://images.unsplash.com/photo-1603712760331-5079a4055236?auto=format&fit=crop&w=1200" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 hero-overlay flex items-center justify-center"><h2 class="text-white text-2xl font-bold">Verified Professionals</h2></div>
+                    <img src="https://images.pexels.com/photos/257736/pexels-photo-257736.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 hero-overlay flex items-center justify-center"><h2 class="text-white text-2xl md:text-4xl font-bold">Appliance Repair</h2></div>
                 </div>
             </div>
             <div class="swiper-pagination"></div>
@@ -123,7 +120,34 @@
         </div>
     </section>
 
-    <footer class="bg-gray-900 text-gray-400 pt-16 pb-8 mt-16">
+    <section class="bg-gray-50 py-16 border-t border-b border-gray-200">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-extrabold text-blue-600 mb-6">Smart Seva - India's Trusted Home Service Network</h2>
+                <div class="text-gray-700 leading-relaxed space-y-6 text-sm md:text-base">
+                    <p><strong>Smart Seva</strong> is a premier digital platform dedicated to bringing high-quality, reliable, and professional home services right to your doorstep. In today's busy life, finding a skilled electrician, a trustworthy plumber, or an expert cleaning professional can be difficult. Our mission is to simplify this process by connecting verified service experts with customers in need of urgent repairs or maintenance.</p>
+                    
+                    <h3 class="text-xl font-bold text-gray-800 mt-8">Why Choose Smart Seva for Your Home?</h3>
+                    <p>At Smart Seva, we prioritize your safety and satisfaction. Every professional on our platform undergoes a rigorous background check and skill assessment. Whether it's a minor electrical short circuit, a major plumbing leak, or deep cleaning of your residential space, we ensure that the job is done perfectly. Our pricing is transparent with no hidden costs, providing you with the best value for your money.</p>
+
+                    <h3 class="text-xl font-bold text-gray-800 mt-8">Our Range of Professional Services</h3>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Electrical Solutions:</strong> Complete house wiring, fan installation, MCB repairs, and lighting solutions.</li>
+                        <li><strong>Plumbing Expertise:</strong> Fixing leaky taps, toilet repairs, water tank cleaning, and new pipe fittings.</li>
+                        <li><strong>Deep Cleaning:</strong> Full home sanitization, sofa cleaning, kitchen deep cleaning, and bathroom scrubbing.</li>
+                        <li><strong>Appliance Repair:</strong> Reliable servicing for ACs, Refrigerators, Washing Machines, and Microwave ovens.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-bold text-gray-800 mt-8">Register as a Partner or Customer</h3>
+                    <p>We are not just a service provider; we are a community. If you are a skilled professional looking to grow your business, join us via our <strong>Worker Registration</strong> portal. For users, the <strong>Customer Registration</strong> ensures personalized support, booking history, and exclusive discounts on every service. Smart Seva is currently expanding its footprint across Assam, West Bengal, Bihar, and beyond, aiming to become the #1 choice for home maintenance.</p>
+                    
+                    <p class="italic text-gray-500">Book your smart service today and experience a hassle-free lifestyle with Smart Seva!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-400 pt-16 pb-8">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
                 <div class="col-span-1">
@@ -131,7 +155,7 @@
                         <div class="bg-blue-600 w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold italic">S</div>
                         <span class="text-xl font-bold text-white">SmartSeva</span>
                     </div>
-                    <p class="text-sm leading-relaxed">Trusted Home Services at your doorstep. Reliable, Verified & Professional experts.</p>
+                    <p class="text-sm">Reliable Home Services. Verified Professionals. One Click Solutions.</p>
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Company</h4>
