@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartSeva Command Center</title>
+    <title>SmartSeva Command Center V2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
@@ -12,83 +12,86 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
         .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(226, 232, 240, 0.8); }
-        .tab-btn.active { background: #2563eb; color: white; shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
         .status-pill { font-size: 0.65rem; padding: 2px 8px; border-radius: 99px; font-weight: 800; text-transform: uppercase; }
+        .nav-link.active { background: #2563eb; color: white; }
     </style>
 </head>
 <body class="flex min-h-screen">
 
-    <aside class="w-20 md:w-64 bg-slate-900 text-white flex flex-col transition-all duration-300">
-        <div class="p-6 text-center border-b border-slate-800">
-            <span class="text-xl font-black tracking-tighter hidden md:inline">SMART<span class="text-blue-500">SEVA</span></span>
-            <span class="md:hidden font-black text-blue-500">S</span>
+    <aside class="w-20 md:w-64 bg-slate-950 text-white flex flex-col transition-all duration-300">
+        <div class="p-6 text-center border-b border-slate-900">
+            <span class="text-xl font-black tracking-tighter hidden md:inline italic">SMART<span class="text-blue-500">SEVA</span></span>
+            <span class="md:hidden font-black text-blue-500 text-2xl">S</span>
         </div>
-        <nav class="flex-1 p-4 space-y-2">
-            <button onclick="switchSection('stats')" class="w-full flex items-center p-3 rounded-xl hover:bg-slate-800 transition group">
-                <i class="fas fa-chart-line w-6 text-blue-400"></i>
-                <span class="hidden md:inline ml-3 font-bold text-sm">Dashboard</span>
+        <nav class="flex-1 p-4 space-y-2 mt-4">
+            <button onclick="switchSection('stats')" id="nav-stats" class="nav-link w-full flex items-center p-4 rounded-2xl hover:bg-slate-900 transition active">
+                <i class="fas fa-grid-2 w-6 text-blue-400"></i>
+                <span class="hidden md:inline ml-3 font-bold text-sm">Overview</span>
             </button>
-            <button onclick="switchSection('workers')" class="w-full flex items-center p-3 rounded-xl hover:bg-slate-800 transition">
-                <i class="fas fa-user-tie w-6 text-orange-400"></i>
+            <button onclick="switchSection('workers')" id="nav-workers" class="nav-link w-full flex items-center p-4 rounded-2xl hover:bg-slate-900 transition">
+                <i class="fas fa-user-gear w-6 text-orange-400"></i>
                 <span class="hidden md:inline ml-3 font-bold text-sm">Experts</span>
             </button>
-            <button onclick="switchSection('bookings')" class="w-full flex items-center p-3 rounded-xl hover:bg-slate-800 transition">
-                <i class="fas fa-calendar-check w-6 text-green-400"></i>
+            <button onclick="switchSection('bookings')" id="nav-bookings" class="nav-link w-full flex items-center p-4 rounded-2xl hover:bg-slate-900 transition">
+                <i class="fas fa-receipt w-6 text-green-400"></i>
                 <span class="hidden md:inline ml-3 font-bold text-sm">Bookings</span>
             </button>
+            <button onclick="switchSection('customers')" id="nav-customers" class="nav-link w-full flex items-center p-4 rounded-2xl hover:bg-slate-900 transition">
+                <i class="fas fa-users w-6 text-purple-400"></i>
+                <span class="hidden md:inline ml-3 font-bold text-sm">Customers</span>
+            </button>
         </nav>
-        <div class="p-4 border-t border-slate-800">
-            <a href="index.html" class="flex items-center p-3 text-red-400 font-bold text-xs uppercase tracking-widest">
-                <i class="fas fa-sign-out-alt w-6"></i> <span class="hidden md:inline ml-3">Logout</span>
-            </a>
-        </div>
     </aside>
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header class="bg-white border-b border-slate-200 px-8 py-4 flex justify-between items-center sticky top-0 z-50">
-            <h2 id="section-title" class="text-xl font-extrabold text-slate-800">Admin Dashboard</h2>
-            <div class="flex items-center space-x-4">
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Master Mode</span>
-                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">A</div>
+        <header class="bg-white border-b border-slate-200 px-8 py-5 flex justify-between items-center sticky top-0 z-50">
+            <h2 id="section-title" class="text-xl font-black text-slate-900 uppercase italic tracking-tighter">Admin Overview</h2>
+            <div class="flex items-center gap-4">
+                <button onclick="location.reload()" class="text-slate-400 hover:text-blue-600 transition"><i class="fas fa-rotate"></i></button>
+                <div class="w-10 h-10 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-black">A</div>
             </div>
         </header>
 
         <div class="p-8">
-            <div id="stats-section" class="section-content grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="glass-card p-6 rounded-3xl shadow-sm border-l-4 border-blue-500">
-                    <p class="text-slate-400 text-xs font-black uppercase">Active Experts</p>
-                    <h3 id="stat-workers" class="text-3xl font-black mt-1">0</h3>
+            <div id="stats-section" class="section-content grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="glass-card p-6 rounded-[2rem] border-b-4 border-blue-500 shadow-sm">
+                    <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Total Experts</p>
+                    <h3 id="stat-workers" class="text-4xl font-black mt-2 text-slate-800">0</h3>
                 </div>
-                <div class="glass-card p-6 rounded-3xl shadow-sm border-l-4 border-green-500">
-                    <p class="text-slate-400 text-xs font-black uppercase">Today's Bookings</p>
-                    <h3 id="stat-bookings" class="text-3xl font-black mt-1">0</h3>
+                <div class="glass-card p-6 rounded-[2rem] border-b-4 border-green-500 shadow-sm">
+                    <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Live Bookings</p>
+                    <h3 id="stat-bookings" class="text-4xl font-black mt-2 text-slate-800">0</h3>
                 </div>
-                <div class="glass-card p-6 rounded-3xl shadow-sm border-l-4 border-orange-500">
-                    <p class="text-slate-400 text-xs font-black uppercase">Pending Approval</p>
-                    <h3 id="stat-pending" class="text-3xl font-black mt-1">0</h3>
+                <div class="glass-card p-6 rounded-[2rem] border-b-4 border-purple-500 shadow-sm">
+                    <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Registered Users</p>
+                    <h3 id="stat-customers" class="text-4xl font-black mt-2 text-slate-800">0</h3>
+                </div>
+                <div class="glass-card p-6 rounded-[2rem] border-b-4 border-orange-500 shadow-sm">
+                    <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Pending Check</p>
+                    <h3 id="stat-pending" class="text-4xl font-black mt-2 text-slate-800">0</h3>
                 </div>
             </div>
 
             <div id="workers-section" class="section-content hidden">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-lg font-black uppercase tracking-tighter">Experts Management</h3>
-                </div>
                 <div id="workerList" class="space-y-4"></div>
             </div>
 
             <div id="bookings-section" class="section-content hidden">
-                <h3 class="text-lg font-black uppercase tracking-tighter mb-6">Live Customer Requests</h3>
                 <div id="bookingList" class="space-y-4"></div>
+            </div>
+
+            <div id="customers-section" class="section-content hidden">
+                <div id="customerList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
         </div>
     </main>
 
     <script>
-        // Password Protection
-        const key = prompt("Enter Admin Key:");
+        // Security
+        const key = prompt("Master Key Required:");
         if (key !== "AapkaPassword123") { window.location.href = "index.html"; }
 
-        // Firebase Setup
+        // Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDWRwmMzdLlWLhdf6KQL4iQi1VHx7uVwXQ",
             authDomain: "smart-seva-5bef9.firebaseapp.com",
@@ -103,81 +106,80 @@
         // Switch Sections
         function switchSection(id) {
             document.querySelectorAll('.section-content').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
             document.getElementById(`${id}-section`).classList.remove('hidden');
-            document.getElementById('section-title').innerText = id.charAt(0).toUpperCase() + id.slice(1) + " Management";
+            document.getElementById(`nav-${id}`).classList.add('active');
+            document.getElementById('section-title').innerText = id.toUpperCase();
         }
 
-        // --- EXPERTS LOGIC ---
+        // --- FETCH EXPERTS ---
         db.collection("workers").orderBy("createdAt", "desc").onSnapshot(snap => {
             const list = document.getElementById('workerList');
             let pendingCount = 0;
             list.innerHTML = "";
-            
             document.getElementById('stat-workers').innerText = snap.size;
-
             snap.forEach(doc => {
-                const w = doc.data();
-                const id = doc.id;
+                const w = doc.data(); const id = doc.id;
                 if(w.status === 'pending') pendingCount++;
-                
-                const statusClass = w.status === 'active' ? 'bg-green-100 text-green-600' : (w.status === 'suspended' ? 'bg-red-100 text-red-600' : 'bg-yellow-100 text-yellow-600');
-
+                const sColor = w.status === 'active' ? 'bg-green-100 text-green-600' : (w.status === 'suspended' ? 'bg-red-100 text-red-600' : 'bg-yellow-100 text-yellow-600');
                 list.innerHTML += `
-                    <div class="glass-card p-5 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4 transition hover:shadow-md">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3">
-                                <h4 class="font-bold text-slate-800">${w.name}</h4>
-                                <span class="status-pill ${statusClass}">${w.status}</span>
-                            </div>
-                            <p class="text-xs font-bold text-blue-600">${w.category} | ${w.location}</p>
-                            <p class="text-[10px] text-slate-400 mt-1">ID: ${id}</p>
+                    <div class="glass-card p-5 rounded-[2rem] flex justify-between items-center transition hover:scale-[1.01]">
+                        <div>
+                            <h4 class="font-black text-slate-800 uppercase text-sm">${w.name} <span class="status-pill ${sColor} ml-2">${w.status}</span></h4>
+                            <p class="text-[10px] font-bold text-blue-600 uppercase mt-1">${w.category} • ${w.location}</p>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="updateDoc('workers','${id}',{status:'active'})" class="bg-green-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase">Approve</button>
-                            <button onclick="updateDoc('workers','${id}',{status:'suspended'})" class="bg-slate-800 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase">Suspend</button>
-                            <button onclick="viewDetails('${w.name}', '${w.phone}', '${w.category}', '${w.location}')" class="bg-blue-50 text-blue-600 px-4 py-2 rounded-xl text-[10px] font-black uppercase">Check</button>
-                            <button onclick="deleteDoc('workers','${id}')" class="text-red-500 p-2 hover:bg-red-50 rounded-lg"><i class="fas fa-trash-alt"></i></button>
+                        <div class="flex gap-2">
+                            <button onclick="updateDoc('workers','${id}',{status:'active'})" class="bg-blue-600 text-white p-3 rounded-xl text-[10px] font-black"><i class="fas fa-check"></i></button>
+                            <button onclick="updateDoc('workers','${id}',{status:'suspended'})" class="bg-slate-200 text-slate-600 p-3 rounded-xl text-[10px] font-black"><i class="fas fa-ban"></i></button>
+                            <button onclick="deleteDoc('workers','${id}')" class="bg-red-50 text-red-500 p-3 rounded-xl text-[10px] font-black"><i class="fas fa-trash"></i></button>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             });
             document.getElementById('stat-pending').innerText = pendingCount;
         });
 
-        // --- BOOKINGS LOGIC ---
+        // --- FETCH BOOKINGS ---
         db.collection("bookings").orderBy("timestamp", "desc").onSnapshot(snap => {
             const list = document.getElementById('bookingList');
             list.innerHTML = "";
             document.getElementById('stat-bookings').innerText = snap.size;
-
             snap.forEach(doc => {
-                const b = doc.data();
-                const id = doc.id;
+                const b = doc.data(); const id = doc.id;
                 list.innerHTML += `
-                    <div class="glass-card p-6 rounded-3xl border-l-8 border-blue-600 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="bg-blue-100 text-blue-600 text-[10px] font-black px-3 py-1 rounded-full uppercase">${b.service}</span>
-                                <span class="text-slate-400 text-[10px] font-bold">${b.timestamp?.toDate().toLocaleString() || 'New Request'}</span>
+                    <div class="glass-card p-6 rounded-[2.5rem] border-l-[12px] border-blue-600 shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="bg-blue-50 text-blue-600 text-[10px] font-black px-3 py-1 rounded-full uppercase">${b.service}</span>
+                                <h4 class="text-xl font-black text-slate-900 mt-2">${b.customerName}</h4>
+                                <p class="text-blue-600 font-black text-sm mb-3"><i class="fas fa-phone mr-1"></i> ${b.phone}</p>
+                                <p class="text-xs text-slate-500 font-bold bg-slate-50 p-3 rounded-2xl border border-slate-100 italic">"${b.address}"</p>
                             </div>
-                            <h4 class="text-xl font-black text-slate-800">${b.customerName}</h4>
-                            <p class="text-blue-600 font-extrabold text-sm mb-2 underline"><i class="fas fa-phone-alt"></i> ${b.phone}</p>
-                            <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-500 font-semibold border border-slate-100">
-                                <i class="fas fa-map-marker-alt text-red-400 mr-1"></i> ${b.address}
-                            </div>
+                            <button onclick="deleteDoc('bookings','${id}')" class="bg-green-500 text-white px-5 py-3 rounded-2xl font-black text-[10px] hover:bg-green-600">DONE</button>
                         </div>
-                        <button onclick="deleteDoc('bookings','${id}')" class="mt-4 md:mt-0 bg-green-500 text-white px-6 py-4 rounded-2xl font-black text-xs hover:bg-green-600 shadow-lg">
-                            COMPLETE <i class="fas fa-check-circle ml-2"></i>
-                        </button>
-                    </div>
-                `;
+                    </div>`;
             });
         });
 
-        // ACTIONS
+        // --- FETCH CUSTOMERS ---
+        db.collection("customers").orderBy("createdAt", "desc").onSnapshot(snap => {
+            const list = document.getElementById('customerList');
+            list.innerHTML = "";
+            document.getElementById('stat-customers').innerText = snap.size;
+            snap.forEach(doc => {
+                const c = doc.data(); const id = doc.id;
+                list.innerHTML += `
+                    <div class="glass-card p-6 rounded-[2rem] border border-slate-100">
+                        <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-4 text-xl font-black">${c.name.charAt(0)}</div>
+                        <h4 class="font-black text-slate-800 uppercase text-sm">${c.name}</h4>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">${c.phone}</p>
+                        <p class="text-[10px] text-slate-400 mt-2 line-clamp-1">${c.address}</p>
+                        <button onclick="deleteDoc('customers','${id}')" class="mt-4 text-red-400 hover:text-red-600 text-xs font-bold uppercase tracking-widest"><i class="fas fa-trash mr-1"></i> Remove</button>
+                    </div>`;
+            });
+        });
+
         async function updateDoc(col, id, data) { await db.collection(col).doc(id).update(data); }
         async function deleteDoc(col, id) { if(confirm("Confirm Delete?")) await db.collection(col).doc(id).delete(); }
-        function viewDetails(n, p, c, l) { alert(`Expert: ${n}\nPhone: ${p}\nJob: ${c}\nLocation: ${l}`); }
     </script>
 </body>
 </html>
