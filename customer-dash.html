@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - SmartSeva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+        .booking-card { background: white; border-radius: 2rem; border: 1px solid #f1f5f9; transition: 0.3s; }
+        .status-pill { font-size: 9px; font-weight: 800; padding: 4px 12px; border-radius: 99px; text-transform: uppercase; }
+        .star-rating i { cursor: pointer; font-size: 1.5rem; transition: 0.2s; }
+        .star-rating i.active { color: #f59e0b; }
+    </style>
+</head>
+<body class="pb-10">
+
+    <div class="bg-blue-600 text-white p-8 rounded-b-[3rem] shadow-lg mb-8">
+        <div class="container mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-black italic tracking-tighter uppercase">My <span class="text-slate-900">Bookings</span></h1>
+                <p id="userNameDisplay" class="text-xs font-bold opacity-80 uppercase mt-1 tracking-widest">Welcome Back</p>
+            </div>
+            <a href="index.html" class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center"><i class="fas fa-home"></i></a>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4">
+        <div id="customerBookingList" class="space-y-6">
+            <p class="text-center py-20 font-bold text-slate-300 italic uppercase tracking-widest">Fetching your bookings...</p>
+        </div>
+    </main>
+
+    <div id="ratingModal" class="fixed inset-0 z-[3000] hidden flex items-center justify-center px-4 bg-black/80 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-sm rounded-[2.5rem] p-8 text-center shadow-2xl">
+            <div class="w-20 h-20 bg-yellow-100 text-yellow-500 rounded-3xl flex items-center justify-center mx-auto mb-4 text-3xl">
+                <i class="fas fa-star"></i>
+            </div>
+            <h3 class="text-xl font-black text-slate-800 uppercase italic">Kaam kaisa laga?</h3>
+            <p class="text-xs font-bold text-slate-400 uppercase mt-1 mb-6">Rate your experience with <span id="ratingWorkerName" class="text-blue-600">Expert</span></p>
+            
+            <div class="star-rating flex justify-center gap-3 mb-8 text-gray-300">
+                <i class="fas fa-star" onclick="setRating(1)"></i>
+                <i class="fas fa-star" onclick="setRating(2)"></i>
+                <i class="fas fa-star" onclick="setRating(3)"></i>
+                <i class="fas fa-star" onclick="setRating(4)"></i>
+                <i class="fas fa-star" onclick="setRating(5)"></i>
+            </div>
+
+            <button onclick="submitRating()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest shadow-lg hover:bg-blue-700 transition">Submit Rating</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. User Check
+        const userData = JSON.parse(localStorage.getItem("smartSevaUser"));
+        if(!userData) { window.location.href = "customer-reg.html"; }
+        document.getElementById('userNameDisplay').innerText = `Hello, ${userData.name}`;
+
+        // 2. Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDWRwmMzdLlWLhdf6KQL4iQi1VHx7uVwXQ",
+            authDomain: "smart-seva-5bef9.firebaseapp.com",
+            projectId: "smart-seva-5bef9",
+            storageBucket: "smart-seva-5bef9.firebasestorage.app",
+            messagingSenderId: "1042547190403",
+            appId: "1:1042547190403:web:15ea1659a88bdf3621c9b6"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        let selectedRating = 0;
+        let currentBookingId = "";
+        let currentWorkerId = "";
+
+        // 3. Load Bookings
+        db.collection("bookings")
+          .where("customerPhone", "==", userData.phone)
+          .onSnapshot(snap => {
+              const list = document.getElementById('customerBookingList');
+              list.innerHTML = "";
+              
+              if(snap.empty) {
+                  list.innerHTML = `<div class="text-center py-20 bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
+                      <p class="font-black text-slate-300 uppercase tracking-widest italic">No Bookings Found</p>
+                  </div>`;
+                  return;
+              }
+
+              snap.forEach(doc => {
+                  const b = doc.data();
+                  const id = doc.id;
+                  
+                  let statusClass = "bg-orange-100 text-orange-600";
+                  if(b.status === 'approved') statusClass = "bg-green-100 text-green-600";
+                  if(b.status === 'completed') statusClass = "bg-blue-100 text-blue-600";
+
+                  list.innerHTML += `
+                    <div class="booking-card p-6 shadow-sm border border-slate-100 relative">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="status-pill ${statusClass}">${b.status}</span>
+                                <h4 class="text-xl font-black text-slate-800 uppercase italic mt-2">${b.service}</h4>
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">${b.serviceDate}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[9px] font-black text-slate-400 uppercase">Expert</p>
+                                <p class="text-xs font-black text-blue-600 uppercase italic">${b.workerName}</p>
+                            </div>
+                        </div>
+
+                        ${b.status === 'completed' && !b.isRated ? `
+                            <button onclick="openRating('${id}', '${b.workerId}', '${b.workerName}')" class="w-full bg-yellow-500 text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-md">Rate Worker & Service</button>
+                        ` : b.status === 'completed' && b.isRated ? `
+                            <div class="text-center text-[10px] font-black text-green-500 uppercase tracking-widest py-2 border-t mt-2">Rating Submitted <i class="fas fa-check-circle"></i></div>
+                        ` : `
+                            <div class="text-xs font-bold text-slate-500 bg-slate-50 p-3 rounded-xl border border-slate-100">Status: ${b.status === 'pending' ? 'Worker approval ka intezar karein...' : 'Worker jald hi aapse sampark karega.'}</div>
+                        `}
+                    </div>`;
+              });
+          });
+
+        // 4. Rating Logic
+        function openRating(bId, wId, wName) {
+            currentBookingId = bId;
+            currentWorkerId = wId;
+            document.getElementById('ratingWorkerName').innerText = wName;
+            document.getElementById('ratingModal').classList.remove('hidden');
+        }
+
+        function setRating(num) {
+            selectedRating = num;
+            const stars = document.querySelectorAll('.star-rating i');
+            stars.forEach((s, idx) => {
+                if(idx < num) s.classList.add('active');
+                else s.classList.remove('active');
+            });
+        }
+
+        async function submitRating() {
+            if(selectedRating === 0) return alert("Pehle stars select karein!");
+            
+            try {
+                // Update Booking
+                await db.collection("bookings").doc(currentBookingId).update({
+                    isRated: true,
+                    ratingValue: selectedRating
+                });
+
+                // Update Worker's Overall Rating (Optional but recommended)
+                // Note: Real world mein hum rating ka average nikalte hain.
+                
+                alert("Thank you! Aapki rating bhej di gayi hai.");
+                document.getElementById('ratingModal').classList.add('hidden');
+                selectedRating = 0;
+            } catch(err) {
+                alert("Error: " + err.message);
+            }
+        }
+    </script>
+</body>
+</html>
