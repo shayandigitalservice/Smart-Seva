@@ -37,7 +37,7 @@
                 
                 <a href="index.html" class="flex items-center space-x-3">
                     <div class="logo-container">
-                        <img src="https://via.placeholder.com/45x45/2563eb/ffffff?text=S" alt="SmartSeva Logo" class="w-11 h-11 rounded-xl shadow-md transform -rotate-3 object-cover">
+                        <img src="https://via.placeholder.com/45x45/2563eb/ffffff?text=S" alt="SmartSeva Logo" class="w-11 h-11 rounded-xl shadow-md object-cover">
                     </div>
                     <div class="flex flex-col leading-tight">
                         <span class="text-xl font-black tracking-tight text-slate-800 uppercase">Smart<span class="text-blue-600">Seva</span></span>
@@ -51,10 +51,10 @@
                     <a href="customer-reg.html" class="btn-box">Customer Portal</a>
                 </div>
 
-                <button id="menu-btn" class="lg:hidden text-2xl text-slate-800"><i class="fas fa-bars-staggered"></i></button>
+                <button id="menu-btn" class="lg:hidden text-2xl text-slate-800 focus:outline-none"><i class="fas fa-bars-staggered"></i></button>
             </div>
 
-            <div id="mobile-menu" class="lg:hidden bg-white border-t border-gray-100">
+            <div id="mobile-menu" class="lg:hidden bg-white border-t border-gray-100 shadow-xl">
                 <div class="flex flex-col p-6 space-y-4 text-center text-sm uppercase font-bold tracking-wider">
                     <a href="index.html" class="text-blue-600">Home</a>
                     <a href="partner.html" class="btn-box">Join as Expert</a>
@@ -65,7 +65,7 @@
 
         <section class="bg-blue-600 py-6 md:py-8 px-4 text-white text-center">
             <div class="max-w-2xl mx-auto">
-                <h1 class="text-xl md:text-3xl font-black mb-4 tracking-tight">Aapko aaj kya help chahiye?</h1>
+                <h1 class="text-xl md:text-3xl font-black mb-4">Aapko aaj kya help chahiye?</h1>
                 <form id="searchForm" class="flex bg-white rounded-xl shadow-lg overflow-hidden p-1">
                     <input type="text" id="searchInput" placeholder="Electrician, Plumber, Cleaning..." class="w-full px-4 py-2 outline-none text-gray-700 font-bold text-sm">
                     <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-700 transition">Search</button>
@@ -78,11 +78,15 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide hero-slide">
                         <img src="https://images.pexels.com/photos/257736/pexels-photo-257736.jpeg?auto=format&fit=crop&w=1400" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 hero-overlay flex items-center justify-center text-white"><h2 class="text-3xl font-black">Expert Electricians</h2></div>
+                        <div class="absolute inset-0 hero-overlay flex items-center justify-center text-white"><h2 class="text-3xl font-black uppercase">Expert Electricians</h2></div>
                     </div>
                     <div class="swiper-slide hero-slide">
                         <img src="https://images.pexels.com/photos/4107120/pexels-photo-4107120.jpeg?auto=format&fit=crop&w=1400" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 hero-overlay flex items-center justify-center text-white"><h2 class="text-3xl font-black">Deep Cleaning</h2></div>
+                        <div class="absolute inset-0 hero-overlay flex items-center justify-center text-white"><h2 class="text-3xl font-black uppercase">Deep Cleaning</h2></div>
+                    </div>
+                    <div class="swiper-slide hero-slide">
+                        <img src="https://images.pexels.com/photos/2310904/pexels-photo-2310904.jpeg?auto=format&fit=crop&w=1400" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 hero-overlay flex items-center justify-center text-white"><h2 class="text-3xl font-black uppercase">Plumbing Solutions</h2></div>
                     </div>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -91,7 +95,7 @@
 
         <section class="container mx-auto px-4 py-8">
             <h2 class="text-2xl font-black text-gray-800 mb-8 flex items-center uppercase tracking-tight">
-                <span class="w-2.5 h-10 bg-blue-600 mr-4 rounded-full"></span> Top Rated Services
+                <span class="w-2.5 h-10 bg-blue-600 mr-4 rounded-full"></span> Hamari Services
             </h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="service-item bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition text-center cursor-pointer group" data-name="electrician">
@@ -114,23 +118,55 @@
         </section>
 
         <section class="seo-gradient py-20 border-t border-slate-100">
-            <div class="container mx-auto px-4 max-w-5xl text-slate-600 leading-relaxed">
-                <h2 class="text-3xl font-black text-slate-900 mb-8 border-l-8 border-blue-600 pl-4">Smart Seva - India's Premier Home Service Platform</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 text-center">
-                    <div class="p-6 bg-white rounded-3xl shadow-md border-b-4 border-blue-600"><i class="fas fa-shield-halved text-3xl text-blue-600 mb-4"></i><h4 class="font-bold">Verified Experts</h4></div>
-                    <div class="p-6 bg-white rounded-3xl shadow-md border-b-4 border-orange-500"><i class="fas fa-wallet text-3xl text-orange-500 mb-4"></i><h4 class="font-bold">Honest Pricing</h4></div>
-                    <div class="p-6 bg-white rounded-3xl shadow-md border-b-4 border-green-600"><i class="fas fa-clock text-3xl text-green-600 mb-4"></i><h4 class="font-bold">7-Day Warranty</h4></div>
+            <div class="container mx-auto px-4 max-w-5xl">
+                <h2 class="text-3xl md:text-5xl font-black text-slate-900 mb-8 border-l-8 border-blue-600 pl-4">Smart Seva - India's Trusted Home Service Network</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 text-center">
+                    <div class="p-8 bg-white rounded-3xl shadow-lg border-b-8 border-blue-600">
+                        <i class="fas fa-shield-halved text-5xl text-blue-600 mb-6"></i>
+                        <h4 class="text-xl font-black mb-3 text-slate-800 uppercase tracking-tighter">100% Safe & Secure</h4>
+                        <p class="text-sm text-slate-500 font-semibold italic leading-relaxed">Every professional undergoes a massive background check and skill assessment.</p>
+                    </div>
+                    <div class="p-8 bg-white rounded-3xl shadow-lg border-b-8 border-orange-500">
+                        <i class="fas fa-check-double text-5xl text-orange-500 mb-6"></i>
+                        <h4 class="text-xl font-black mb-3 text-slate-800 uppercase tracking-tighter">Expert Quality</h4>
+                        <p class="text-sm text-slate-500 font-semibold italic leading-relaxed">Certified professionals with years of experience in high-end repairs.</p>
+                    </div>
+                    <div class="p-8 bg-white rounded-3xl shadow-lg border-b-8 border-green-600">
+                        <i class="fas fa-wallet text-5xl text-green-600 mb-6"></i>
+                        <h4 class="text-xl font-black mb-3 text-slate-800 uppercase tracking-tighter">Honest Pricing</h4>
+                        <p class="text-sm text-slate-500 font-semibold italic leading-relaxed">Get upfront quotes with zero hidden charges or surprise costs.</p>
+                    </div>
                 </div>
-                <div class="space-y-6 text-sm md:text-base">
-                    <p><strong>Smart Seva</strong> stands as a beacon of reliability in the home services industry. We understand that your home is your sanctuary, and maintaining it shouldn't be a source of stress. Our platform is designed to connect you with the most skilled, background-verified, and professional experts who treat your home with the care it deserves.</p>
-                    <p>Whether you are dealing with a sudden electrical failure, a stubborn plumbing leak, or simply want to refresh your living space with deep cleaning, Smart Seva is your go-to partner. We specialize in providing end-to-end solutions that cover everything from minor repairs to major installations across major cities and regional areas like <strong>Assam, West Bengal, and Bihar</strong>.</p>
-                    <p>Through our <strong>Join as Expert</strong> program, we empower skilled technicians to find steady work and grow their professional identity. Simultaneously, our <strong>Customer Portal</strong> offers users a seamless way to book services, manage schedules, and access exclusive loyalty rewards. Experience the smart way of living with Smart Seva today. We are committed to delivering quality with every visit, ensuring your household runs smoothly without any interruptions.</p>
+
+                <div class="text-slate-600 leading-8 space-y-10 text-sm md:text-base">
+                    <div class="bg-blue-50 p-10 rounded-[3rem] border-l-[12px] border-blue-600 shadow-inner">
+                        <h3 class="text-2xl font-black text-blue-900 mb-6 uppercase">Why Smart Seva is Redefining Home Services in India</h3>
+                        <p class="mb-4">Welcome to the future of home maintenance. <strong>Smart Seva</strong> is a premier digital platform dedicated to bringing high-quality, reliable, and professional home services right to your doorstep. In today's fast-paced world, finding a skilled electrician, a trustworthy plumber, or an expert cleaning professional can be difficult. Our mission is to simplify this process by connecting verified service experts with customers in need of urgent repairs or maintenance.</p>
+                        <p>Whether you are looking for an <strong>electrician in Tezpur</strong>, a <strong>plumber in Bihar</strong>, or <strong>deep cleaning services in West Bengal</strong>, we are your digital partner for excellence. Every bolt tightened and every wire installed meets global safety standards.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div>
+                            <h3 class="text-xl font-black text-slate-900 mb-6 border-b-2 border-blue-100 pb-2 uppercase tracking-tighter">Verified Professional Network</h3>
+                            <p>We don't just hire; we curate. Every expert on the Smart Seva network undergoes a 3-step verification process: ID validation, skill assessment, and background check. This is why our <strong>Join as Expert</strong> program is so prestigious. We empower local technicians to become part of a professional ecosystem that provides them with steady work and a dignified professional identity.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black text-slate-900 mb-6 border-b-2 border-blue-100 pb-2 uppercase tracking-tighter">Customer First Philosophy</h3>
+                            <p>Our <strong>Customer Portal</strong> is built for simplicity. We understand that our users might not be tech-savvy, so we kept the interface clean and straightforward. From tracking your service history to getting a 7-day warranty on all repairs, Smart Seva puts the power in the hands of the customer. Trust is our primary currency, and we earn it with every single booking.</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-10">
+                        <h3 class="text-xl font-black text-slate-900 mb-6 uppercase tracking-tighter">Expanding Our Digital Footprint</h3>
+                        <p>Smart Seva is rapidly expanding across regional hubs in North India. Our mission is to deliver excellence right to your doorstep. From residential deep cleaning to full-house electrical wiring and leak-proof plumbing solutions, we ensure that the job is done perfectly. Experience the smart way of living with Smart Seva today and enjoy a hassle-free household management experience.</p>
+                    </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <footer class="footer-fixed bg-slate-950 text-slate-400 pt-16 pb-6">
+    <footer class="footer-fixed bg-slate-950 text-slate-500 pt-16 pb-6">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left mb-12">
                 <div>
@@ -142,30 +178,32 @@
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-widest">Navigation</h4>
-                    <ul class="space-y-2 text-xs font-bold">
-                        <li><a href="#" class="hover:text-blue-500 transition">About Us</a></li>
-                        <li><a href="partner.html" class="hover:text-blue-500 transition">Join as Expert</a></li>
+                    <ul class="space-y-2 text-xs font-bold uppercase tracking-tighter">
+                        <li><a href="#" class="hover:text-blue-500">About Us</a></li>
+                        <li><a href="partner.html" class="hover:text-blue-500">Join as Expert</a></li>
+                        <li><a href="customer-reg.html" class="hover:text-blue-500">Customer Portal</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-widest">Legal Hub</h4>
-                    <ul class="space-y-2 text-xs font-bold">
+                    <ul class="space-y-2 text-xs font-bold uppercase tracking-tighter">
                         <li><a href="#" class="hover:text-blue-500 transition">Terms & Conditions</a></li>
+                        <li><a href="#" class="hover:text-blue-500 transition">Privacy Policy</a></li>
                         <li><a href="#" class="hover:text-blue-500 transition">Disclaimer</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-widest">Connect</h4>
-                    <div class="flex justify-center md:justify-start space-x-4 text-xl">
-                        <a href="#" class="hover:text-blue-600"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#" class="hover:text-blue-600"><i class="fab fa-instagram"></i></a>
+                    <div class="flex justify-center md:justify-start space-x-6 text-2xl">
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-slate-800 pt-6 text-center text-[10px] font-bold uppercase tracking-widest text-white">
+            <div class="border-t border-slate-900 pt-6 text-center text-[10px] font-bold uppercase tracking-[0.4em] text-white">
                 © 2026 Smart Seva - India's Premium Home Service App
-                <div class="mt-4 text-red-600 opacity-30 hover:opacity-100 transition inline-block ml-4">
-                   <a href="admin.html"><i class="fas fa-lock"></i></a>
+                <div class="mt-4 text-red-600 opacity-20 hover:opacity-100 transition inline-block ml-4">
+                   <a href="admin.html"><i class="fas fa-lock text-xs"></i></a>
                 </div>
             </div>
         </div>
