@@ -27,6 +27,9 @@
         
         .hero-overlay { background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent); }
         .seo-gradient { background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%); }
+
+        /* Booking Modal Style */
+        #bookingModal { transition: all 0.3s ease; }
     </style>
 </head>
 <body class="text-gray-900">
@@ -166,6 +169,36 @@
         </section>
     </div>
 
+    <div id="bookingModal" class="fixed inset-0 z-[2000] hidden flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl relative">
+            <button id="closeModalBtn" class="absolute top-6 right-6 text-gray-400 hover:text-red-500 transition text-2xl">
+                <i class="fas fa-times-circle"></i>
+            </button>
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-black text-blue-600 uppercase tracking-tighter">Book <span id="selectedServiceName">Service</span></h3>
+                <p class="text-gray-400 text-[10px] font-bold uppercase mt-1">Sahi kaam, sahi daam - SmartSeva</p>
+            </div>
+            <form id="bookingForm" class="space-y-4">
+                <input type="hidden" id="hiddenServiceType">
+                <div>
+                    <label class="text-[10px] font-black uppercase text-gray-400 ml-2">Pura Naam</label>
+                    <input type="text" id="custName" required placeholder="Enter Name" class="w-full px-5 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:border-blue-500 outline-none font-bold text-sm">
+                </div>
+                <div>
+                    <label class="text-[10px] font-black uppercase text-gray-400 ml-2">Mobile Number</label>
+                    <input type="tel" id="custPhone" required placeholder="Enter Mobile" class="w-full px-5 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:border-blue-500 outline-none font-bold text-sm">
+                </div>
+                <div>
+                    <label class="text-[10px] font-black uppercase text-gray-400 ml-2">Pura Pata (Address)</label>
+                    <textarea id="custAddress" required placeholder="Ghar ka address likhein" class="w-full px-5 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:border-blue-500 outline-none font-bold text-sm h-20"></textarea>
+                </div>
+                <button type="submit" id="submitBtn" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest shadow-lg hover:bg-blue-700 transition-all">
+                    Confirm Booking
+                </button>
+            </form>
+        </div>
+    </div>
+
     <footer class="footer-fixed bg-slate-950 text-slate-500 pt-16 pb-6">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left mb-12">
@@ -210,12 +243,31 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+
     <script>
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDWRwmMzdLlWLhdf6KQL4iQi1VHx7uVwXQ",
+            authDomain: "smart-seva-5bef9.firebaseapp.com",
+            projectId: "smart-seva-5bef9",
+            storageBucket: "smart-seva-5bef9.firebasestorage.app",
+            messagingSenderId: "1042547190403",
+            appId: "1:1042547190403:web:15ea1659a88bdf3621c9b6"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Slider
         new Swiper(".mySwiper", { loop: true, autoplay: { delay: 3500 }, pagination: { el: ".swiper-pagination", clickable: true } });
+        
+        // Navbar
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('active'); });
 
+        // Search
         document.getElementById('searchForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const query = document.getElementById('searchInput').value.toLowerCase();
@@ -225,6 +277,66 @@
                 item.style.display = name.includes(query) ? "block" : "none";
             });
             if(query === "") items.forEach(i => i.style.display = "block");
+        });
+
+        // --- BOOKING LOGIC ---
+        const modal = document.getElementById('bookingModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const bookingForm = document.getElementById('bookingForm');
+
+        function openModal(serviceName) {
+            document.getElementById('selectedServiceName').innerText = serviceName;
+            document.getElementById('hiddenServiceType').value = serviceName;
+            modal.classList.remove('hidden');
+        }
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        // Click outside to close
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Attach click to all service items
+        document.querySelectorAll('.service-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const serviceTitle = item.querySelector('h3').innerText;
+                openModal(serviceTitle);
+            });
+        });
+
+        // Handle Booking Submission
+        bookingForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = "Confirming...";
+            submitBtn.disabled = true;
+
+            const newBooking = {
+                service: document.getElementById('hiddenServiceType').value,
+                customerName: document.getElementById('custName').value,
+                phone: document.getElementById('custPhone').value,
+                address: document.getElementById('custAddress').value,
+                status: 'pending',
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            try {
+                await db.collection("bookings").add(newBooking);
+                alert("Hooray! Booking confirmed. Hum jaldi hi aapse sampark karenge.");
+                bookingForm.reset();
+                modal.classList.add('hidden');
+            } catch (error) {
+                console.error("Error adding booking: ", error);
+                alert("Oops! Kuch gadbad ho gayi. Dobara koshish karein.");
+            } finally {
+                submitBtn.innerText = "Confirm Booking";
+                submitBtn.disabled = false;
+            }
         });
     </script>
 </body>
