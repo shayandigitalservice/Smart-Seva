@@ -3,43 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partner Registration - Smart Seva</title>
+    <title>Partner with SmartSeva - Expert Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; color: white; }
+        .input-field { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 12px 16px; outline: none; transition: 0.3s; color: white; width: 100%; }
+        .input-field:focus { border-color: #2563eb; background: #1e293b; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+        .label-text { font-size: 10px; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px; display: block; letter-spacing: 0.05em; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); border-radius: 2.5rem; }
+        .tab-btn.active { background: #2563eb; color: white; }
+    </style>
 </head>
-<body class="bg-gray-100">
+<body class="min-h-screen py-10 px-4">
 
-    <div class="container mx-auto px-4 py-10">
-        <div class="max-w-md mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
-            <div class="bg-blue-600 p-8 text-white text-center">
-                <h2 class="text-3xl font-bold">Join Smart Seva</h2>
-                <p class="mt-2 text-blue-100">Register as a service professional</p>
-            </div>
+    <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-8">
+            <a href="index.html" class="inline-block">
+                <div class="bg-blue-600 w-14 h-14 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 text-white text-xl font-black">S</div>
+                <h1 class="text-2xl font-black text-white uppercase tracking-tighter italic">Smart<span class="text-blue-500">Seva</span></h1>
+                <p class="text-[9px] font-black text-blue-400 uppercase tracking-[0.3em]">Expert Partnership</p>
+            </a>
+        </div>
 
-            <form id="pForm" class="p-8 space-y-5">
-                <input type="text" id="wName" placeholder="Full Name" required class="w-full p-4 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-blue-500">
-                
-                <select id="wCat" required class="w-full p-4 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">Select Service</option>
-                    <option value="Electrician">Electrician</option>
-                    <option value="Plumber">Plumber</option>
-                    <option value="Cleaning">Cleaning</option>
-                </select>
+        <div class="flex justify-center gap-4 mb-8">
+            <button onclick="toggleView('login')" id="btn-login" class="tab-btn active px-8 py-3 rounded-xl font-black text-xs uppercase transition">Login</button>
+            <button onclick="toggleView('signup')" id="btn-signup" class="tab-btn bg-slate-800 text-slate-400 px-8 py-3 rounded-xl font-black text-xs uppercase transition">Join as Expert</button>
+        </div>
 
-                <input type="text" id="wLoc" placeholder="Your Area / City" required class="w-full p-4 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-blue-500">
-                
-                <input type="tel" id="wPhone" placeholder="WhatsApp Number" required class="w-full p-4 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-blue-500">
+        <div id="login-section" class="glass-card p-8 md:p-12 shadow-2xl">
+            <h2 class="text-xl font-black uppercase italic mb-6">Worker Login</h2>
+            <form id="workerLoginForm" class="space-y-6">
+                <div>
+                    <label class="label-text">Phone Number</label>
+                    <input type="tel" id="loginPhone" required placeholder="Registered Mobile" class="input-field">
+                </div>
+                <div>
+                    <label class="label-text">Password</label>
+                    <input type="password" id="loginPass" required placeholder="••••••••" class="input-field">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:bg-blue-700 transition-all">Login to Dashboard</button>
+            </form>
+        </div>
 
-                <button type="submit" id="subBtn" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition shadow-lg">
-                    Register Now
-                </button>
+        <div id="signup-section" class="glass-card p-8 md:p-12 shadow-2xl hidden">
+            <h2 class="text-xl font-black uppercase italic mb-8 border-b border-slate-700 pb-4 text-blue-500">Expert Registration</h2>
+            
+            <form id="workerSignupForm" class="space-y-6 text-slate-300">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="label-text">Full Name</label>
+                        <input type="text" id="wName" required class="input-field">
+                    </div>
+                    <div>
+                        <label class="label-text">Father's Name</label>
+                        <input type="text" id="wFather" required class="input-field">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="label-text">Category</label>
+                        <select id="wCategory" required class="input-field">
+                            <option value="electrician">Electrician</option>
+                            <option value="plumber">Plumber</option>
+                            <option value="cleaning">Cleaning</option>
+                            <option value="repairing">Repairing</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label-text">Experience (Years)</label>
+                        <input type="number" id="wExp" required class="input-field">
+                    </div>
+                    <div>
+                        <label class="label-text">Phone Number</label>
+                        <input type="tel" id="wPhone" required class="input-field">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="label-text">State</label>
+                        <select id="wState" required class="input-field">
+                            <option value="Assam">Assam</option>
+                            <option value="West Bengal">West Bengal</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label-text">District</label>
+                        <select id="wDistrict" required class="input-field">
+                            <option value="Sonitpur">Sonitpur</option>
+                            <option value="Kamrup">Kamrup</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label-text">Pincode</label>
+                        <input type="number" id="wPin" required class="input-field">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="label-text">Permanent Address & Service Area</label>
+                    <textarea id="wAddr" required class="input-field h-20 resize-none"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="label-text">Aadhar Number</label>
+                        <input type="number" id="wAadhar" required class="input-field">
+                    </div>
+                    <div>
+                        <label class="label-text">Set Password</label>
+                        <input type="password" id="wPass" required class="input-field">
+                    </div>
+                </div>
+
+                <button type="submit" id="signupBtn" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:bg-blue-700 transition-all">Submit for Approval</button>
             </form>
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+
     <script>
-        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDWRwmMzdLlWLhdf6KQL4iQi1VHx7uVwXQ",
             authDomain: "smart-seva-5bef9.firebaseapp.com",
@@ -48,34 +136,90 @@
             messagingSenderId: "1042547190403",
             appId: "1:1042547190403:web:15ea1659a88bdf3621c9b6"
         };
-        
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        document.getElementById('pForm').addEventListener('submit', async (e) => {
+        // Toggle Logic
+        function toggleView(view) {
+            if(view === 'login') {
+                document.getElementById('login-section').classList.remove('hidden');
+                document.getElementById('signup-section').classList.add('hidden');
+                document.getElementById('btn-login').classList.add('active');
+                document.getElementById('btn-signup').classList.remove('active');
+            } else {
+                document.getElementById('signup-section').classList.remove('hidden');
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('btn-signup').classList.add('active');
+                document.getElementById('btn-login').classList.remove('active');
+            }
+        }
+
+        // --- SIGNUP LOGIC ---
+        document.getElementById('workerSignupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('subBtn');
+            const btn = document.getElementById('signupBtn');
             btn.innerText = "Processing...";
             btn.disabled = true;
 
             const data = {
                 name: document.getElementById('wName').value,
-                category: document.getElementById('wCat').value,
-                location: document.getElementById('wLoc').value,
+                fatherName: document.getElementById('wFather').value,
+                category: document.getElementById('wCategory').value,
+                experience: document.getElementById('wExp').value,
                 phone: document.getElementById('wPhone').value,
-                status: "pending", // Default status
+                state: document.getElementById('wState').value,
+                district: document.getElementById('wDistrict').value,
+                pincode: document.getElementById('wPin').value,
+                location: document.getElementById('wAddr').value,
+                aadhar: document.getElementById('wAadhar').value,
+                password: document.getElementById('wPass').value,
+                status: 'pending', // Waiting for Admin Approval
                 createdAt: new Date()
             };
 
             try {
-                await db.collection("workers").add(data);
-                alert("Success! Admin will approve you soon.");
-                window.location.href = "index.html";
-            } catch (err) {
-                alert("Error: " + err.message);
-                btn.innerText = "Register Now";
-                btn.disabled = false;
-            }
+                // Check if already exists
+                const check = await db.collection("workers").where("phone", "==", data.phone).get();
+                if(!check.empty) {
+                    alert("Mobile number already registered!");
+                } else {
+                    await db.collection("workers").add(data);
+                    alert("Registration Successful! Admin approval ka intezar karein.");
+                    location.reload();
+                }
+            } catch (err) { alert(err.message); }
+            btn.disabled = false;
+            btn.innerText = "Submit for Approval";
+        });
+
+        // --- LOGIN LOGIC ---
+        document.getElementById('workerLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const phone = document.getElementById('loginPhone').value;
+            const pass = document.getElementById('loginPass').value;
+
+            try {
+                const snap = await db.collection("workers")
+                                    .where("phone", "==", phone)
+                                    .where("password", "==", pass)
+                                    .get();
+                
+                if(snap.empty) {
+                    alert("Wrong Phone or Password!");
+                } else {
+                    const worker = snap.docs[0].data();
+                    const id = snap.docs[0].id;
+                    
+                    if(worker.status === 'active') {
+                        localStorage.setItem("smartSevaWorker", JSON.stringify({id, name: worker.name}));
+                        window.location.href = "worker-dash.html";
+                    } else if(worker.status === 'pending') {
+                        alert("Aapka account abhi tak Admin se approve nahi hua hai!");
+                    } else {
+                        alert("Aapka account suspend kar diya gaya hai.");
+                    }
+                }
+            } catch (err) { alert(err.message); }
         });
     </script>
 </body>
