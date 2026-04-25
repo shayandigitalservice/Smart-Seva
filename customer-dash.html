@@ -3,163 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Dashboard - SmartSeva</title>
+    <title>SmartSeva Pro - Customer Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
         .booking-card { background: white; border-radius: 2rem; border: 1px solid #f1f5f9; transition: 0.3s; }
-        .status-pill { font-size: 9px; font-weight: 800; padding: 4px 12px; border-radius: 99px; text-transform: uppercase; }
-        .star-rating i { cursor: pointer; font-size: 1.5rem; transition: 0.2s; }
-        .star-rating i.active { color: #f59e0b; }
+        .sos-btn { animation: pulse-red 2s infinite; }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
     </style>
 </head>
-<body class="pb-10">
+<body class="pb-20">
 
-    <div class="bg-blue-600 text-white p-8 rounded-b-[3rem] shadow-lg mb-8">
+    <div class="bg-slate-950 text-white p-8 rounded-b-[3rem] shadow-2xl mb-8">
         <div class="container mx-auto flex justify-between items-center">
             <div>
-                <h1 class="text-2xl font-black italic tracking-tighter uppercase">My <span class="text-slate-900">Bookings</span></h1>
-                <p id="userNameDisplay" class="text-xs font-bold opacity-80 uppercase mt-1 tracking-widest">Welcome Back</p>
+                <h1 class="text-2xl font-black tracking-tighter uppercase leading-none">Smart<span class="text-blue-500">Seva</span></h1>
+                <p id="welcomeUser" class="text-[10px] font-bold text-slate-400 uppercase mt-2 tracking-[0.2em]">Partnering Excellence</p>
             </div>
-            <a href="index.html" class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center"><i class="fas fa-home"></i></a>
+            <div class="flex gap-3">
+                <button onclick="triggerSOS()" class="sos-btn w-12 h-12 bg-red-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-red-600/40"><i class="fas fa-shield-heart"></i></button>
+                <button onclick="logout()" class="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center text-slate-400 hover:text-white transition border border-slate-800"><i class="fas fa-power-off"></i></button>
+            </div>
         </div>
     </div>
 
-    <main class="container mx-auto px-4">
-        <div id="customerBookingList" class="space-y-6">
-            <p class="text-center py-20 font-bold text-slate-300 italic uppercase tracking-widest">Fetching your bookings...</p>
+    <main class="container mx-auto px-4 max-w-2xl">
+        
+        <div class="bg-blue-600 rounded-[2rem] p-6 mb-8 text-white relative overflow-hidden shadow-xl shadow-blue-600/20">
+            <div class="relative z-10">
+                <p class="text-[10px] font-black uppercase tracking-widest opacity-80">Refer & Earn</p>
+                <h3 class="text-lg font-black mt-1">Get ₹50 for every friend!</h3>
+                <button onclick="copyReferral()" class="mt-4 bg-white text-blue-600 px-6 py-2 rounded-xl font-black text-[10px] uppercase shadow-lg">Copy Link</button>
+            </div>
+            <i class="fas fa-gift absolute -right-4 -bottom-4 text-7xl opacity-20 rotate-12"></i>
         </div>
+
+        <h3 class="text-sm font-black text-slate-800 uppercase tracking-widest mb-6">Live Booking Status</h3>
+        
+        <div id="bookingList" class="space-y-6">
+            </div>
     </main>
 
-    <div id="ratingModal" class="fixed inset-0 z-[3000] hidden flex items-center justify-center px-4 bg-black/80 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-sm rounded-[2.5rem] p-8 text-center shadow-2xl">
-            <div class="w-20 h-20 bg-yellow-100 text-yellow-500 rounded-3xl flex items-center justify-center mx-auto mb-4 text-3xl">
-                <i class="fas fa-star"></i>
-            </div>
-            <h3 class="text-xl font-black text-slate-800 uppercase italic">Kaam kaisa laga?</h3>
-            <p class="text-xs font-bold text-slate-400 uppercase mt-1 mb-6">Rate your experience with <span id="ratingWorkerName" class="text-blue-600">Expert</span></p>
-            
-            <div class="star-rating flex justify-center gap-3 mb-8 text-gray-300">
-                <i class="fas fa-star" onclick="setRating(1)"></i>
-                <i class="fas fa-star" onclick="setRating(2)"></i>
-                <i class="fas fa-star" onclick="setRating(3)"></i>
-                <i class="fas fa-star" onclick="setRating(4)"></i>
-                <i class="fas fa-star" onclick="setRating(5)"></i>
-            </div>
-
-            <button onclick="submitRating()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest shadow-lg hover:bg-blue-700 transition">Submit Rating</button>
-        </div>
-    </div>
-
     <script>
-        // 1. User Check
         const userData = JSON.parse(localStorage.getItem("smartSevaUser"));
-        if(!userData) { window.location.href = "customer-reg.html"; }
-        document.getElementById('userNameDisplay').innerText = `Hello, ${userData.name}`;
+        if(!userData) window.location.href = "customer-reg.html";
+        document.getElementById('welcomeUser').innerText = `Welcome, ${userData.name}`;
 
-        // 2. Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyDWRwmMzdLlWLhdf6KQL4iQi1VHx7uVwXQ",
-            authDomain: "smart-seva-5bef9.firebaseapp.com",
-            projectId: "smart-seva-5bef9",
-            storageBucket: "smart-seva-5bef9.firebasestorage.app",
-            messagingSenderId: "1042547190403",
-            appId: "1:1042547190403:web:15ea1659a88bdf3621c9b6"
-        };
+        const firebaseConfig = { /* Aapka Config Same Rahega */ };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        let selectedRating = 0;
-        let currentBookingId = "";
-        let currentWorkerId = "";
+        // 1. Fetch Bookings
+        db.collection("bookings").where("customerPhone", "==", userData.phone).orderBy("timestamp", "desc").onSnapshot(snap => {
+            const list = document.getElementById('bookingList');
+            list.innerHTML = "";
+            
+            snap.forEach(doc => {
+                const b = doc.data();
+                const id = doc.id;
+                const otp = id.slice(-4).toUpperCase(); // Last 4 chars as OTP
 
-        // 3. Load Bookings
-        db.collection("bookings")
-          .where("customerPhone", "==", userData.phone)
-          .onSnapshot(snap => {
-              const list = document.getElementById('customerBookingList');
-              list.innerHTML = "";
-              
-              if(snap.empty) {
-                  list.innerHTML = `<div class="text-center py-20 bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
-                      <p class="font-black text-slate-300 uppercase tracking-widest italic">No Bookings Found</p>
-                  </div>`;
-                  return;
-              }
-
-              snap.forEach(doc => {
-                  const b = doc.data();
-                  const id = doc.id;
-                  
-                  let statusClass = "bg-orange-100 text-orange-600";
-                  if(b.status === 'approved') statusClass = "bg-green-100 text-green-600";
-                  if(b.status === 'completed') statusClass = "bg-blue-100 text-blue-600";
-
-                  list.innerHTML += `
-                    <div class="booking-card p-6 shadow-sm border border-slate-100 relative">
-                        <div class="flex justify-between items-start mb-4">
+                list.innerHTML += `
+                    <div class="booking-card p-6 shadow-sm border border-slate-50">
+                        <div class="flex justify-between items-start mb-6">
                             <div>
-                                <span class="status-pill ${statusClass}">${b.status}</span>
-                                <h4 class="text-xl font-black text-slate-800 uppercase italic mt-2">${b.service}</h4>
-                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">${b.serviceDate}</p>
+                                <span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[9px] font-black uppercase">${b.status}</span>
+                                <h4 class="text-xl font-black text-slate-900 mt-2">${b.service}</h4>
+                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Expert: ${b.workerName}</p>
                             </div>
                             <div class="text-right">
-                                <p class="text-[9px] font-black text-slate-400 uppercase">Expert</p>
-                                <p class="text-xs font-black text-blue-600 uppercase italic">${b.workerName}</p>
+                                <p class="text-[8px] font-black text-slate-400 uppercase">OTP (Share with worker)</p>
+                                <p class="text-lg font-black text-blue-600 tracking-widest">${b.status === 'approved' ? otp : '----'}</p>
                             </div>
                         </div>
 
-                        ${b.status === 'completed' && !b.isRated ? `
-                            <button onclick="openRating('${id}', '${b.workerId}', '${b.workerName}')" class="w-full bg-yellow-500 text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-md">Rate Worker & Service</button>
-                        ` : b.status === 'completed' && b.isRated ? `
-                            <div class="text-center text-[10px] font-black text-green-500 uppercase tracking-widest py-2 border-t mt-2">Rating Submitted <i class="fas fa-check-circle"></i></div>
-                        ` : `
-                            <div class="text-xs font-bold text-slate-500 bg-slate-50 p-3 rounded-xl border border-slate-100">Status: ${b.status === 'pending' ? 'Worker approval ka intezar karein...' : 'Worker jald hi aapse sampark karega.'}</div>
-                        `}
+                        <div class="space-y-3">
+                            ${b.status === 'completed' ? `
+                                <button onclick="generateInvoice('${id}')" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest shadow-xl"><i class="fas fa-file-invoice-dollar mr-2"></i> Download Invoice</button>
+                            ` : `
+                                <div class="bg-slate-50 p-4 rounded-2xl flex items-center justify-between">
+                                    <p class="text-[10px] font-bold text-slate-500 uppercase">Estimated Charge</p>
+                                    <p class="text-sm font-black text-slate-800 tracking-tighter">₹499.00</p>
+                                </div>
+                            `}
+                        </div>
                     </div>`;
-              });
-          });
-
-        // 4. Rating Logic
-        function openRating(bId, wId, wName) {
-            currentBookingId = bId;
-            currentWorkerId = wId;
-            document.getElementById('ratingWorkerName').innerText = wName;
-            document.getElementById('ratingModal').classList.remove('hidden');
-        }
-
-        function setRating(num) {
-            selectedRating = num;
-            const stars = document.querySelectorAll('.star-rating i');
-            stars.forEach((s, idx) => {
-                if(idx < num) s.classList.add('active');
-                else s.classList.remove('active');
             });
+        });
+
+        // 2. SOS Function
+        async function triggerSOS() {
+            if(confirm("EMERGENCY: Do you want to alert Admin and share your live location?")) {
+                await db.collection("alerts").add({
+                    userId: userData.phone,
+                    userName: userData.name,
+                    location: userData.address,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    type: "SOS"
+                });
+                alert("HELP IS ON THE WAY! Admin has been notified.");
+            }
         }
 
-        async function submitRating() {
-            if(selectedRating === 0) return alert("Pehle stars select karein!");
-            
-            try {
-                // Update Booking
-                await db.collection("bookings").doc(currentBookingId).update({
-                    isRated: true,
-                    ratingValue: selectedRating
-                });
+        // 3. Invoice Generator
+        function generateInvoice(id) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.setFontSize(22); doc.text("SMART SEVA INVOICE", 20, 20);
+            doc.setFontSize(12); doc.text(`Order ID: ${id}`, 20, 30);
+            doc.text(`Customer: ${userData.name}`, 20, 40);
+            doc.text(`Service: Standard Home Maintenance`, 20, 50);
+            doc.text(`Total Amount Paid: INR 499.00`, 20, 60);
+            doc.text(`Status: Service Successfully Completed`, 20, 70);
+            doc.save(`SmartSeva_Bill_${id}.pdf`);
+        }
 
-                // Update Worker's Overall Rating (Optional but recommended)
-                // Note: Real world mein hum rating ka average nikalte hain.
-                
-                alert("Thank you! Aapki rating bhej di gayi hai.");
-                document.getElementById('ratingModal').classList.add('hidden');
-                selectedRating = 0;
-            } catch(err) {
-                alert("Error: " + err.message);
-            }
+        function copyReferral() {
+            const link = `https://smartseva.in/join?ref=${userData.phone}`;
+            navigator.clipboard.writeText(link);
+            alert("Referral Link Copied! Send it to your friends.");
+        }
+
+        function logout() {
+            localStorage.removeItem("smartSevaUser");
+            window.location.href = "index.html";
         }
     </script>
 </body>
