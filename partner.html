@@ -3,125 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partner with SmartSeva - Expert Portal</title>
+    <title>Expert Partner Portal - SmartSeva</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; color: white; }
-        .input-field { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 12px 16px; outline: none; transition: 0.3s; color: white; width: 100%; }
-        .input-field:focus { border-color: #2563eb; background: #1e293b; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+        .input-field { background: #ffffff; border: 2px solid #f1f5f9; border-radius: 12px; padding: 12px 16px; outline: none; transition: 0.3s; font-weight: 600; font-size: 0.85rem; width: 100%; color: #1e293b; }
+        .input-field:focus { border-color: #2563eb; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.05); }
         .label-text { font-size: 10px; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 6px; display: block; letter-spacing: 0.05em; }
-        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); border-radius: 2.5rem; }
-        .tab-btn.active { background: #2563eb; color: white; }
+        .reg-card { border-radius: 2rem; background: #ffffff; box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05); border: 1px solid #f1f5f9; }
+        .tab-btn { transition: 0.3s; border-bottom: 3px solid transparent; cursor: pointer; }
+        .tab-btn.active { border-color: #2563eb; color: #2563eb; }
     </style>
 </head>
-<body class="min-h-screen py-10 px-4">
+<body class="min-h-screen py-10 px-4 flex flex-col items-center">
 
-    <div class="max-w-3xl mx-auto">
-        <div class="text-center mb-8">
+    <div class="max-w-3xl w-full">
+        <div class="text-center mb-10">
             <a href="index.html" class="inline-block">
                 <div class="bg-blue-600 w-14 h-14 rounded-2xl shadow-lg flex items-center justify-center mx-auto mb-3 text-white text-xl font-black">S</div>
-                <h1 class="text-2xl font-black text-white uppercase tracking-tighter italic">Smart<span class="text-blue-500">Seva</span></h1>
-                <p class="text-[9px] font-black text-blue-400 uppercase tracking-[0.3em]">Expert Partnership</p>
+                <h1 class="text-2xl font-black text-slate-800 uppercase tracking-tighter">Smart<span class="text-blue-600">Seva</span></h1>
+                <p class="text-[9px] font-black text-blue-500 uppercase tracking-[0.3em]">Professional Expert Partnership</p>
             </a>
         </div>
 
-        <div class="flex justify-center gap-4 mb-8">
-            <button onclick="toggleView('login')" id="btn-login" class="tab-btn active px-8 py-3 rounded-xl font-black text-xs uppercase transition">Login</button>
-            <button onclick="toggleView('signup')" id="btn-signup" class="tab-btn bg-slate-800 text-slate-400 px-8 py-3 rounded-xl font-black text-xs uppercase transition">Join as Expert</button>
-        </div>
+        <div class="reg-card p-8 md:p-12 relative overflow-hidden">
+            <div class="flex gap-8 mb-10 border-b border-gray-100">
+                <button id="loginTab" onclick="switchTab('login')" class="tab-btn active pb-4 font-bold uppercase text-xs tracking-widest">Expert Login</button>
+                <button id="signupTab" onclick="switchTab('signup')" class="tab-btn pb-4 font-bold uppercase text-xs tracking-widest text-gray-400">Join as Expert</button>
+            </div>
 
-        <div id="login-section" class="glass-card p-8 md:p-12 shadow-2xl">
-            <h2 class="text-xl font-black uppercase italic mb-6">Worker Login</h2>
-            <form id="workerLoginForm" class="space-y-6">
-                <div>
-                    <label class="label-text">Phone Number</label>
-                    <input type="tel" id="loginPhone" required placeholder="Registered Mobile" class="input-field">
-                </div>
-                <div>
-                    <label class="label-text">Password</label>
-                    <input type="password" id="loginPass" required placeholder="••••••••" class="input-field">
-                </div>
-                <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:bg-blue-700 transition-all">Login to Dashboard</button>
-            </form>
-        </div>
+            <div id="loginSection">
+                <h2 class="text-xl font-black text-slate-900 uppercase mb-6">Partner Login</h2>
+                <form id="workerLoginForm" class="space-y-5">
+                    <div>
+                        <label class="label-text">Registered Phone Number</label>
+                        <input type="tel" id="lPhone" required placeholder="Enter Mobile Number" class="input-field">
+                    </div>
+                    <div>
+                        <label class="label-text">Password</label>
+                        <input type="password" id="lPass" required placeholder="••••••••" class="input-field">
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="button" onclick="forgotPassword()" class="text-[10px] font-bold text-blue-600 uppercase tracking-widest hover:underline">Forgot Password?</button>
+                    </div>
+                    <button type="submit" class="w-full bg-slate-900 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs shadow-xl hover:bg-blue-600 transition-all">
+                        Access Dashboard
+                    </button>
+                </form>
+            </div>
 
-        <div id="signup-section" class="glass-card p-8 md:p-12 shadow-2xl hidden">
-            <h2 class="text-xl font-black uppercase italic mb-8 border-b border-slate-700 pb-4 text-blue-500">Expert Registration</h2>
-            
-            <form id="workerSignupForm" class="space-y-6 text-slate-300">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="label-text">Full Name</label>
-                        <input type="text" id="wName" required class="input-field">
+            <div id="signupSection" class="hidden">
+                <h2 class="text-xl font-black text-slate-900 uppercase mb-6 border-b pb-4">Professional Registration</h2>
+                <form id="workerSignupForm" class="space-y-6">
+                    <div class="mb-6">
+                        <button type="button" onclick="getLocation()" id="gpsBtn" class="w-full bg-blue-50 text-blue-600 py-4 rounded-xl font-black text-[11px] uppercase border-2 border-blue-600/10 hover:bg-blue-600 hover:text-white transition">
+                           <i class="fas fa-location-crosshairs mr-2"></i> Detect Service Area (Auto-Fill)
+                        </button>
+                        <input type="hidden" id="wCoords">
                     </div>
-                    <div>
-                        <label class="label-text">Father's Name</label>
-                        <input type="text" id="wFather" required class="input-field">
-                    </div>
-                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label class="label-text">Category</label>
-                        <select id="wCategory" required class="input-field">
-                            <option value="electrician">Electrician</option>
-                            <option value="plumber">Plumber</option>
-                            <option value="cleaning">Cleaning</option>
-                            <option value="repairing">Repairing</option>
-                        </select>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="label-text">Full Name</label>
+                            <input type="text" id="wName" required placeholder="Full Name" class="input-field">
+                        </div>
+                        <div>
+                            <label class="label-text">Father's Name</label>
+                            <input type="text" id="wFather" required placeholder="Father's Name" class="input-field">
+                        </div>
                     </div>
-                    <div>
-                        <label class="label-text">Experience (Years)</label>
-                        <input type="number" id="wExp" required class="input-field">
-                    </div>
-                    <div>
-                        <label class="label-text">Phone Number</label>
-                        <input type="tel" id="wPhone" required class="input-field">
-                    </div>
-                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label class="label-text">State</label>
-                        <select id="wState" required class="input-field">
-                            <option value="Assam">Assam</option>
-                            <option value="West Bengal">West Bengal</option>
-                        </select>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="label-text">Service Category</label>
+                            <select id="wCategory" required class="input-field">
+                                <option value="electrician">Electrician</option>
+                                <option value="plumber">Plumber</option>
+                                <option value="cleaning">Cleaning</option>
+                                <option value="repairing">Repairing</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="label-text">Experience (In Years)</label>
+                            <input type="number" id="wExp" required placeholder="Ex: 5" class="input-field">
+                        </div>
+                        <div>
+                            <label class="label-text">Phone Number</label>
+                            <input type="tel" id="wPhone" required placeholder="Mobile Number" class="input-field">
+                        </div>
                     </div>
-                    <div>
-                        <label class="label-text">District</label>
-                        <select id="wDistrict" required class="input-field">
-                            <option value="Sonitpur">Sonitpur</option>
-                            <option value="Kamrup">Kamrup</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="label-text">Pincode</label>
-                        <input type="number" id="wPin" required class="input-field">
-                    </div>
-                </div>
 
-                <div>
-                    <label class="label-text">Permanent Address & Service Area</label>
-                    <textarea id="wAddr" required class="input-field h-20 resize-none"></textarea>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="label-text">Aadhar Number</label>
-                        <input type="number" id="wAadhar" required class="input-field">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="label-text">State</label>
+                            <input type="text" id="wState" required placeholder="Auto-filled" class="input-field">
+                        </div>
+                        <div>
+                            <label class="label-text">District</label>
+                            <input type="text" id="wDistrict" required placeholder="Auto-filled" class="input-field">
+                        </div>
+                        <div>
+                            <label class="label-text">Pincode</label>
+                            <input type="number" id="wPin" required placeholder="Auto-filled" class="input-field">
+                        </div>
                     </div>
+
+                    <div>
+                        <label class="label-text">Service Area & Permanent Address</label>
+                        <textarea id="wAddr" required placeholder="Detailed Address" class="input-field h-20 resize-none"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="label-text">Aadhar Number</label>
+                            <input type="number" id="wAadhar" required placeholder="12 Digit ID" class="input-field">
+                        </div>
+                        <div>
+                            <label class="label-text">Skill Certificate (Optional)</label>
+                            <input type="file" accept="image/*,application/pdf" class="text-[10px] font-bold text-slate-400">
+                        </div>
+                    </div>
+
                     <div>
                         <label class="label-text">Set Password</label>
-                        <input type="password" id="wPass" required class="input-field">
+                        <input type="password" id="wPass" required placeholder="Create Secure Password" class="input-field">
                     </div>
-                </div>
 
-                <button type="submit" id="signupBtn" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:bg-blue-700 transition-all">Submit for Approval</button>
-            </form>
+                    <button type="submit" id="signupBtn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs shadow-xl hover:bg-blue-700 transition-all">
+                        Submit for Admin Approval
+                    </button>
+                </form>
+            </div>
         </div>
+        <p class="text-center mt-8 text-[10px] font-bold text-slate-400 uppercase tracking-widest">© 2026 Smart Seva - Partner Ecosystem</p>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
@@ -139,88 +155,115 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Toggle Logic
-        function toggleView(view) {
-            if(view === 'login') {
-                document.getElementById('login-section').classList.remove('hidden');
-                document.getElementById('signup-section').classList.add('hidden');
-                document.getElementById('btn-login').classList.add('active');
-                document.getElementById('btn-signup').classList.remove('active');
+        // Switch Tabs
+        function switchTab(type) {
+            if(type === 'login') {
+                document.getElementById('loginSection').classList.remove('hidden');
+                document.getElementById('signupSection').classList.add('hidden');
+                document.getElementById('loginTab').classList.add('active');
+                document.getElementById('signupTab').classList.remove('active');
+                document.getElementById('signupTab').classList.add('text-gray-400');
             } else {
-                document.getElementById('signup-section').classList.remove('hidden');
-                document.getElementById('login-section').classList.add('hidden');
-                document.getElementById('btn-signup').classList.add('active');
-                document.getElementById('btn-login').classList.remove('active');
+                document.getElementById('signupSection').classList.remove('hidden');
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('signupTab').classList.add('active');
+                document.getElementById('loginTab').classList.remove('active');
+                document.getElementById('loginTab').classList.add('text-gray-400');
             }
         }
 
-        // --- SIGNUP LOGIC ---
+        // GPS & Address Logic
+        async function fetchAddress(lat, lon) {
+            try {
+                const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`);
+                const data = await response.json();
+                if (data.address) {
+                    const addr = data.address;
+                    document.getElementById('wState').value = addr.state || "";
+                    document.getElementById('wDistrict').value = addr.district || addr.city_district || addr.county || "";
+                    document.getElementById('wPin').value = addr.postcode || "";
+                    document.getElementById('wAddr').value = data.display_name || "";
+                }
+            } catch (error) { alert("Error fetching address details."); }
+        }
+
+        function getLocation() {
+            const btn = document.getElementById('gpsBtn');
+            btn.innerText = "Accessing GPS...";
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (p) => {
+                    const lat = p.coords.latitude;
+                    const lon = p.coords.longitude;
+                    document.getElementById('wCoords').value = `${lat}, ${lon}`;
+                    await fetchAddress(lat, lon);
+                    btn.innerHTML = `<i class="fas fa-check-circle mr-2"></i> Location Synced`;
+                    btn.classList.add('bg-green-50', 'text-green-600', 'border-green-600/20');
+                }, () => { 
+                    alert("Location access denied."); 
+                    btn.innerText = "Detect Service Area (Auto-Fill)";
+                });
+            }
+        }
+
+        // SIGNUP LOGIC
         document.getElementById('workerSignupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('signupBtn');
-            btn.innerText = "Processing...";
+            btn.innerText = "Submitting Profile...";
             btn.disabled = true;
 
-            const data = {
+            const workerData = {
                 name: document.getElementById('wName').value,
                 fatherName: document.getElementById('wFather').value,
                 category: document.getElementById('wCategory').value,
                 experience: document.getElementById('wExp').value,
                 phone: document.getElementById('wPhone').value,
+                aadhar: document.getElementById('wAadhar').value,
                 state: document.getElementById('wState').value,
                 district: document.getElementById('wDistrict').value,
-                pincode: document.getElementById('wPin').value,
                 location: document.getElementById('wAddr').value,
-                aadhar: document.getElementById('wAadhar').value,
                 password: document.getElementById('wPass').value,
-                status: 'pending', // Waiting for Admin Approval
+                coords: document.getElementById('wCoords').value,
+                status: 'pending',
                 createdAt: new Date()
             };
 
             try {
-                // Check if already exists
-                const check = await db.collection("workers").where("phone", "==", data.phone).get();
+                const check = await db.collection("workers").where("phone", "==", workerData.phone).get();
                 if(!check.empty) {
-                    alert("Mobile number already registered!");
+                    alert("Expert already registered with this phone number.");
                 } else {
-                    await db.collection("workers").add(data);
-                    alert("Registration Successful! Admin approval ka intezar karein.");
+                    await db.collection("workers").add(workerData);
+                    alert("Profile submitted! Please wait for Admin approval.");
                     location.reload();
                 }
             } catch (err) { alert(err.message); }
             btn.disabled = false;
-            btn.innerText = "Submit for Approval";
         });
 
-        // --- LOGIN LOGIC ---
+        // LOGIN LOGIC
         document.getElementById('workerLoginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const phone = document.getElementById('loginPhone').value;
-            const pass = document.getElementById('loginPass').value;
+            const phone = document.getElementById('lPhone').value;
+            const pass = document.getElementById('lPass').value;
 
-            try {
-                const snap = await db.collection("workers")
-                                    .where("phone", "==", phone)
-                                    .where("password", "==", pass)
-                                    .get();
-                
-                if(snap.empty) {
-                    alert("Wrong Phone or Password!");
+            const snap = await db.collection("workers").where("phone", "==", phone).where("password", "==", pass).get();
+            if (snap.empty) {
+                alert("Invalid Credentials.");
+            } else {
+                const worker = snap.docs[0].data();
+                if(worker.status === 'active') {
+                    localStorage.setItem("smartSevaWorker", JSON.stringify({id: snap.docs[0].id, name: worker.name}));
+                    window.location.href = "worker-dash.html";
                 } else {
-                    const worker = snap.docs[0].data();
-                    const id = snap.docs[0].id;
-                    
-                    if(worker.status === 'active') {
-                        localStorage.setItem("smartSevaWorker", JSON.stringify({id, name: worker.name}));
-                        window.location.href = "worker-dash.html";
-                    } else if(worker.status === 'pending') {
-                        alert("Aapka account abhi tak Admin se approve nahi hua hai!");
-                    } else {
-                        alert("Aapka account suspend kar diya gaya hai.");
-                    }
+                    alert("Your account is currently: " + worker.status.toUpperCase());
                 }
-            } catch (err) { alert(err.message); }
+            }
         });
+
+        function forgotPassword() {
+            alert("Contact Support to reset your Expert Password.");
+        }
     </script>
 </body>
 </html>
