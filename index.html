@@ -9,18 +9,27 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        
         html, body { height: 100%; margin: 0; padding: 0; scroll-behavior: smooth; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; display: flex; flex-direction: column; background-color: #ffffff; }
+        
         .main-content { flex: 1 0 auto; }
         .footer-fixed { flex-shrink: 0; }
+
         .hero-slide { height: 400px; } 
         @media (max-width: 640px) { .hero-slide { height: 260px; } }
+
         .btn-box { border: 2px solid #2563eb; color: #2563eb; font-weight: 700; padding: 6px 14px; border-radius: 8px; transition: 0.3s; font-size: 0.75rem; text-transform: uppercase; display: inline-block; }
         .btn-box:hover { background: #2563eb; color: white !important; }
+
         #mobile-menu { max-height: 0; overflow: hidden; transition: 0.4s ease-out; }
         #mobile-menu.active { max-height: 500px; }
+        
         .hero-overlay { background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent); }
         .seo-gradient { background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%); }
+
+        /* Booking Modal Style */
+        #bookingModal { transition: all 0.3s ease; }
     </style>
 </head>
 <body class="text-gray-900">
@@ -28,20 +37,26 @@
     <div class="main-content">
         <header class="bg-white border-b border-gray-100 sticky top-0 z-[1000] shadow-sm">
             <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                
                 <a href="index.html" class="flex items-center space-x-3">
-                    <div class="logo-container"><img src="https://via.placeholder.com/45x45/2563eb/ffffff?text=S" alt="SmartSeva Logo" class="w-11 h-11 rounded-xl shadow-md object-cover"></div>
+                    <div class="logo-container">
+                        <img src="https://via.placeholder.com/45x45/2563eb/ffffff?text=S" alt="SmartSeva Logo" class="w-11 h-11 rounded-xl shadow-md object-cover">
+                    </div>
                     <div class="flex flex-col leading-tight">
                         <span class="text-xl font-black tracking-tight text-slate-800 uppercase">Smart<span class="text-blue-600">Seva</span></span>
                         <span class="text-[9px] text-orange-600 font-bold uppercase tracking-[0.2em]">Premium Solutions</span>
                     </div>
                 </a>
+
                 <div class="hidden lg:flex items-center space-x-4">
                     <a href="index.html" class="text-blue-600 font-bold px-4">Home</a>
                     <a href="partner.html" class="btn-box">Join as Expert</a>
                     <a href="customer-reg.html" class="btn-box">Customer Portal</a>
                 </div>
+
                 <button id="menu-btn" class="lg:hidden text-2xl text-slate-800 focus:outline-none"><i class="fas fa-bars-staggered"></i></button>
             </div>
+
             <div id="mobile-menu" class="lg:hidden bg-white border-t border-gray-100 shadow-xl">
                 <div class="flex flex-col p-6 space-y-4 text-center text-sm uppercase font-bold tracking-wider">
                     <a href="index.html" class="text-blue-600">Home</a>
@@ -53,10 +68,10 @@
 
         <section class="bg-blue-600 py-6 md:py-8 px-4 text-white text-center">
             <div class="max-w-2xl mx-auto">
-                <h1 class="text-xl md:text-3xl font-black mb-4 italic">Aapko aaj kya help chahiye?</h1>
+                <h1 class="text-xl md:text-3xl font-black mb-4">Aapko aaj kya help chahiye?</h1>
                 <form id="searchForm" class="flex bg-white rounded-xl shadow-lg overflow-hidden p-1">
                     <input type="text" id="searchInput" placeholder="Electrician, Plumber, Cleaning..." class="w-full px-4 py-2 outline-none text-gray-700 font-bold text-sm">
-                    <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold">Search</button>
+                    <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-700 transition">Search</button>
                 </form>
             </div>
         </section>
@@ -64,65 +79,90 @@
         <div class="container mx-auto px-4 py-8">
             <div class="swiper mySwiper rounded-[2.5rem] overflow-hidden shadow-2xl">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide hero-slide"><img src="https://images.pexels.com/photos/257736/pexels-photo-257736.jpeg?auto=format&fit=crop&w=1400" class="w-full h-full object-cover"><div class="absolute inset-0 hero-overlay flex items-center justify-center text-white"><h2 class="text-3xl font-black uppercase italic">Expert Electricians</h2></div></div>
-                    <div class="swiper-slide hero-slide"><img src="https://images.pexels.com/photos/4107120/pexels-photo-4107120.jpeg?auto=format&fit=crop&w=1400" class="w-full h-full object-cover"><div class="absolute inset-0 hero-overlay flex items-center justify-center text-white"><h2 class="text-3xl font-black uppercase italic">Deep Cleaning</h2></div></div>
-                    <div class="swiper-slide hero-slide"><img src="https://images.pexels.com/photos/2310904/pexels-photo-2310904.jpeg?auto=format&fit=crop&w=1400" class="w-full h-full object-cover"><div class="absolute inset-0 hero-overlay flex items-center justify-center text-white"><h2 class="text-3xl font-black uppercase italic">Plumbing Solutions</h2></div></div>
+                    <div class="swiper-slide hero-slide">
+                        <img src="https://images.pexels.com/photos/257736/pexels-photo-257736.jpeg?auto=format&fit=crop&w=1400" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 hero-overlay flex items-center justify-center text-white"><h2 class="text-3xl font-black uppercase">Expert Electricians</h2></div>
+                    </div>
+                    <div class="swiper-slide hero-slide">
+                        <img src="https://images.pexels.com/photos/4107120/pexels-photo-4107120.jpeg?auto=format&fit=crop&w=1400" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 hero-overlay flex items-center justify-center text-white"><h2 class="text-3xl font-black uppercase">Deep Cleaning</h2></div>
+                    </div>
+                    <div class="swiper-slide hero-slide">
+                        <img src="https://images.pexels.com/photos/2310904/pexels-photo-2310904.jpeg?auto=format&fit=crop&w=1400" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 hero-overlay flex items-center justify-center text-white"><h2 class="text-3xl font-black uppercase">Plumbing Solutions</h2></div>
+                    </div>
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
         </div>
 
         <section class="container mx-auto px-4 py-8">
-            <h2 class="text-2xl font-black text-gray-800 mb-8 flex items-center uppercase tracking-tight italic"><span class="w-2.5 h-10 bg-blue-600 mr-4 rounded-full"></span> Hamari Services</h2>
+            <h2 class="text-2xl font-black text-gray-800 mb-8 flex items-center uppercase tracking-tight">
+                <span class="w-2.5 h-10 bg-blue-600 mr-4 rounded-full"></span> Hamari Services
+            </h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div onclick="openMarket('electrician')" class="service-item bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition text-center cursor-pointer group">
+                <div class="service-item bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition text-center cursor-pointer group" data-name="electrician">
                     <div class="bg-yellow-50 text-yellow-500 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-yellow-500 group-hover:text-white transition"><i class="fas fa-bolt text-3xl"></i></div>
-                    <h3 class="font-extrabold text-gray-800 uppercase text-xs tracking-widest italic">Electrician</h3>
+                    <h3 class="font-extrabold text-gray-800 uppercase text-xs tracking-widest">Electrician</h3>
                 </div>
-                <div onclick="openMarket('plumber')" class="service-item bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition text-center cursor-pointer group">
+                <div class="service-item bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition text-center cursor-pointer group" data-name="plumber">
                     <div class="bg-blue-50 text-blue-500 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-500 group-hover:text-white transition"><i class="fas fa-faucet text-3xl"></i></div>
-                    <h3 class="font-extrabold text-gray-800 uppercase text-xs tracking-widest italic">Plumber</h3>
+                    <h3 class="font-extrabold text-gray-800 uppercase text-xs tracking-widest">Plumber</h3>
                 </div>
-                <div onclick="openMarket('cleaning')" class="service-item bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition text-center cursor-pointer group">
+                <div class="service-item bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition text-center cursor-pointer group" data-name="cleaning">
                     <div class="bg-green-50 text-green-500 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-green-500 group-hover:text-white transition"><i class="fas fa-broom text-3xl"></i></div>
-                    <h3 class="font-extrabold text-gray-800 uppercase text-xs tracking-widest italic">Cleaning</h3>
+                    <h3 class="font-extrabold text-gray-800 uppercase text-xs tracking-widest">Cleaning</h3>
                 </div>
-                <div onclick="openMarket('repairing')" class="service-item bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition text-center cursor-pointer group">
+                <div class="service-item bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition text-center cursor-pointer group" data-name="repairing">
                     <div class="bg-red-50 text-red-500 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-red-500 group-hover:text-white transition"><i class="fas fa-screwdriver-wrench text-3xl"></i></div>
-                    <h3 class="font-extrabold text-gray-800 uppercase text-xs tracking-widest italic">Repairing</h3>
+                    <h3 class="font-extrabold text-gray-800 uppercase text-xs tracking-widest">Repairing</h3>
                 </div>
             </div>
         </section>
 
-        <section id="workerSection" class="hidden container mx-auto px-4 py-8 bg-slate-50 rounded-[3rem] mb-10 border border-slate-200">
-            <h2 class="text-xl font-black uppercase italic mb-6 px-4 text-blue-600">Select Expert Worker</h2>
-            <div id="workerGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6 px-4"></div>
-        </section>
-
         <section class="seo-gradient py-20 border-t border-slate-100">
             <div class="container mx-auto px-4 max-w-5xl">
-                <h2 class="text-3xl md:text-5xl font-black text-slate-900 mb-8 border-l-8 border-blue-600 pl-4 italic">Smart Seva - India's Trusted Home Service Network</h2>
+                <h2 class="text-3xl md:text-5xl font-black text-slate-900 mb-8 border-l-8 border-blue-600 pl-4">Smart Seva - India's Trusted Home Service Network</h2>
+                
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 text-center">
                     <div class="p-8 bg-white rounded-3xl shadow-lg border-b-8 border-blue-600">
                         <i class="fas fa-shield-halved text-5xl text-blue-600 mb-6"></i>
                         <h4 class="text-xl font-black mb-3 text-slate-800 uppercase tracking-tighter">100% Safe & Secure</h4>
-                        <p class="text-sm text-slate-500 font-semibold italic">Every professional undergoes a massive background check and skill assessment.</p>
+                        <p class="text-sm text-slate-500 font-semibold italic leading-relaxed">Every professional undergoes a massive background check and skill assessment.</p>
                     </div>
                     <div class="p-8 bg-white rounded-3xl shadow-lg border-b-8 border-orange-500">
                         <i class="fas fa-check-double text-5xl text-orange-500 mb-6"></i>
                         <h4 class="text-xl font-black mb-3 text-slate-800 uppercase tracking-tighter">Expert Quality</h4>
-                        <p class="text-sm text-slate-500 font-semibold italic">Certified professionals with years of experience in high-end repairs.</p>
+                        <p class="text-sm text-slate-500 font-semibold italic leading-relaxed">Certified professionals with years of experience in high-end repairs.</p>
                     </div>
                     <div class="p-8 bg-white rounded-3xl shadow-lg border-b-8 border-green-600">
                         <i class="fas fa-wallet text-5xl text-green-600 mb-6"></i>
                         <h4 class="text-xl font-black mb-3 text-slate-800 uppercase tracking-tighter">Honest Pricing</h4>
-                        <p class="text-sm text-slate-500 font-semibold italic">Get upfront quotes with zero hidden charges or surprise costs.</p>
+                        <p class="text-sm text-slate-500 font-semibold italic leading-relaxed">Get upfront quotes with zero hidden charges or surprise costs.</p>
                     </div>
                 </div>
+
                 <div class="text-slate-600 leading-8 space-y-10 text-sm md:text-base">
                     <div class="bg-blue-50 p-10 rounded-[3rem] border-l-[12px] border-blue-600 shadow-inner">
-                        <h3 class="text-2xl font-black text-blue-900 mb-6 uppercase italic">Why Smart Seva is Redefining Home Services in India</h3>
-                        <p>Welcome to the future of home maintenance. <strong>Smart Seva</strong> is a premier digital platform...</p>
+                        <h3 class="text-2xl font-black text-blue-900 mb-6 uppercase">Why Smart Seva is Redefining Home Services in India</h3>
+                        <p class="mb-4">Welcome to the future of home maintenance. <strong>Smart Seva</strong> is a premier digital platform dedicated to bringing high-quality, reliable, and professional home services right to your doorstep. In today's fast-paced world, finding a skilled electrician, a trustworthy plumber, or an expert cleaning professional can be difficult. Our mission is to simplify this process by connecting verified service experts with customers in need of urgent repairs or maintenance.</p>
+                        <p>Whether you are looking for an <strong>electrician in Tezpur</strong>, a <strong>plumber in Bihar</strong>, or <strong>deep cleaning services in West Bengal</strong>, we are your digital partner for excellence. Every bolt tightened and every wire installed meets global safety standards.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div>
+                            <h3 class="text-xl font-black text-slate-900 mb-6 border-b-2 border-blue-100 pb-2 uppercase tracking-tighter">Verified Professional Network</h3>
+                            <p>We don't just hire; we curate. Every expert on the Smart Seva network undergoes a 3-step verification process: ID validation, skill assessment, and background check. This is why our <strong>Join as Expert</strong> program is so prestigious. We empower local technicians to become part of a professional ecosystem that provides them with steady work and a dignified professional identity.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black text-slate-900 mb-6 border-b-2 border-blue-100 pb-2 uppercase tracking-tighter">Customer First Philosophy</h3>
+                            <p>Our <strong>Customer Portal</strong> is built for simplicity. We understand that our users might not be tech-savvy, so we kept the interface clean and straightforward. From tracking your service history to getting a 7-day warranty on all repairs, Smart Seva puts the power in the hands of the customer. Trust is our primary currency, and we earn it with every single booking.</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-10">
+                        <h3 class="text-xl font-black text-slate-900 mb-6 uppercase tracking-tighter">Expanding Our Digital Footprint</h3>
+                        <p>Smart Seva is rapidly expanding across regional hubs in North India. Our mission is to deliver excellence right to your doorstep. From residential deep cleaning to full-house electrical wiring and leak-proof plumbing solutions, we ensure that the job is done perfectly. Experience the smart way of living with Smart Seva today and enjoy a hassle-free household management experience.</p>
                     </div>
                 </div>
             </div>
@@ -131,25 +171,74 @@
 
     <div id="bookingModal" class="fixed inset-0 z-[2000] hidden flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm">
         <div class="bg-white w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl relative">
-            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-red-500 transition text-2xl"><i class="fas fa-times-circle"></i></button>
+            <button id="closeModalBtn" class="absolute top-6 right-6 text-gray-400 hover:text-red-500 transition text-2xl">
+                <i class="fas fa-times-circle"></i>
+            </button>
             <div class="text-center mb-6">
-                <h3 class="text-xl font-black text-blue-600 uppercase italic">Finish Booking</h3>
-                <p class="text-[10px] font-bold text-slate-400 uppercase">Expert: <span id="targetWorkerName"></span></p>
+                <h3 class="text-2xl font-black text-blue-600 uppercase tracking-tighter">Book <span id="selectedServiceName">Service</span></h3>
+                <p class="text-gray-400 text-[10px] font-bold uppercase mt-1">Sahi kaam, sahi daam - SmartSeva</p>
             </div>
-            <form id="finalBookingForm" class="space-y-4">
-                <input type="hidden" id="wId"><input type="hidden" id="wCat">
-                <input type="date" id="bDate" required class="w-full px-5 py-3 rounded-xl border bg-gray-50 font-bold outline-none">
-                <textarea id="bMsg" placeholder="Problem kya hai?" class="w-full px-5 py-3 rounded-xl border bg-gray-50 font-bold h-24 outline-none"></textarea>
-                <button type="submit" id="bBtn" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black uppercase italic shadow-lg">Send Booking Request</button>
+            <form id="bookingForm" class="space-y-4">
+                <input type="hidden" id="hiddenServiceType">
+                <div>
+                    <label class="text-[10px] font-black uppercase text-gray-400 ml-2">Pura Naam</label>
+                    <input type="text" id="custName" required placeholder="Enter Name" class="w-full px-5 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:border-blue-500 outline-none font-bold text-sm">
+                </div>
+                <div>
+                    <label class="text-[10px] font-black uppercase text-gray-400 ml-2">Mobile Number</label>
+                    <input type="tel" id="custPhone" required placeholder="Enter Mobile" class="w-full px-5 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:border-blue-500 outline-none font-bold text-sm">
+                </div>
+                <div>
+                    <label class="text-[10px] font-black uppercase text-gray-400 ml-2">Pura Pata (Address)</label>
+                    <textarea id="custAddress" required placeholder="Ghar ka address likhein" class="w-full px-5 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:border-blue-500 outline-none font-bold text-sm h-20"></textarea>
+                </div>
+                <button type="submit" id="submitBtn" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest shadow-lg hover:bg-blue-700 transition-all">
+                    Confirm Booking
+                </button>
             </form>
         </div>
     </div>
 
     <footer class="footer-fixed bg-slate-950 text-slate-500 pt-16 pb-6">
-        <div class="container mx-auto px-4 text-center">
-            <div class="flex justify-center space-x-3 mb-6 text-white italic font-black text-xl">SMARTSEVA</div>
-            <div class="text-[10px] font-bold uppercase tracking-[0.4em] text-white">© 2026 Smart Seva - Premium Home Service App</div>
-            <div class="mt-4"><a href="admin.html" class="text-slate-800"><i class="fas fa-lock text-xs"></i></a></div>
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left mb-12">
+                <div>
+                    <div class="flex items-center justify-center md:justify-start space-x-3 mb-4 text-white">
+                        <div class="bg-blue-600 w-8 h-8 rounded flex items-center justify-center font-bold">S</div>
+                        <span class="text-xl font-bold uppercase tracking-tight">SmartSeva</span>
+                    </div>
+                    <p class="text-xs">Quality home services at your doorstep. Verified Experts only.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-widest">Navigation</h4>
+                    <ul class="space-y-2 text-xs font-bold uppercase tracking-tighter">
+                        <li><a href="#" class="hover:text-blue-500">About Us</a></li>
+                        <li><a href="partner.html" class="hover:text-blue-500">Join as Expert</a></li>
+                        <li><a href="customer-reg.html" class="hover:text-blue-500">Customer Portal</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-widest">Legal Hub</h4>
+                    <ul class="space-y-2 text-xs font-bold uppercase tracking-tighter">
+                        <li><a href="#" class="hover:text-blue-500 transition">Terms & Conditions</a></li>
+                        <li><a href="#" class="hover:text-blue-500 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-blue-500 transition">Disclaimer</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-widest">Connect</h4>
+                    <div class="flex justify-center md:justify-start space-x-6 text-2xl">
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-900 pt-6 text-center text-[10px] font-bold uppercase tracking-[0.4em] text-white">
+                © 2026 Smart Seva - India's Premium Home Service App
+                <div class="mt-4 text-red-600 opacity-20 hover:opacity-100 transition inline-block ml-4">
+                   <a href="admin.html"><i class="fas fa-lock text-xs"></i></a>
+                </div>
+            </div>
         </div>
     </footer>
 
@@ -158,70 +247,97 @@
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
 
     <script>
-        const firebaseConfig = { apiKey: "AIzaSyDWRwmMzdLlWLhdf6KQL4iQi1VHx7uVwXQ", authDomain: "smart-seva-5bef9.firebaseapp.com", projectId: "smart-seva-5bef9", storageBucket: "smart-seva-5bef9.firebasestorage.app", messagingSenderId: "1042547190403", appId: "1:1042547190403:web:15ea1659a88bdf3621c9b6" };
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDWRwmMzdLlWLhdf6KQL4iQi1VHx7uVwXQ",
+            authDomain: "smart-seva-5bef9.firebaseapp.com",
+            projectId: "smart-seva-5bef9",
+            storageBucket: "smart-seva-5bef9.firebasestorage.app",
+            messagingSenderId: "1042547190403",
+            appId: "1:1042547190403:web:15ea1659a88bdf3621c9b6"
+        };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
+        // Slider
         new Swiper(".mySwiper", { loop: true, autoplay: { delay: 3500 }, pagination: { el: ".swiper-pagination", clickable: true } });
         
+        // Navbar
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('active'); });
 
-        async function openMarket(cat) {
-            const user = JSON.parse(localStorage.getItem("smartSevaUser"));
-            if(!user) return window.location.href="customer-reg.html";
-            
-            const section = document.getElementById('workerSection');
-            const grid = document.getElementById('workerGrid');
-            section.classList.remove('hidden');
-            grid.innerHTML = "<p class='col-span-full text-center py-10 font-bold text-slate-400'>Experts dhund rahe hain...</p>";
-            window.scrollTo({ top: section.offsetTop - 100, behavior: 'smooth' });
-
-            const snap = await db.collection("workers").where("category","==",cat).where("district","==",user.district).where("status","==","active").get();
-            grid.innerHTML = "";
-            if(snap.empty) { grid.innerHTML = "<p class='col-span-full text-center py-10 font-black text-red-400 italic'>No Workers in your area.</p>"; return; }
-            
-            snap.forEach(doc => {
-                const w = doc.data();
-                grid.innerHTML += `<div class="bg-white p-6 rounded-[2rem] border shadow-sm">
-                    <h4 class="font-black text-slate-800 uppercase italic">${w.name}</h4>
-                    <p class="text-[10px] font-bold text-blue-600 uppercase mt-1">${w.experience} Years Exp | ⭐ 4.8</p>
-                    <button onclick="openBooking('${doc.id}','${w.name}','${cat}')" class="w-full mt-4 bg-slate-900 text-white py-3 rounded-xl font-black text-[10px] uppercase italic">Select Worker</button>
-                </div>`;
-            });
-        }
-
-        function openBooking(id, name, cat) {
-            document.getElementById('wId').value = id;
-            document.getElementById('targetWorkerName').innerText = name;
-            document.getElementById('wCat').value = cat;
-            document.getElementById('bookingModal').classList.remove('hidden');
-        }
-
-        function closeModal() { document.getElementById('bookingModal').classList.add('hidden'); }
-
-        document.getElementById('finalBookingForm').addEventListener('submit', async (e) => {
+        // Search
+        document.getElementById('searchForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            const user = JSON.parse(localStorage.getItem("smartSevaUser"));
-            const btn = document.getElementById('bBtn'); btn.disabled = true; btn.innerText = "Requesting...";
-            
-            const data = {
-                workerId: document.getElementById('wId').value,
-                workerName: document.getElementById('targetWorkerName').innerText,
-                service: document.getElementById('wCat').value,
-                serviceDate: document.getElementById('bDate').value,
-                userMsg: document.getElementById('bMsg').value,
-                customerName: user.name,
-                customerPhone: user.phone,
-                customerAddress: user.address,
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const items = document.querySelectorAll('.service-item');
+            items.forEach(item => {
+                const name = item.getAttribute('data-name');
+                item.style.display = name.includes(query) ? "block" : "none";
+            });
+            if(query === "") items.forEach(i => i.style.display = "block");
+        });
+
+        // --- BOOKING LOGIC ---
+        const modal = document.getElementById('bookingModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const bookingForm = document.getElementById('bookingForm');
+
+        function openModal(serviceName) {
+            document.getElementById('selectedServiceName').innerText = serviceName;
+            document.getElementById('hiddenServiceType').value = serviceName;
+            modal.classList.remove('hidden');
+        }
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        // Click outside to close
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Attach click to all service items
+        document.querySelectorAll('.service-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const serviceTitle = item.querySelector('h3').innerText;
+                openModal(serviceTitle);
+            });
+        });
+
+        // Handle Booking Submission
+        bookingForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = "Confirming...";
+            submitBtn.disabled = true;
+
+            const newBooking = {
+                service: document.getElementById('hiddenServiceType').value,
+                customerName: document.getElementById('custName').value,
+                phone: document.getElementById('custPhone').value,
+                address: document.getElementById('custAddress').value,
                 status: 'pending',
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             };
-            await db.collection("bookings").add(data);
-            alert("Booking Sent! Worker approve karega toh dashboard par dikhega.");
-            window.location.href = "customer-dash.html";
+
+            try {
+                await db.collection("bookings").add(newBooking);
+                alert("Hooray! Booking confirmed. Hum jaldi hi aapse sampark karenge.");
+                bookingForm.reset();
+                modal.classList.add('hidden');
+            } catch (error) {
+                console.error("Error adding booking: ", error);
+                alert("Oops! Kuch gadbad ho gayi. Dobara koshish karein.");
+            } finally {
+                submitBtn.innerText = "Confirm Booking";
+                submitBtn.disabled = false;
+            }
         });
     </script>
 </body>
-</html>
+                        </html>
