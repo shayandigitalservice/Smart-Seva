@@ -47,10 +47,7 @@
             <div class="flex justify-between items-start mb-6">
                 <div>
                     <h2 class="text-3xl font-black text-slate-900 tracking-tight">Namaste, <span id="workerName" class="text-blue-600">Expert</span></h2>
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] mt-1 italic">Aapka aaj ka business summary</p>
-                </div>
-                <div class="w-14 h-14 bg-white rounded-2xl border border-slate-200 flex items-center justify-center shadow-sm">
-                    <i class="fas fa-user-circle text-slate-300 text-3xl"></i>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] mt-1 italic">Business Overview</p>
                 </div>
             </div>
 
@@ -60,7 +57,7 @@
                     <h3 id="stat-done" class="text-3xl font-black text-slate-800 mt-1">0</h3>
                 </div>
                 <div class="stat-card border-b-4 border-green-500">
-                    <p class="text-[9px] font-black text-slate-400 uppercase">Today's Revenue</p>
+                    <p class="text-[9px] font-black text-slate-400 uppercase">Revenue</p>
                     <h3 class="text-3xl font-black text-slate-800 mt-1">₹<span id="stat-earning">0</span></h3>
                 </div>
             </div>
@@ -83,7 +80,6 @@
         const workerLocal = JSON.parse(localStorage.getItem("smartSevaWorker"));
         if (!workerLocal) { window.location.href = "partner.html"; }
 
-        // Firebase Initialization
         const firebaseConfig = {
             apiKey: "AIzaSyDWRwmMzdLlWLhdf6KQL4iQi1VHx7uVwXQ",
             authDomain: "smart-seva-5bef9.firebaseapp.com",
@@ -97,35 +93,28 @@
 
         let currentFilter = 'pending';
 
-        // Check Account Validity
         async function checkWorkerStatus() {
             const doc = await db.collection("workers").doc(workerLocal.id).get();
             if (!doc.exists || doc.data().status !== 'active') {
-                alert("Account Not Authorized. Contact Admin.");
+                alert("Unauthorized Access.");
                 logout();
             } else {
                 document.getElementById('workerName').innerText = doc.data().name.split(' ')[0];
             }
         }
 
-        // Load & Sync Stats
         function syncStats() {
             db.collection("bookings").where("workerId", "==", workerLocal.id)
               .onSnapshot(snap => {
-                  let done = 0;
-                  let cash = 0;
+                  let done = 0; let cash = 0;
                   snap.forEach(doc => {
-                      if(doc.data().status === 'completed') {
-                          done++;
-                          cash += 500; // Assuming 500 per job for demo
-                      }
+                      if(doc.data().status === 'completed') { done++; cash += 500; }
                   });
                   document.getElementById('stat-done').innerText = done;
                   document.getElementById('stat-earning').innerText = cash;
               });
         }
 
-        // Main Job Loader
         function loadJobs() {
             db.collection("bookings")
               .where("workerId", "==", workerLocal.id)
@@ -134,68 +123,71 @@
                   const container = document.getElementById('bookingContainer');
                   container.innerHTML = "";
                   
-                  const filtered = snap.docs.filter(d => d.data().status === currentFilter);
+                  const filtered = snap.docs.filter(d => {
+                      const s = d.data().status;
+                      // Show 'ongoing' jobs in Active tab as well
+                      return currentFilter === 'approved' ? (s === 'approved' || s === 'ongoing') : (s === currentFilter);
+                  });
 
                   if(filtered.length === 0) {
-                      container.innerHTML = `
-                        <div class="text-center py-20 bg-white rounded-[2.5rem] border-2 border-dashed border-slate-100">
-                            <i class="fas fa-mug-hot text-slate-200 text-4xl mb-4"></i>
-                            <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest">Aaram karo, koi naya kaam nahi hai</p>
-                        </div>`;
+                      container.innerHTML = `<div class="text-center py-20 bg-white rounded-[2.5rem] border-2 border-dashed border-slate-100"><p class="text-[10px] font-black text-slate-300 uppercase tracking-widest">No ${currentFilter} tasks</p></div>`;
                       return;
                   }
 
                   filtered.forEach(doc => {
                       const b = doc.data();
                       const id = doc.id;
-                      
+                      const otp = id.slice(-4).toUpperCase(); // Generating same OTP as Customer Dashboard
+
                       container.innerHTML += `
                         <div class="booking-card p-6 relative overflow-hidden">
                             <div class="flex justify-between items-start mb-6">
                                 <div>
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-[8px] font-black bg-slate-100 px-2 py-1 rounded-md uppercase tracking-widest">${b.service}</span>
-                                        ${currentFilter === 'approved' ? '<span class="w-2 h-2 bg-green-500 rounded-full animate-ping"></span>' : ''}
-                                    </div>
-                                    <h4 class="text-xl font-black text-slate-900 mt-2">${b.customerName}</h4>
-                                    <p class="text-[9px] font-bold text-slate-400 uppercase mt-1"><i class="far fa-calendar-check mr-1"></i> ${b.serviceDate}</p>
+                                    <span class="text-[8px] font-black bg-blue-50 text-blue-600 px-2 py-1 rounded-md uppercase tracking-widest">${b.status}</span>
+                                    <h4 class="text-xl font-black text-slate-900 mt-2 tracking-tight">${b.customerName}</h4>
+                                    <p class="text-[9px] font-bold text-slate-400 uppercase mt-1 tracking-widest">${b.service} • ${b.serviceDate}</p>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-[8px] font-black text-slate-400 uppercase">Potential Pay</p>
-                                    <p class="text-lg font-black text-green-600 tracking-tighter">₹500.00</p>
+                                    <p class="text-[8px] font-black text-slate-400 uppercase">Payout</p>
+                                    <p class="text-lg font-black text-green-600">₹499.00</p>
                                 </div>
                             </div>
 
-                            <div class="bg-slate-50/50 p-5 rounded-2xl mb-6 border border-slate-100/50">
-                                <div class="flex gap-4 items-start mb-4">
-                                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm text-blue-500"><i class="fas fa-map-marked-alt"></i></div>
-                                    <div>
-                                        <p class="text-[8px] font-black text-slate-400 uppercase">Service Location</p>
-                                        <p class="text-xs font-bold text-slate-700 leading-tight mt-1">${b.customerAddress}</p>
-                                    </div>
-                                </div>
-                                <div class="flex gap-4 items-start">
-                                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm text-orange-400"><i class="fas fa-quote-left"></i></div>
-                                    <div>
-                                        <p class="text-[8px] font-black text-slate-400 uppercase">Customer Note</p>
-                                        <p class="text-xs italic text-slate-500 font-medium mt-1">"${b.userMsg || 'Standard Service Requested'}"</p>
-                                    </div>
-                                </div>
+                            <div class="bg-slate-50 p-4 rounded-2xl mb-6 space-y-3">
+                                <p class="text-xs font-bold text-slate-600 leading-tight"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i> ${b.customerAddress}</p>
+                                <p class="text-[10px] italic text-slate-400">"${b.userMsg || 'No instructions'}"</p>
                             </div>
 
-                            <div class="flex gap-3">
-                                ${currentFilter === 'pending' ? `
-                                    <button onclick="updateStatus('${id}', 'approved')" class="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-xl shadow-blue-600/20 hover:scale-[1.02] active:scale-95 transition">Accept Lead</button>
-                                    <button onclick="updateStatus('${id}', 'rejected')" class="px-6 bg-slate-100 text-slate-400 py-4 rounded-2xl font-black text-[11px] uppercase transition">Ignore</button>
+                            <div class="flex gap-2">
+                                ${b.status === 'pending' ? `
+                                    <button onclick="updateStatus('${id}', 'approved')" class="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg">Accept Lead</button>
+                                ` : b.status === 'approved' ? `
+                                    <button onclick="startJob('${id}', '${otp}')" class="flex-1 bg-slate-900 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg">Start Work (Verify OTP)</button>
+                                    <a href="tel:${b.customerPhone}" class="w-14 h-14 bg-slate-100 text-slate-800 rounded-2xl flex items-center justify-center text-lg"><i class="fas fa-phone-alt"></i></a>
                                 ` : `
-                                    <a href="tel:${b.customerPhone}" class="flex-1 bg-slate-900 text-white py-4 rounded-2xl font-black text-[11px] uppercase text-center shadow-xl shadow-slate-900/20"><i class="fas fa-phone-alt mr-2"></i> Call Now</a>
-                                    <a href="https://wa.me/91${b.customerPhone}" class="w-14 h-14 bg-green-500 text-white rounded-2xl flex items-center justify-center text-xl shadow-xl shadow-green-500/20"><i class="fab fa-whatsapp"></i></a>
-                                    <button onclick="updateStatus('${id}', 'completed')" class="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black text-[11px] uppercase shadow-xl shadow-blue-600/20">End Job</button>
+                                    <button onclick="updateStatus('${id}', 'completed')" class="flex-1 bg-green-600 text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg animate-pulse">Finish Job</button>
+                                    <a href="https://wa.me/91${b.customerPhone}" class="w-14 h-14 bg-green-500 text-white rounded-2xl flex items-center justify-center text-lg shadow-lg shadow-green-500/20"><i class="fab fa-whatsapp"></i></a>
                                 `}
                             </div>
                         </div>`;
                   });
               });
+        }
+
+        async function startJob(id, correctOtp) {
+            const input = prompt("Ask the customer for the 4-digit OTP shown on their screen:");
+            if (input && input.toUpperCase() === correctOtp) {
+                await db.collection("bookings").doc(id).update({ status: 'ongoing' });
+                alert("OTP Verified! Work started.");
+            } else {
+                alert("Incorrect OTP. Please check with customer.");
+            }
+        }
+
+        async function updateStatus(id, newStatus) {
+            if(confirm(`Confirm status: ${newStatus}?`)) {
+                await db.collection("bookings").doc(id).update({ status: newStatus });
+            }
         }
 
         function filterBookings(status, btn) {
@@ -205,21 +197,12 @@
             loadJobs();
         }
 
-        async function updateStatus(id, newStatus) {
-            if(confirm(`Nischit hai? Status: ${newStatus}`)) {
-                await db.collection("bookings").doc(id).update({ status: newStatus });
-            }
-        }
-
         function logout() {
             localStorage.removeItem("smartSevaWorker");
             window.location.href = "partner.html";
         }
 
-        // Start Everything
-        checkWorkerStatus();
-        syncStats();
-        loadJobs();
+        checkWorkerStatus(); syncStats(); loadJobs();
     </script>
 </body>
 </html>
