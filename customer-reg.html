@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Access - SmartSeva</title>
+    <title>SmartSeva - Final Access</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -21,18 +21,18 @@
 
     <div id="successOverlay">
         <div class="bg-white p-10 rounded-[2.5rem] text-center shadow-2xl">
-            <div class="w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-lg">
+            <div class="w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
                 <i class="fas fa-check"></i>
             </div>
-            <h2 class="text-xl font-black text-slate-900 uppercase">Success!</h2>
-            <p id="overlayMsg" class="text-slate-400 font-bold text-[10px] uppercase tracking-widest mt-2">Opening Dashboard...</p>
+            <h2 class="text-xl font-black text-slate-900 uppercase">Registered!</h2>
+            <p class="text-slate-400 font-bold text-[10px] uppercase tracking-widest mt-2">Opening Dashboard...</p>
         </div>
     </div>
 
     <div class="max-w-2xl w-full">
         <div class="text-center mb-10">
             <div class="bg-blue-600 w-16 h-16 rounded-2xl shadow-xl flex items-center justify-center mx-auto mb-4 text-white text-2xl font-black">S</div>
-            <h1 class="text-2xl font-black text-slate-800 uppercase tracking-tighter leading-none">Smart<span class="text-blue-600">Seva</span></h1>
+            <h1 class="text-2xl font-black text-slate-800 uppercase tracking-tighter">Smart<span class="text-blue-600">Seva</span></h1>
         </div>
 
         <div class="reg-card p-8 md:p-12">
@@ -45,23 +45,32 @@
                 <form id="customerLoginForm" class="space-y-6">
                     <input type="tel" id="lPhone" required class="input-field" placeholder="Mobile Number">
                     <input type="password" id="lPass" required maxlength="6" class="input-field" placeholder="6-Digit Password">
-                    <button type="submit" class="w-full bg-slate-900 text-white py-4 rounded-xl font-black uppercase text-[11px] tracking-widest">Login Now</button>
+                    <button type="submit" class="w-full bg-slate-900 text-white py-4 rounded-xl font-black uppercase text-[11px] tracking-widest hover:bg-blue-600 transition-all">Login Now</button>
                 </form>
             </div>
 
             <div id="signupSection" class="hidden space-y-6">
                 <form id="customerRegForm" class="space-y-6">
-                    <button type="button" onclick="getLocation()" id="gpsBtn" class="w-full bg-blue-50 text-blue-600 py-4 rounded-xl font-black text-[10px] uppercase border-2 border-blue-600/10">Auto-Detect Address</button>
-                    <input type="text" id="cName" placeholder="Full Name" required class="input-field">
-                    <input type="tel" id="cPhone" placeholder="Mobile Number" required class="input-field">
-                    <div class="grid grid-cols-2 gap-4">
+                    <button type="button" onclick="getLocation()" id="gpsBtn" class="w-full bg-blue-50 text-blue-600 py-4 rounded-xl font-black text-[10px] uppercase border-2 border-blue-600/10">
+                        <i class="fas fa-location-arrow mr-2"></i> Auto-Detect Address
+                    </button>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="text" id="cName" placeholder="Full Name" required class="input-field">
+                        <input type="tel" id="cPhone" placeholder="Mobile Number" required class="input-field">
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <input type="text" id="cState" placeholder="State" required class="input-field">
                         <input type="text" id="cDistrict" placeholder="District" required class="input-field">
+                        <input type="number" id="cPin" placeholder="PIN" required class="input-field">
                     </div>
-                    <input type="number" id="cPin" placeholder="PIN" required class="input-field">
-                    <textarea id="cAddr" placeholder="Full Address" required class="input-field h-20"></textarea>
+
+                    <textarea id="cAddr" placeholder="Full Address" required class="input-field h-20 resize-none"></textarea>
+                    
                     <input type="password" id="cPass" required maxlength="6" minlength="6" placeholder="Set 6-Digit Password" class="input-field border-blue-200">
-                    <button type="submit" id="regBtn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase text-[11px]">Register Profile</button>
+
+                    <button type="submit" id="regBtn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase text-[11px] tracking-widest shadow-xl shadow-blue-600/20">Register Profile</button>
                 </form>
             </div>
         </div>
@@ -71,6 +80,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
 
     <script>
+        // Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDWRwmMzdLlWLhdf6KQL4iQi1VHx7uVwXQ",
             authDomain: "smart-seva-5bef9.firebaseapp.com",
@@ -81,7 +91,7 @@
             appId: "1:1042547190403:web:15ea1659a88bdf3621c9b6"
         };
         firebase.initializeApp(firebaseConfig);
-        const db = firebase.database(); // Realtime Database use kar rahe hain
+        const db = firebase.database();
 
         function switchTab(type) {
             document.getElementById('loginSection').classList.toggle('hidden', type === 'signup');
@@ -90,30 +100,65 @@
             document.getElementById('signupTab').classList.toggle('active', type === 'signup');
         }
 
-        // Registration Logic
+        // --- GPS Function ---
+        async function getLocation() {
+            const btn = document.getElementById('gpsBtn');
+            btn.innerText = "Locating...";
+            
+            if (!navigator.geolocation) {
+                alert("GPS not supported by your browser");
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                try {
+                    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${position.coords.latitude}&lon=${position.coords.longitude}`);
+                    const data = await res.json();
+                    
+                    document.getElementById('cState').value = data.address.state || "";
+                    document.getElementById('cDistrict').value = data.address.city || data.address.district || data.address.suburb || "";
+                    document.getElementById('cPin').value = data.address.postcode || "";
+                    document.getElementById('cAddr').value = data.display_name || "";
+                    
+                    btn.innerHTML = "📍 Location Verified";
+                    btn.classList.add('bg-green-500', 'text-white');
+                } catch(e) {
+                    alert("Error fetching address details");
+                    btn.innerText = "Auto-Detect Address";
+                }
+            }, (err) => {
+                alert("GPS Error: " + err.message + ". Please enable location.");
+                btn.innerText = "Auto-Detect Address";
+            }, { enableHighAccuracy: true });
+        }
+
+        // --- Registration Logic ---
         document.getElementById('customerRegForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = document.getElementById('regBtn');
             const phone = document.getElementById('cPhone').value.trim();
-            btn.innerText = "Connecting...";
+            const pass = document.getElementById('cPass').value;
+
+            btn.innerText = "Processing...";
             btn.disabled = true;
 
-            // Realtime Database mein check aur save
-            db.ref('customers/' + phone).once('value').then((snapshot) => {
-                if (snapshot.exists()) {
-                    alert("Mobile already registered!");
+            db.ref('customers/' + phone).once('value').then((snap) => {
+                if(snap.exists()) {
+                    alert("User already exists with this number!");
                     btn.disabled = false;
                     btn.innerText = "Register Profile";
                 } else {
                     const userData = {
                         name: document.getElementById('cName').value,
                         phone: phone,
-                        password: document.getElementById('cPass').value,
+                        password: pass,
                         state: document.getElementById('cState').value,
                         district: document.getElementById('cDistrict').value,
                         pin: document.getElementById('cPin').value,
-                        address: document.getElementById('cAddr').value
+                        address: document.getElementById('cAddr').value,
+                        createdAt: new Date().toISOString()
                     };
+
                     db.ref('customers/' + phone).set(userData).then(() => {
                         localStorage.setItem("smartSevaUser", JSON.stringify(userData));
                         document.getElementById('successOverlay').style.display = "flex";
@@ -121,25 +166,25 @@
                     });
                 }
             }).catch(err => {
-                alert("Error: " + err.message);
+                alert("Database Error: " + err.message);
                 btn.disabled = false;
             });
         });
 
-        // Login Logic
+        // --- Login Logic ---
         document.getElementById('customerLoginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const phone = document.getElementById('lPhone').value.trim();
             const pass = document.getElementById('lPass').value;
-            
-            db.ref('customers/' + phone).once('value').then((snapshot) => {
-                const user = snapshot.val();
-                if (user && user.password === pass) {
+
+            db.ref('customers/' + phone).once('value').then((snap) => {
+                const user = snap.val();
+                if(user && user.password === pass) {
                     localStorage.setItem("smartSevaUser", JSON.stringify(user));
                     document.getElementById('successOverlay').style.display = "flex";
                     setTimeout(() => { window.location.href = "customer-dash.html"; }, 1000);
                 } else {
-                    alert("Wrong Number or Password!");
+                    alert("Invalid Credentials!");
                 }
             });
         });
