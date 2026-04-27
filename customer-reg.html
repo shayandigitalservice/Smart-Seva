@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartSeva - Final Access</title>
+    <title>Customer Access - SmartSeva</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -12,7 +12,7 @@
         .input-field { background: #ffffff; border: 2px solid #f1f5f9; border-radius: 12px; padding: 12px 16px; outline: none; transition: 0.3s; font-weight: 600; font-size: 0.85rem; width: 100%; color: #1e293b; }
         .input-field:focus { border-color: #2563eb; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.05); }
         .reg-card { border-radius: 2.5rem; background: #ffffff; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05); border: 1px solid #f1f5f9; }
-        .tab-btn { transition: 0.3s; border-bottom: 3px solid transparent; cursor: pointer; padding-bottom: 12px; font-weight: 800; text-transform: uppercase; font-size: 12px; }
+        .tab-btn { transition: 0.3s; border-bottom: 3px solid transparent; cursor: pointer; padding-bottom: 12px; font-weight: 800; text-transform: uppercase; font-size: 11px; color: #94a3b8; }
         .tab-btn.active { border-color: #2563eb; color: #2563eb; }
         #successOverlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(4px); align-items: center; justify-content: center; }
     </style>
@@ -25,34 +25,33 @@
                 <i class="fas fa-check"></i>
             </div>
             <h2 class="text-xl font-black text-slate-900 uppercase">Registered!</h2>
-            <p class="text-slate-400 font-bold text-[10px] uppercase tracking-widest mt-2">Opening Your Dashboard...</p>
+            <p class="text-slate-400 font-bold text-[10px] uppercase tracking-widest mt-2">Opening Dashboard...</p>
         </div>
     </div>
 
     <div class="max-w-2xl w-full">
         <div class="text-center mb-10">
-            <div class="bg-blue-600 w-16 h-16 rounded-2xl shadow-xl shadow-blue-600/20 flex items-center justify-center mx-auto mb-4 text-white text-2xl font-black">S</div>
-            <h1 class="text-2xl font-black text-slate-800 uppercase tracking-tighter">Smart<span class="text-blue-600">Seva</span></h1>
+            <div class="bg-blue-600 w-16 h-16 rounded-2xl shadow-xl flex items-center justify-center mx-auto mb-4 text-white text-2xl font-black">S</div>
+            <h1 class="text-2xl font-black text-slate-800 uppercase tracking-tighter leading-none">Smart<span class="text-blue-600">Seva</span></h1>
         </div>
 
         <div class="reg-card p-8 md:p-12">
-            <div class="flex gap-10 mb-10 border-b border-slate-50">
+            <div class="flex gap-8 mb-10 border-b border-slate-50">
                 <button id="loginTab" onclick="switchTab('login')" class="tab-btn active">Login</button>
-                <button id="signupTab" onclick="switchTab('signup')" class="tab-btn text-slate-300">Registration</button>
+                <button id="signupTab" onclick="switchTab('signup')" class="tab-btn">Registration</button>
             </div>
 
             <div id="loginSection">
                 <form id="customerLoginForm" class="space-y-6">
-                    <input type="tel" id="lPhone" required class="input-field" placeholder="Phone Number">
-                    <input type="password" id="lPass" required maxlength="6" minlength="6" inputmode="numeric" class="input-field" placeholder="6-Digit Password">
-                    <button type="submit" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black uppercase text-[11px] tracking-widest hover:bg-blue-600 transition-all">Login Now</button>
+                    <input type="tel" id="lPhone" required class="input-field" placeholder="Mobile Number">
+                    <input type="password" id="lPass" required maxlength="6" inputmode="numeric" class="input-field" placeholder="6-Digit Password">
+                    <button type="submit" class="w-full bg-slate-900 text-white py-4 rounded-xl font-black uppercase text-[11px] tracking-widest hover:bg-blue-600 transition-all">Login Now</button>
                 </form>
             </div>
 
             <div id="signupSection" class="hidden space-y-6">
                 <form id="customerRegForm" class="space-y-6">
-                    <button type="button" onclick="getLocation()" id="gpsBtn" class="w-full bg-blue-50 text-blue-600 py-4 rounded-xl font-black text-[10px] uppercase border-2 border-blue-600/10"><i class="fas fa-location-crosshairs mr-2"></i> Detect Address</button>
-                    <input type="hidden" id="cCoords">
+                    <button type="button" onclick="getLocation()" id="gpsBtn" class="w-full bg-blue-50 text-blue-600 py-4 rounded-xl font-black text-[10px] uppercase border-2 border-blue-600/10"><i class="fas fa-location-crosshairs mr-2"></i> Auto-Detect Address</button>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <input type="text" id="cName" placeholder="Full Name" required class="input-field">
@@ -68,11 +67,11 @@
                     <textarea id="cAddr" placeholder="Full Address" required class="input-field h-20 resize-none"></textarea>
                     
                     <div>
-                        <p class="text-[10px] font-black text-blue-600 uppercase mb-2">Set 6-Digit Password Only</p>
+                        <p class="text-[9px] font-black text-blue-600 uppercase mb-2">Set Exactly 6-Digit Password</p>
                         <input type="password" id="cPass" required maxlength="6" minlength="6" inputmode="numeric" placeholder="Ex: 123456" class="input-field border-blue-200">
                     </div>
 
-                    <button type="submit" id="regBtn" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-black uppercase text-[11px] tracking-widest shadow-xl">Create Account</button>
+                    <button type="submit" id="regBtn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase text-[11px] tracking-widest shadow-xl shadow-blue-600/20">Register Profile</button>
                 </form>
             </div>
         </div>
@@ -107,86 +106,79 @@
                 try {
                     const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${p.coords.latitude}&lon=${p.coords.longitude}`);
                     const data = await res.json();
-                    document.getElementById('cCoords').value = `${p.coords.latitude},${p.coords.longitude}`;
                     document.getElementById('cState').value = data.address.state || "";
                     document.getElementById('cDistrict').value = data.address.city || data.address.district || "";
                     document.getElementById('cPin').value = data.address.postcode || "";
                     document.getElementById('cAddr').value = data.display_name || "";
                     btn.innerHTML = "Location Verified";
                     btn.className = "w-full bg-green-500 text-white py-4 rounded-xl font-black text-[10px] uppercase";
-                } catch(e) { btn.innerText = "GPS OK - Fill Manually"; }
-            }, () => { alert("Enable GPS"); btn.innerText = "Detect Address"; });
+                } catch(e) { btn.innerText = "GPS Error - Fill Manually"; }
+            }, () => { alert("Please enable GPS"); btn.innerText = "Detect Address"; });
         }
 
-        // --- THE FIXED REGISTRATION LOGIC ---
-        document.getElementById('customerRegForm').addEventListener('submit', async (e) => {
+        // --- THE ACTUAL FIX ---
+        document.getElementById('customerRegForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = document.getElementById('regBtn');
-            const pass = document.getElementById('cPass').value;
             const phone = document.getElementById('cPhone').value.trim();
+            const pass = document.getElementById('cPass').value;
 
             if(pass.length !== 6) { alert("Password must be 6 digits!"); return; }
 
-            btn.innerText = "Saving to Database...";
+            btn.innerText = "Connecting...";
             btn.disabled = true;
 
-            try {
-                // Duplicate check
-                const checkSnap = await db.collection("customers").where("phone", "==", phone).get();
-                if(!checkSnap.empty) {
-                    alert("This number is already registered!");
+            // Step 1: Duplicate Check
+            db.collection("customers").where("phone", "==", phone).get().then((snap) => {
+                if(!snap.empty) {
+                    alert("Mobile number already registered!");
                     btn.disabled = false;
-                    btn.innerText = "Create Account";
-                    return;
+                    btn.innerText = "Register Profile";
+                } else {
+                    // Step 2: Prepare & Save Data
+                    const userData = {
+                        name: document.getElementById('cName').value,
+                        phone: phone,
+                        password: pass,
+                        state: document.getElementById('cState').value,
+                        district: document.getElementById('cDistrict').value,
+                        pin: document.getElementById('cPin').value,
+                        address: document.getElementById('cAddr').value,
+                        createdAt: new Date().toISOString()
+                    };
+
+                    db.collection("customers").add(userData).then(() => {
+                        localStorage.setItem("smartSevaUser", JSON.stringify(userData));
+                        document.getElementById('successOverlay').style.display = "flex";
+                        setTimeout(() => { window.location.href = "customer-dash.html"; }, 1500);
+                    }).catch((err) => {
+                        alert("Database Write Error: " + err.message);
+                        btn.disabled = false;
+                    });
                 }
-
-                // Prepare Data
-                const userData = {
-                    name: document.getElementById('cName').value,
-                    phone: phone,
-                    password: pass,
-                    state: document.getElementById('cState').value,
-                    district: document.getElementById('cDistrict').value,
-                    pin: document.getElementById('cPin').value,
-                    address: document.getElementById('cAddr').value,
-                    createdAt: new Date().toISOString()
-                };
-
-                // Final Save
-                await db.collection("customers").add(userData);
-                
-                // Storage & Success
-                localStorage.setItem("smartSevaUser", JSON.stringify(userData));
-                document.getElementById('successOverlay').style.display = "flex";
-                setTimeout(() => { window.location.href = "customer-dash.html"; }, 2000);
-
-            } catch (err) { 
-                console.error("Firebase Error:", err);
-                alert("Database Error! Check Firebase Rules."); 
-                btn.disabled = false; 
-                btn.innerText = "Create Account"; 
-            }
+            }).catch((err) => {
+                alert("Connection Error: " + err.message);
+                btn.disabled = false;
+            });
         });
 
-        // LOGIN LOGIC
-        document.getElementById('customerLoginForm').addEventListener('submit', async (e) => {
+        document.getElementById('customerLoginForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            const btn = e.target.querySelector('button');
             const phone = document.getElementById('lPhone').value.trim();
             const pass = document.getElementById('lPass').value.trim();
-            const btn = e.target.querySelector('button');
-            btn.innerText = "Verifying...";
 
-            try {
-                const snap = await db.collection("customers").where("phone", "==", phone).where("password", "==", pass).get();
+            btn.innerText = "Verifying...";
+            db.collection("customers").where("phone", "==", phone).where("password", "==", pass).get().then((snap) => {
                 if (snap.empty) {
-                    alert("Wrong Credentials!");
+                    alert("Wrong Number or Password!");
                     btn.innerText = "Login Now";
                 } else {
                     localStorage.setItem("smartSevaUser", JSON.stringify(snap.docs[0].data()));
                     document.getElementById('successOverlay').style.display = "flex";
-                    setTimeout(() => { window.location.href = "customer-dash.html"; }, 1500);
+                    setTimeout(() => { window.location.href = "customer-dash.html"; }, 1000);
                 }
-            } catch (err) { alert("Login Error!"); btn.innerText = "Login Now"; }
+            }).catch((err) => { alert("Login failed!"); btn.innerText = "Login Now"; });
         });
     </script>
 </body>
