@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Access | Shayan Smart Tools</title>
+    <title>Customer Portal| Smart Seva</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -86,7 +86,7 @@
                 <i class="fas fa-check"></i>
             </div>
             <h2 class="text-2xl font-bold">Authenticated!</h2>
-            <p class="text-gray-400 mt-2">Accessing Shayan Smart Tools...</p>
+            <p class="text-gray-400 mt-2">Accessing Smart Seva....</p>
         </div>
     </div>
 
@@ -103,7 +103,7 @@
                         <img id="mainLogo" src="1000040753.png" class="h-16 w-16 rounded-2xl shadow-md mb-4 object-cover cursor-pointer" onclick="document.getElementById('logoInput').click()">
                         <input type="file" id="logoInput" class="hidden" accept="image/*" onchange="updateLogo(this)">
                     </div>
-                    <h2 class="text-2xl font-bold text-gray-900">Welcome Back</h2>
+                    <h2 class="text-2xl font-bold text-gray-900">Welcome To Smart Seva</h2>
                     <p class="text-gray-500 text-sm mt-1">Please enter your details to continue</p>
                 </div>
 
@@ -128,7 +128,7 @@
                                 <input type="password" id="lPass" maxlength="6" placeholder="6-digit pin" required>
                             </div>
                         </div>
-                        <button type="submit" class="btn-signup">Sign In</button>
+                        <button type="submit" class="btn-signup"> Login Dashboard</button>
                     </form>
                 </div>
 
@@ -180,7 +180,7 @@
                         </div>
 
                         <div class="input-group">
-                            <label>Mailing Address</label>
+                            <label>Permanent Address</label>
                             <div class="input-box">
                                 <i class="fa-solid fa-house"></i>
                                 <input type="text" id="cAddr" placeholder="Street/Village" required>
@@ -209,7 +209,7 @@
                 </div>
 
                 <div class="footer-text text-center mt-6 text-sm text-gray-500">
-                    Trusted by developers in <b>Tezpur</b>.
+                    Trusted by developers in <b>Smart Seva</b>.
                 </div>
             </div>
         </div>
@@ -258,7 +258,7 @@
 
         async function getLocation() {
             const btn = document.getElementById('gpsBtn');
-            btn.innerText = "SATELLITE SYNCING...";
+            btn.innerText = "Location Verifying...";
             navigator.geolocation.getCurrentPosition(async (pos) => {
                 const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`);
                 const data = await res.json();
@@ -266,7 +266,7 @@
                 document.getElementById('cDistrict').value = data.address.district || data.address.city || data.address.town || "";
                 document.getElementById('cPin').value = data.address.postcode || "";
                 document.getElementById('cAddr').value = data.display_name || "";
-                btn.innerText = "LOCATION SYNCED ✅";
+                btn.innerText = "LOCATION Verified ✅";
             }, () => { alert("Enable GPS"); btn.innerText = "SYNC FAILED"; });
         }
 
