@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartSeva - Customer Portal</title>
+    <title>Customer Access - SmartSeva</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -25,7 +25,7 @@
                 <i class="fas fa-check"></i>
             </div>
             <h2 class="text-xl font-black text-slate-900 uppercase">Success!</h2>
-            <p id="overlayMsg" class="text-slate-400 font-bold text-[10px] uppercase tracking-widest mt-2">Processing...</p>
+            <p id="overlayMsg" class="text-slate-400 font-bold text-[10px] uppercase tracking-widest mt-2">Opening Dashboard...</p>
         </div>
     </div>
 
@@ -45,58 +45,44 @@
                 <form id="customerLoginForm" class="space-y-6">
                     <input type="tel" id="lPhone" required class="input-field" placeholder="Mobile Number">
                     <input type="password" id="lPass" required maxlength="6" class="input-field" placeholder="6-Digit Password">
-                    <button type="submit" id="loginBtn" class="w-full bg-slate-900 text-white py-4 rounded-xl font-black uppercase text-[11px] tracking-widest hover:bg-blue-600 transition-all">Login Now</button>
+                    <button type="submit" class="w-full bg-slate-900 text-white py-4 rounded-xl font-black uppercase text-[11px] tracking-widest">Login Now</button>
                 </form>
             </div>
 
             <div id="signupSection" class="hidden space-y-6">
                 <form id="customerRegForm" class="space-y-6">
-                    <button type="button" onclick="getLocation()" id="gpsBtn" class="w-full bg-blue-50 text-blue-600 py-4 rounded-xl font-black text-[10px] uppercase border-2 border-blue-600/10">
-                        <i class="fas fa-location-crosshairs mr-2"></i> Auto-Detect Address
-                    </button>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" id="cName" placeholder="Full Name" required class="input-field">
-                        <input type="tel" id="cPhone" placeholder="Mobile Number" required class="input-field">
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <button type="button" onclick="getLocation()" id="gpsBtn" class="w-full bg-blue-50 text-blue-600 py-4 rounded-xl font-black text-[10px] uppercase border-2 border-blue-600/10">Auto-Detect Address</button>
+                    <input type="text" id="cName" placeholder="Full Name" required class="input-field">
+                    <input type="tel" id="cPhone" placeholder="Mobile Number" required class="input-field">
+                    <div class="grid grid-cols-2 gap-4">
                         <input type="text" id="cState" placeholder="State" required class="input-field">
                         <input type="text" id="cDistrict" placeholder="District" required class="input-field">
-                        <input type="number" id="cPin" placeholder="PIN" required class="input-field">
                     </div>
-
-                    <textarea id="cAddr" placeholder="Full Address" required class="input-field h-20 resize-none"></textarea>
-                    
-                    <div>
-                        <p class="text-[9px] font-black text-blue-600 uppercase mb-2">Set Exactly 6-Digit Password</p>
-                        <input type="password" id="cPass" required maxlength="6" minlength="6" placeholder="Ex: 123456" class="input-field border-blue-200">
-                    </div>
-
-                    <button type="submit" id="regBtn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase text-[11px] tracking-widest shadow-xl shadow-blue-600/20">Create Account</button>
+                    <input type="number" id="cPin" placeholder="PIN" required class="input-field">
+                    <textarea id="cAddr" placeholder="Full Address" required class="input-field h-20"></textarea>
+                    <input type="password" id="cPass" required maxlength="6" minlength="6" placeholder="Set 6-Digit Password" class="input-field border-blue-200">
+                    <button type="submit" id="regBtn" class="w-full bg-blue-600 text-white py-4 rounded-xl font-black uppercase text-[11px]">Register Profile</button>
                 </form>
             </div>
         </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
 
     <script>
-        // --- Firebase Configuration ---
         const firebaseConfig = {
             apiKey: "AIzaSyDWRwmMzdLlWLhdf6KQL4iQi1VHx7uVwXQ",
             authDomain: "smart-seva-5bef9.firebaseapp.com",
+            databaseURL: "https://smart-seva-5bef9-default-rtdb.firebaseio.com",
             projectId: "smart-seva-5bef9",
             storageBucket: "smart-seva-5bef9.firebasestorage.app",
             messagingSenderId: "1042547190403",
             appId: "1:1042547190403:web:15ea1659a88bdf3621c9b6"
         };
-        
         firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+        const db = firebase.database(); // Realtime Database use kar rahe hain
 
-        // --- UI Logic ---
         function switchTab(type) {
             document.getElementById('loginSection').classList.toggle('hidden', type === 'signup');
             document.getElementById('signupSection').classList.toggle('hidden', type === 'login');
@@ -104,106 +90,58 @@
             document.getElementById('signupTab').classList.toggle('active', type === 'signup');
         }
 
-        async function getLocation() {
-            const btn = document.getElementById('gpsBtn');
-            btn.innerText = "Accessing GPS...";
-            navigator.geolocation.getCurrentPosition(async (p) => {
-                try {
-                    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${p.coords.latitude}&lon=${p.coords.longitude}`);
-                    const data = await res.json();
-                    document.getElementById('cState').value = data.address.state || "";
-                    document.getElementById('cDistrict').value = data.address.city || data.address.suburb || "";
-                    document.getElementById('cPin').value = data.address.postcode || "";
-                    document.getElementById('cAddr').value = data.display_name || "";
-                    btn.innerHTML = "📍 Location Updated";
-                    btn.className = "w-full bg-green-500 text-white py-4 rounded-xl font-black text-[10px] uppercase";
-                } catch(e) { btn.innerText = "Error - Enter Manually"; }
-            }, () => { alert("Please enable Location/GPS"); btn.innerText = "Retry Location"; });
-        }
-
-        // --- Registration Logic ---
-        document.getElementById('customerRegForm').addEventListener('submit', async (e) => {
+        // Registration Logic
+        document.getElementById('customerRegForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = document.getElementById('regBtn');
             const phone = document.getElementById('cPhone').value.trim();
-            const pass = document.getElementById('cPass').value;
-
-            if(pass.length !== 6) { alert("Password must be exactly 6 digits!"); return; }
-
+            btn.innerText = "Connecting...";
             btn.disabled = true;
-            btn.innerText = "Checking User...";
 
-            try {
-                // Check duplicate
-                const check = await db.collection("customers").where("phone", "==", phone).get();
-                if(!check.empty) {
-                    alert("This mobile number is already registered!");
+            // Realtime Database mein check aur save
+            db.ref('customers/' + phone).once('value').then((snapshot) => {
+                if (snapshot.exists()) {
+                    alert("Mobile already registered!");
                     btn.disabled = false;
-                    btn.innerText = "Create Account";
-                    return;
+                    btn.innerText = "Register Profile";
+                } else {
+                    const userData = {
+                        name: document.getElementById('cName').value,
+                        phone: phone,
+                        password: document.getElementById('cPass').value,
+                        state: document.getElementById('cState').value,
+                        district: document.getElementById('cDistrict').value,
+                        pin: document.getElementById('cPin').value,
+                        address: document.getElementById('cAddr').value
+                    };
+                    db.ref('customers/' + phone).set(userData).then(() => {
+                        localStorage.setItem("smartSevaUser", JSON.stringify(userData));
+                        document.getElementById('successOverlay').style.display = "flex";
+                        setTimeout(() => { window.location.href = "customer-dash.html"; }, 1500);
+                    });
                 }
-
-                // Register
-                const userData = {
-                    name: document.getElementById('cName').value,
-                    phone: phone,
-                    password: pass,
-                    state: document.getElementById('cState').value,
-                    district: document.getElementById('cDistrict').value,
-                    pin: document.getElementById('cPin').value,
-                    address: document.getElementById('cAddr').value,
-                    userType: "customer",
-                    createdAt: new Date().getTime()
-                };
-
-                await db.collection("customers").add(userData);
-                localStorage.setItem("smartSevaUser", JSON.stringify(userData));
-                
-                document.getElementById('overlayMsg').innerText = "Account Created! Redirecting...";
-                document.getElementById('successOverlay').style.display = "flex";
-                setTimeout(() => { window.location.href = "customer-dash.html"; }, 2000);
-
-            } catch (err) {
-                console.error(err);
-                alert("Database Error: Make sure Firestore Rules are Public!");
+            }).catch(err => {
+                alert("Error: " + err.message);
                 btn.disabled = false;
-                btn.innerText = "Create Account";
-            }
+            });
         });
 
-        // --- Login Logic ---
-        document.getElementById('customerLoginForm').addEventListener('submit', async (e) => {
+        // Login Logic
+        document.getElementById('customerLoginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const btn = document.getElementById('loginBtn');
             const phone = document.getElementById('lPhone').value.trim();
             const pass = document.getElementById('lPass').value;
-
-            btn.disabled = true;
-            btn.innerText = "Verifying...";
-
-            try {
-                const snap = await db.collection("customers")
-                                   .where("phone", "==", phone)
-                                   .where("password", "==", pass)
-                                   .get();
-
-                if (snap.empty) {
-                    alert("Invalid Phone or Password!");
-                    btn.disabled = false;
-                    btn.innerText = "Login Now";
-                } else {
-                    const userData = snap.docs[0].data();
-                    localStorage.setItem("smartSevaUser", JSON.stringify(userData));
-                    
-                    document.getElementById('overlayMsg').innerText = "Login Successful!";
+            
+            db.ref('customers/' + phone).once('value').then((snapshot) => {
+                const user = snapshot.val();
+                if (user && user.password === pass) {
+                    localStorage.setItem("smartSevaUser", JSON.stringify(user));
                     document.getElementById('successOverlay').style.display = "flex";
-                    setTimeout(() => { window.location.href = "customer-dash.html"; }, 1500);
+                    setTimeout(() => { window.location.href = "customer-dash.html"; }, 1000);
+                } else {
+                    alert("Wrong Number or Password!");
                 }
-            } catch (err) {
-                alert("Login Error. Check Internet/Rules.");
-                btn.disabled = false;
-                btn.innerText = "Login Now";
-            }
+            });
         });
     </script>
 </body>
