@@ -3,167 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Access | SmartSeva</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Customer Access | Shayan Smart Tools</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
         
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #ffffff; /* Pure Clean White Background */
-            color: #1e293b;
-        }
-
-        .input-label {
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #94a3b8;
-            margin-bottom: 6px;
-            display: block;
-        }
-
-        .input-flat {
-            border-bottom: 2px solid #f1f5f9;
-            padding: 12px 0px;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        .signup-wrapper {
+            display: flex;
             width: 100%;
-            font-weight: 600;
-            transition: all 0.3s;
-            background: transparent;
+            min-height: 100vh;
+            background: #fff;
         }
 
-        .input-flat:focus {
-            outline: none;
-            border-color: #2563eb;
-        }
-
-        .btn-action {
-            background: #2563eb;
+        /* Left Side Info */
+        .signup-side-info {
+            flex: 1.2;
+            background: linear-gradient(rgba(69, 202, 253, 0.85), rgba(43, 124, 255, 0.8)), 
+                        url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             color: white;
-            padding: 16px;
-            border-radius: 12px;
-            font-weight: 800;
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 13px;
-            transition: 0.3s;
-            margin-top: 20px;
+            padding: 50px;
+            text-align: center;
         }
 
-        .btn-action:active {
-            transform: scale(0.98);
+        /* Right Side Form Area */
+        .signup-form-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            background: #ffffff;
         }
 
-        .tab-minimal {
-            font-size: 12px;
-            font-weight: 800;
-            color: #94a3b8;
-            padding: 10px 0;
-            position: relative;
-            transition: 0.3s;
-        }
+        .signup-card { width: 100%; max-width: 480px; }
 
-        .tab-minimal.active {
-            color: #2563eb;
+        /* Input Styling */
+        .input-group { margin-bottom: 18px; text-align: left; }
+        .input-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #344054; text-transform: uppercase; letter-spacing: 0.5px; }
+        .input-box { position: relative; }
+        .input-box i { position: absolute; left: 16px; top: 15px; color: #98a2b3; font-size: 14px; }
+        .input-box input, .input-box textarea { 
+            width: 100%; padding: 14px 14px 14px 48px; 
+            border: 1.5px solid #eaecf0; border-radius: 12px; font-size: 15px; outline: none; transition: 0.3s;
+            background: #f9fafb;
         }
+        .input-box input:focus { border-color: #45cafd; background: #fff; box-shadow: 0 0 0 4px rgba(69,202,253,0.1); }
 
-        .tab-minimal.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 30px;
-            height: 3px;
-            background: #2563eb;
-            border-radius: 10px;
+        .btn-signup { 
+            width: 100%; background: #45cafd; color: white; border: none; 
+            padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 800; 
+            cursor: pointer; transition: 0.3s; margin-top: 10px; text-transform: uppercase;
+        }
+        .btn-signup:hover { background: #2b7cff; transform: translateY(-1px); box-shadow: 0 10px 20px rgba(43, 124, 255, 0.15); }
+
+        /* Tab Switcher */
+        .tab-box { display: flex; gap: 20px; border-bottom: 1px solid #f2f4f7; margin-bottom: 30px; }
+        .tab-btn { padding: 10px 0; font-size: 14px; font-weight: 700; color: #667085; cursor: pointer; position: relative; border: none; background: none; }
+        .tab-btn.active { color: #45cafd; }
+        .tab-btn.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px; background: #45cafd; }
+
+        #successOverlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(16, 24, 40, 0.95); backdrop-filter: blur(8px); align-items: center; justify-content: center; }
+
+        @media (max-width: 900px) {
+            .signup-side-info { display: none; }
+            .signup-form-area { padding: 20px; }
         }
     </style>
 </head>
-<body class="min-h-screen py-12 px-6 flex justify-center">
+<body>
 
-    <div class="w-full max-w-md">
-        <div class="text-center mb-12">
-            <div class="relative inline-block">
-                <div onclick="document.getElementById('logoInput').click()" class="w-24 h-24 mx-auto mb-4 cursor-pointer">
-                    <img id="mainLogo" src="https://cdn-icons-png.flaticon.com/512/10613/10613200.png" class="w-full h-full object-contain rounded-2xl">
-                </div>
-                <input type="file" id="logoInput" class="hidden" accept="image/*" onchange="updateLogo(this)">
+    <div id="successOverlay">
+        <div class="text-center text-white">
+            <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl shadow-lg">
+                <i class="fas fa-check"></i>
             </div>
-            <h1 class="text-2xl font-black tracking-tighter">SMART<span class="text-blue-600">SEVA</span></h1>
+            <h2 class="text-2xl font-bold">Authenticated!</h2>
+            <p class="text-gray-400 mt-2">Accessing Shayan Smart Tools...</p>
+        </div>
+    </div>
+
+    <div class="signup-wrapper">
+        <div class="signup-side-info">
+            <h1 class="font-extrabold text-5xl mb-6">SHAYAN <span class="text-blue-100 font-light">TOOLS</span></h1>
+            <p class="text-lg opacity-90">Tezpur's most advanced digital utility hub. Manage your profile and access professional calculators in one click.</p>
         </div>
 
-        <div class="flex gap-8 mb-10 border-b border-slate-100">
-            <button id="loginTab" onclick="switchTab('login')" class="tab-minimal active uppercase">Login</button>
-            <button id="signupTab" onclick="switchTab('signup')" class="tab-minimal uppercase">Register</button>
-        </div>
-
-        <div id="loginSection" class="space-y-8">
-            <form id="customerLoginForm">
-                <div class="mb-6">
-                    <label class="input-label">Mobile Number</label>
-                    <input type="tel" id="lPhone" required class="input-flat" placeholder="Enter your number">
-                </div>
-                <div class="mb-6">
-                    <label class="input-label">6-Digit Pin</label>
-                    <input type="password" id="lPass" required maxlength="6" class="input-flat" placeholder="••••••">
-                </div>
-                <button type="submit" class="btn-action">Sign In</button>
-            </form>
-        </div>
-
-        <div id="signupSection" class="hidden">
-            <form id="customerRegForm" class="space-y-6">
-                <button type="button" onclick="getLocation()" id="gpsBtn" class="w-full text-left py-4 text-blue-600 text-xs font-bold uppercase tracking-widest border-b border-blue-50">
-                    <i class="fas fa-location-crosshairs mr-2"></i> Auto-Fill Location Details
-                </button>
-
-                <div class="grid grid-cols-1 gap-6">
-                    <div>
-                        <label class="input-label">Full Name</label>
-                        <input type="text" id="cName" required class="input-flat" placeholder="Type name here">
+        <div class="signup-form-area">
+            <div class="signup-card">
+                <div class="text-center mb-8">
+                    <div class="inline-block relative">
+                        <img id="mainLogo" src="1000040753.png" class="h-16 w-16 rounded-2xl shadow-md mb-4 object-cover cursor-pointer" onclick="document.getElementById('logoInput').click()">
+                        <input type="file" id="logoInput" class="hidden" accept="image/*" onchange="updateLogo(this)">
                     </div>
-                    <div>
-                        <label class="input-label">Father's Name</label>
-                        <input type="text" id="fName" required class="input-flat" placeholder="Father's full name">
-                    </div>
-                    <div>
-                        <label class="input-label">Mobile Number</label>
-                        <input type="tel" id="cPhone" required class="input-flat" placeholder="10-digit number">
-                    </div>
+                    <h2 class="text-2xl font-bold text-gray-900">Welcome Back</h2>
+                    <p class="text-gray-500 text-sm mt-1">Please enter your details to continue</p>
                 </div>
 
-                <div class="grid grid-cols-2 gap-6">
-                    <div>
-                        <label class="input-label">State</label>
-                        <input type="text" id="cState" required class="input-flat">
-                    </div>
-                    <div>
-                        <label class="input-label">District</label>
-                        <input type="text" id="cDistrict" required class="input-flat">
-                    </div>
+                <div class="tab-box">
+                    <button id="loginTab" onclick="switchTab('login')" class="tab-btn active">LOG IN</button>
+                    <button id="signupTab" onclick="switchTab('signup')" class="tab-btn">REGISTER</button>
                 </div>
 
-                <div>
-                    <label class="input-label">Full Address</label>
-                    <input type="text" id="cAddr" required class="input-flat" placeholder="House, Street, Area">
+                <div id="loginSection">
+                    <form id="customerLoginForm">
+                        <div class="input-group">
+                            <label>Mobile Number</label>
+                            <div class="input-box">
+                                <i class="fa-solid fa-phone"></i>
+                                <input type="tel" id="lPhone" placeholder="Enter phone number" required>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Secret Pin</label>
+                            <div class="input-box">
+                                <i class="fa-solid fa-lock"></i>
+                                <input type="password" id="lPass" maxlength="6" placeholder="6-digit pin" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-signup">Sign In</button>
+                    </form>
                 </div>
 
-                <div class="grid grid-cols-2 gap-6">
-                    <div>
-                        <label class="input-label">PIN Code</label>
-                        <input type="number" id="cPin" required class="input-flat">
-                    </div>
-                    <div>
-                        <label class="input-label">Setup Pin</label>
-                        <input type="password" id="cPass" required maxlength="6" class="input-flat" placeholder="123456">
-                    </div>
+                <div id="signupSection" class="hidden h-[450px] overflow-y-auto pr-2 custom-scroll">
+                    <form id="customerRegForm">
+                        <button type="button" onclick="getLocation()" id="gpsBtn" class="w-full mb-4 py-3 text-xs font-bold text-blue-500 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+                            <i class="fa-solid fa-location-crosshairs mr-2"></i> AUTO-FILL LOCATION
+                        </button>
+                        
+                        <div class="input-group">
+                            <label>Full Name</label>
+                            <div class="input-box">
+                                <i class="fa-solid fa-user"></i>
+                                <input type="text" id="cName" placeholder="Your name" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Father's Name</label>
+                            <div class="input-box">
+                                <i class="fa-solid fa-user-group"></i>
+                                <input type="text" id="fName" placeholder="Father's name" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Mobile</label>
+                            <div class="input-box">
+                                <i class="fa-solid fa-phone"></i>
+                                <input type="tel" id="cPhone" placeholder="10-digit number" required>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="input-group">
+                                <label>State</label>
+                                <div class="input-box">
+                                    <i class="fa-solid fa-map"></i>
+                                    <input type="text" id="cState" placeholder="State" required>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label>District</label>
+                                <div class="input-box">
+                                    <i class="fa-solid fa-city"></i>
+                                    <input type="text" id="cDistrict" placeholder="District" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Mailing Address</label>
+                            <div class="input-box">
+                                <i class="fa-solid fa-house"></i>
+                                <input type="text" id="cAddr" placeholder="Street/Village" required>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="input-group">
+                                <label>Pin Code</label>
+                                <div class="input-box">
+                                    <i class="fa-solid fa-location-pin"></i>
+                                    <input type="number" id="cPin" placeholder="784xxx" required>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label>Set Pin</label>
+                                <div class="input-box">
+                                    <i class="fa-solid fa-key"></i>
+                                    <input type="password" id="cPass" maxlength="6" placeholder="6-digit" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="regBtn" class="btn-signup">Create Profile</button>
+                    </form>
                 </div>
 
-                <button type="submit" id="regBtn" class="btn-action">Create Profile</button>
-            </form>
+                <div class="footer-text text-center mt-6 text-sm text-gray-500">
+                    Trusted by developers in <b>Tezpur</b>.
+                </div>
+            </div>
         </div>
     </div>
 
@@ -183,18 +231,18 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // Logo Persistance Logic
-        window.onload = function() {
-            const savedLogo = localStorage.getItem('smartSevaLogo');
+        // Logo Persistance
+        window.onload = () => {
+            const savedLogo = localStorage.getItem('shayanLogo');
             if(savedLogo) document.getElementById('mainLogo').src = savedLogo;
-        }
+        };
 
         function updateLogo(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = (e) => {
                     document.getElementById('mainLogo').src = e.target.result;
-                    localStorage.setItem('smartSevaLogo', e.target.result);
+                    localStorage.setItem('shayanLogo', e.target.result);
                 }
                 reader.readAsDataURL(input.files[0]);
             }
@@ -210,7 +258,7 @@
 
         async function getLocation() {
             const btn = document.getElementById('gpsBtn');
-            btn.innerText = "Detecting...";
+            btn.innerText = "SATELLITE SYNCING...";
             navigator.geolocation.getCurrentPosition(async (pos) => {
                 const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`);
                 const data = await res.json();
@@ -218,13 +266,17 @@
                 document.getElementById('cDistrict').value = data.address.district || data.address.city || data.address.town || "";
                 document.getElementById('cPin').value = data.address.postcode || "";
                 document.getElementById('cAddr').value = data.display_name || "";
-                btn.innerText = "Location Synced ✅";
-            }, () => { alert("Turn on GPS"); btn.innerText = "Sync Failed"; });
+                btn.innerText = "LOCATION SYNCED ✅";
+            }, () => { alert("Enable GPS"); btn.innerText = "SYNC FAILED"; });
         }
 
-        document.getElementById('customerRegForm').addEventListener('submit', function(e) {
+        // Registration
+        document.getElementById('customerRegForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const phone = document.getElementById('cPhone').value.trim();
+            const btn = document.getElementById('regBtn');
+            btn.innerText = "CREATING...";
+            
             const userData = {
                 name: document.getElementById('cName').value,
                 fatherName: document.getElementById('fName').value,
@@ -236,13 +288,16 @@
                 address: document.getElementById('cAddr').value,
                 createdAt: new Date().toISOString()
             };
+
             db.ref('customers/' + phone).set(userData).then(() => {
                 localStorage.setItem("smartSevaUser", JSON.stringify(userData));
-                window.location.href = "customer-dash.html";
+                document.getElementById('successOverlay').style.display = "flex";
+                setTimeout(() => { window.location.href = "customer-dash.html"; }, 2000);
             });
         });
 
-        document.getElementById('customerLoginForm').addEventListener('submit', function(e) {
+        // Login
+        document.getElementById('customerLoginForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const phone = document.getElementById('lPhone').value.trim();
             const pass = document.getElementById('lPass').value;
@@ -250,8 +305,9 @@
                 const user = snap.val();
                 if(user && user.password === pass) {
                     localStorage.setItem("smartSevaUser", JSON.stringify(user));
-                    window.location.href = "customer-dash.html";
-                } else { alert("Invalid login!"); }
+                    document.getElementById('successOverlay').style.display = "flex";
+                    setTimeout(() => { window.location.href = "customer-dash.html"; }, 1500);
+                } else { alert("Invalid Credentials!"); }
             });
         });
     </script>
